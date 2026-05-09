@@ -1,16 +1,18 @@
 export default function QuizPanel({ quiz, questions, onNext }) {
-  const { currentQ, answered, feedback } = quiz
+  const { currentQ, answered, result, feedback } = quiz
   const q = questions[currentQ]
 
   return (
     <div id="quiz-panel" className="panel">
-      <div className="panel-label">Quiz</div>
-      <div>{q.prompt}</div>
+      <div className="panel-label">Quiz Challenge</div>
+      <div className="quiz-prompt">{q.prompt}</div>
       <div className="divider" />
-      <div>{feedback}</div>
+      <div className={`quiz-feedback ${result || 'loading'}`}>
+        {feedback}
+      </div>
       {answered && (
         <button onClick={onNext}>
-          {currentQ < questions.length - 1 ? 'Next' : 'Restart'}
+          {currentQ < questions.length - 1 ? 'Next Question' : 'Restart Quiz'}
         </button>
       )}
     </div>
