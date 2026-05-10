@@ -41,6 +41,12 @@ export default function App() {
     setQuizStarted(true)
   }
 
+  function handleEndQuiz() {
+    setSelectedBone(null)
+    setQuiz(initialQuiz)
+    setQuizStarted(false)
+  }
+
   function handleNextQuestion() {
     setSelectedBone(null)
     setQuiz(prev => ({
@@ -65,6 +71,7 @@ export default function App() {
         questions={questions}
         started={quizStarted}
         onStart={handleStartQuiz}
+        onEnd={handleEndQuiz}
         onNext={handleNextQuestion}
       />
       <InfoPanel selectedBone={selectedBone} />

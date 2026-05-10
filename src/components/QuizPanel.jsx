@@ -1,4 +1,4 @@
-export default function QuizPanel({ quiz, questions, started, onStart, onNext }) {
+export default function QuizPanel({ quiz, questions, started, onStart, onEnd, onNext }) {
   const { currentQ, answered, result, feedback } = quiz
   const q = questions[currentQ]
 
@@ -19,11 +19,14 @@ export default function QuizPanel({ quiz, questions, started, onStart, onNext })
           <div className={`quiz-feedback ${result || 'loading'}`}>
             {feedback}
           </div>
-          {answered && (
-            <button onClick={onNext}>
-              {currentQ < questions.length - 1 ? 'Next Question' : 'Restart Quiz'}
-            </button>
-          )}
+          <div className="quiz-actions">
+            {answered && (
+              <button onClick={onNext}>
+                {currentQ < questions.length - 1 ? 'Next Question' : 'Restart Quiz'}
+              </button>
+            )}
+            <button onClick={onEnd}>End Quiz</button>
+          </div>
         </>
       )}
     </div>
