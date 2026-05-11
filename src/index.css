@@ -279,6 +279,30 @@ button:active {
   box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
 }
 
+.show-more-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--highlight) !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  padding: 0.5rem 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  box-shadow: none !important;
+  font-weight: 800 !important;
+  cursor: pointer;
+  display: flex !important;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.show-more-btn:hover {
+  opacity: 1;
+  transform: none !important;
+  color: var(--accent-alt) !important;
+}
+
 /* Quiz feedback styling */
 .quiz-prompt {
   font-weight: 700;

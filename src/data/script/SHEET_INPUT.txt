@@ -1,0 +1,7278 @@
+English
+Vertical
+Horizontal
+Median
+Coronal
+Sagittal
+Right
+Left
+Intermediate
+Medial
+Lateral
+Anterior
+Posterior
+Ventral
+Dorsal
+Frontal
+Occipital
+Superior
+Inferior
+Cranial
+Caudal
+Rostral
+Apical
+Basal
+Middle
+Transverse
+Longitudinal
+Axial
+External
+Internal
+Luminal
+Superficial
+Deep
+Proximal
+Distal
+Central
+Peripheral
+Radial
+Ulnar
+Fibular
+Tibial
+Palmar
+Plantar
+Flexor
+Extensor
+Reference planes
+Longitudinal planes
+Coronal planes
+Sagittal planes
+Median plane
+Paramedian plane
+Transverse planes
+Transpyloric plane
+Subcostal plane
+Transumbilical plane
+Supracristal plane
+Intertubercular plane
+Interspinous plane
+Reference lines
+Anterior median line
+Sternal line
+Parasternal line
+Midclavicular line
+Mamillary line
+Anterior axillary line
+Midaxillary line
+Posterior axillary line
+Scapular line
+Paravertebral line
+Posterior median line
+Human body positions
+Anatomical position
+Comparative anatomical position
+Prone position
+Supine position
+Movements
+Abduction
+Adduction
+Lateral rotation
+Medial rotation
+Circumduction
+Flexion
+Extension
+Pronation
+Supination
+Opposition
+Reposition
+Plantar flexion
+Dorsiflexion
+Elevation
+Depression
+Eversion
+Inversion
+Protraction
+Retraction
+Human body
+Parts of human body
+Head
+Neurocranial part of head
+Cranial cavity
+Forehead
+Occiput
+Temple
+Auricle
+Lobule of auricle
+Helix
+Crus of helix
+Antihelix
+Crura of antihelix
+Antitragus
+Tragus
+Face
+Eye (part of head)
+Upper eyelid
+Lower eyelid
+Cheek
+External nose
+Ala of nose
+Mouth
+Upper lip
+Lower lip
+Chin
+Neck
+Trunk
+Thorax
+Thoracic cavity
+Abdomen
+Abdominal cavity
+Pelvis
+Pelvic cavity
+Perineum
+Anterior trunk
+Anterolateral thoracic wall
+Anterolateral abdominal wall
+Back
+Back of thorax
+Back of abdomen
+Upper limb
+Shoulder
+Axilla
+Anterior axillary fold
+Posterior axillary fold
+Free part of upper limb
+Arm
+Elbow
+Forearm
+Wrist
+Hand
+Metacarpus
+Digits of hand
+Thumb
+Index finger
+Middle finger
+Ring finger
+Little finger
+Lower limb
+Buttock
+Hip
+Free part of lower limb
+Thigh
+Knee
+Posterior part of knee
+Leg
+Calf
+Ankle
+Foot
+Heel
+Midfoot
+Metatarsus
+Digits of foot
+Great toe
+Second toe
+Third toe
+Fourth toe
+Little toe
+Regions of human body
+Regions of head
+Regions of epicranium
+Vertex
+Frontal region
+Eyebrow
+Parietal region
+Occipital region
+Temporal region
+Mastoid region
+Auricular region
+Triangular fossa
+Scapha
+Concha of auricle
+Cymba conchae
+Cavity of concha
+Anterior notch of auricle
+Intertragic incisure
+Auricular tubercle
+Apex of auricle
+Posterior auricular groove
+(Supratragic tubercle)
+Fossa antihelica
+Eminentia conchae
+Eminentia scaphae
+Eminentia fossae triangularis
+Regions of face
+Orbital region
+Suprapalpebral sulcus
+Palpebral fissure
+Lateral palpebral commissure
+Medial palpebral commissure
+Lateral angle of eye
+Medial angle of eye
+Infrapalpebral sulcus
+Palpebronasal fold
+Infra-orbital region
+Buccal region
+Parotideomasseteric region
+Zygomatic region
+Nasal region
+Root of nose
+Dorsum of nose
+Apex of nose
+Nasolabial sulcus
+Oral region
+Philtrum
+Tubercle of upper lip
+Labial commissure
+Angle of mouth
+Mentolabial sulcus
+Mental region
+Regions of neck
+Anterior region of neck
+Anterior triangle of neck
+Suprahyoid region
+Submandibular triangle
+Submental triangle
+Infrahyoid region
+Carotid triangle
+Muscular triangle
+Sternocleidomastoid region
+Lesser supraclavicular fossa
+Lateral region of neck
+Greater supraclavicular fossa
+Omoclavicular triangle
+Occipital triangle
+Posterior region of neck
+Regions of thorax
+Anterior region of thorax
+Precordium
+Presternal region
+Infraclavicular fossa
+Deltopectoral triangle
+Deltopectoral groove
+Pectoral region
+Mammary region
+Inframammary region
+Lateral region of thorax
+Regions of abdomen
+Hypochondriac region
+Epigastric region
+Epigastric fossa
+Lateral region of abdomen
+Umbilical region
+Umbilicus
+Inguinal region
+Hypogastric region
+Regions of back
+Vertebral region
+Scapular region
+Triangle of auscultation
+Infrascapular region
+Lumbar region
+Lumbar triangle
+Superior lumbar triangle
+Sacral region
+Sacro-iliac dimple
+Coccygeal region
+(Coccygeal foveola)
+Regions of perineum
+Anal region
+Anal triangle
+Urogenital region
+Regions of upper limb
+Axillary region
+Axillary fossa
+Deltoid region
+Brachial region
+Anterior region of arm
+Lateral bicipital groove
+Medial bicipital groove
+Posterior region of arm
+Cubital region
+Anterior region of elbow
+Cubital fossa
+Posterior region of elbow
+Antebrachial region
+Anterior region of forearm
+Posterior region of forearm
+Lateral border of forearm
+Medial border of forearm
+Carpal region
+Anterior region of wrist
+Posterior region of wrist
+Radial foveola
+Regions of hand
+Metacarpal region
+Dorsum of hand
+Palm
+Thenar eminence
+Hypothenar eminence
+Regions of digits of hand
+Palmar surfaces of digits of hand
+Dorsal surfaces of digits of hand
+Interdigital spaces of hand
+Regions of lower limb
+Gluteal region
+Intergluteal cleft
+Gluteal fold
+Hip region
+Femoral region
+Anterior region of thigh
+Femoral triangle
+Posterior region of thigh
+Knee region
+Anterior region of knee
+Posterior region of knee
+Popliteal fossa
+Leg region
+Anterior region of leg
+Posterior region of leg
+Sural region
+Talocrural region
+Anterior region of ankle
+Posterior region of ankle
+Lateral retromalleolar region
+Medial retromalleolar region
+Regions of foot
+Heel region
+Dorsum of foot
+Sole
+Longitudinal arch of foot
+Lateral part of longitudinal arch of foot
+Medial part of longitudinal arch of foot
+Arch of foot
+Proximal transverse arch of foot
+Distal transverse arch of foot
+Lateral border of foot
+Medial border of foot
+Metatarsal region
+Hallucial eminence
+Regions of digits of foot
+Plantar surfaces of digits of foot
+Dorsal surfaces of digits of foot
+Interdigital spaces of foot
+Musculoskeletal systems
+Skeletal system
+Axial skeleton
+Neurocranium
+Viscerocranium
+Facial bones
+Chondrocranium
+Desmocranium
+Appendicular skeleton
+Skeleton of upper limbs
+Pectoral girdle
+Skeleton of free upper limb
+Skeleton of lower limbs
+Pelvic girdle
+Skeleton of free lower limb
+Bones
+Membranous bone
+Endochondral bone
+Long bone
+Short bone
+Flat bone
+Irregular bone
+Pneumatised bone
+Sesamoid bone
+(Accessory bone)
+(Supernumerary bone)
+Bone
+Bony part of bone
+Compact bone
+Spongy bone
+Cartilaginous part of bone
+Articular cartilage
+Membranous part of bone
+Periosteum
+Perichondrium
+Medullary cavity
+Endosteum
+Bone marrow
+Yellow bone marrow
+Red bone marrow
+Diaphysis
+Metaphysis
+Epiphysis
+Epiphysial cartilage
+Epiphysial plate
+Epiphysial line
+Apophysis
+Articular surface
+Articular fossa
+(Articular head)
+Nutrient foramen
+Nutrient canal
+Ossification centres
+Primary ossification centre
+Secondary ossification centre
+Cranium
+Frontal aspect of cranium
+Superior aspect of cranium
+Occipital aspect of cranium
+Lateral aspect of cranium
+Inferior aspect of cranium
+Pericranium
+Forehead of cranium
+Occiput of cranium
+Vertex of cranium
+Nasion
+Bregma
+Lambda
+Inion
+Pterion
+Asterion
+Porion
+Basion
+Opisthion
+Temporal fossa
+Zygomatic arch
+Infratemporal fossa
+Pterygopalatine fossa
+Pterygomaxillary fissure
+Fontanelles
+Anterior fontanelle
+Posterior fontanelle
+Sphenoidal fontanelle
+Mastoid fontanelle
+Calvaria
+External table of calvaria
+Diploe
+Diploic canals
+Internal table of calvaria
+Groove for superior sagittal sinus
+Granular foveolae
+Impressions of cerebral gyri
+Eminences of cerebral sulci
+Venous grooves
+Arterial grooves
+Cranial base
+Internal surface of cranial base
+Sphenopetrosal fissure
+Petro-occipital fissure
+Anterior cranial fossa
+Middle cranial fossa
+Posterior cranial fossa
+Clivus
+Groove for inferior pertrosal sinus
+Groove for sigmoid sinus
+External surface of cranial base
+Jugular foramen
+Foramen lacerum
+(Sphenotemporal foramen)
+Bony palate
+Greater palatine canal
+Greater palatine foramen
+Incisive fossa
+(Palatine torus)
+Palatovaginal canal
+Vomerovaginal canal
+Vomerorostral canal
+Orbit
+Periorbita
+Orbital septum
+Orbital cavity
+Orbital opening
+Orbital margin
+Supra-orbital margin
+Infra-orbital margin
+Lateral margin of orbit
+Medial margin of orbit
+Roof of orbit
+Floor of orbit
+Lateral wall of orbit
+(Cranio-orbital foramen)
+Medial wall of orbit
+Anterior ethmoidal foramen
+Posterior ethmoidal foramen
+Fossa for lacrimal sac
+Apex of orbit
+Superior orbital fissure
+Inferior orbital fissure
+Nasolacrimal canal
+Bony part of nasal septum
+Nasal cavity of cranium
+Piriform aperture
+Superior nasal meatus of cranium
+Middle nasal meatus of cranium
+Inferior nasal meatus of cranium
+Opening of nasolacrimal canal
+Common nasal meatus of cranium
+Spheno-ethmoidal recess of cranium
+Nasopharyngeal meatus of cranium
+Choana
+Sphenopalatine foramen
+Bones of cranium
+Parietal bone
+Internal surface of parietal bone
+Groove for middle meningeal artery
+External surface of parietal bone
+Superior temporal line
+Inferior temporal line
+Parietal eminence
+Occipital border of parietal bone
+Squamosal border of parietal bone
+Sagittal border of parietal bone
+Frontal border of parietal bone
+Frontal angle of parietal bone
+Occipital angle of parietal bone
+Sphenoidal angle of parietal bone
+Mastoid angle of parietal bone
+Parietal foramen
+Frontal bone
+Squamous part of frontal bone
+External surface of squamous part of frontal bone
+Frontal eminence
+Superciliary arch
+Glabella
+Frontal part of orbital margin
+Supra-orbital foramen
+(Supra-orbital notch)
+(Frontal notch)
+(Frontal foramen)
+Temporal surface of frontal bone
+Parietal margin of frontal bone
+Temporal line
+Zygomatic process of frontal bone
+Internal surface of squamous part of frontal bone
+Frontal crest
+Foramen caecum of frontal bone
+Nasal part of frontal bone
+Nasal spine of frontal bone
+Nasal margin of frontal bone
+Orbital part of frontal bone
+Orbital plate of frontal bone
+Orbital surface of frontal bone
+(Trochlear spine)
+Trochlear fovea
+Fossa for lacrimal gland
+Sphenoidal margin of frontal bone
+Ethmoidal notch
+Sinus of frontal bone
+Opening of frontal sinus
+Septum of frontal sinuses
+Occipital bone
+Foramen magnum
+Basilar part of occipital bone
+Pharyngeal tubercle
+Lateral part of occipital bone
+Occipital condyle
+Condylar canal
+Hypoglossal canal
+Condylar fossa
+Jugular tubercle
+Jugular notch of occipital bone
+Jugular process
+Intrajugular process of occipital bone
+Squamous part of occipital bone
+Mastoid border of occipital bone
+Lambdoidal border of occipital bone
+External occipital protuberance
+(External occipital crest)
+Supreme nuchal line
+Superior nuchal line
+Inferior nuchal line
+Occipital plane
+Cruciform eminence
+Internal occipital protuberance
+(Internal occipital crest)
+Groove for transverse sinus
+Groove for occipital sinus
+Groove for marginal sinus
+(Paramastoid process)
+Cerebral fossa
+Cerebellar fossa
+(Vermian fossa)
+Sphenoid bone
+Body of sphenoid bone
+Sphenoidal yoke
+Limbus of sphenoid
+Chiasmatic sulcus
+Sella turcica
+Tuberculum sellae
+(Middle clinoid process)
+Hypophysial fossa
+(Craniopharyngeal canal)
+Dorsum sellae
+Posterior clinoid process
+Carotid sulcus
+Sphenoidal lingula
+Sphenoidal crest
+Sphenoidal rostrum
+Sinus of sphenoid bone
+Opening of sinus of sphenoid bone
+Septum of sphenoidal sinuses
+Sphenoidal concha
+Lesser wing
+Optic canal
+Infra-optic tubercle
+Anterior clinoid process
+(Caroticoclinoid foramen)
+Crista alaris
+Greater wing
+Cerebral surface of greater wing
+Temporal surface of greater wing
+Infratemporal surface of greater wing
+Infratemporal crest
+Maxillary surface of greater wing
+Orbital surface of greater wing
+Zygomatic margin of greater wing
+Frontal margin of greater wing
+Parietal margin of greater wing
+Squamosal margin of greater wing
+Foramen rotundum
+Foramen ovale
+(Sphenoidal emissary foramen)
+Foramen spinosum
+(Foramen petrosum)
+Spine of sphenoid bone
+Sulcus of auditory tube
+Pterygoid process
+Lateral pterygoid plate
+Medial pterygoid plate
+Pterygoid notch
+Pterygoid fossa
+Scaphoid fossa
+Vaginal process of sphenoid bone
+Palatovaginal groove
+Vomerovaginal groove
+Pterygoid hamulus
+Groove of pterygoid hamulus
+Pterygoid canal
+Pterygospinous process
+Temporal bone
+Petrous part of temporal bone
+Occipital margin of temporal bone
+Mastoid process
+Mastoid antrum
+Mastoid cells
+Mastoid notch
+Groove for occipital artery
+Mastoid foramen
+Apex of petrous part
+Carotid canal
+External opening of carotid canal
+Internal opening of carotid canal
+Caroticotympanic canaliculi
+Musculotubal canal
+Semicanal for tensor tympani
+Semicanal for auditory tube
+Septum of musculotubal canal
+Anterior surface of petrous part
+Tegmen tympani
+Arcuate eminence
+Hiatus for greater petrosal nerve
+Groove for greater petrosal nerve
+Hiatus for lesser petrosal nerve
+Groove for lesser petrosal nerve
+Trigeminal impression
+Petrous ridge
+Groove for superior petrosal sinus
+Posterior surface of petrous part
+Internal acoustic opening
+Internal acoustic meatus
+Subarcuate fossa
+Vestibular canaliculus
+Opening of vestibular canal
+Posterior border of petrous part
+Jugular notch of temporal bone
+Inferior surface of petrous part
+Jugular fossa
+Cochlear canaliculus
+Opening of cochlear canaliculus
+Mastoid canaliculus
+Intrajugular process of temporal bone
+Styloid process of temporal bone
+Stylomastoid foramen
+Inferior tympanic canaliculus
+Petrosal fossula
+Bony tympanic cavity
+Facial canal
+Geniculum of facial canal
+Posterior tympanic canaliculus
+Anterior tympanic canaliculus
+Bony labyrinth
+Tympanic part of temporal bone
+Tympanic ring
+Bony external acoustic opening
+Bony external acoustic meatus
+Greater tympanic spine
+Lesser tympanic spine
+Tympanic sulcus
+Tympanic notch
+Sheath of styloid process
+Squamous part of temporal bone
+Parietal border of temporal bone
+Parietal notch
+Sphenoidal margin of temporal bone
+Temporal surface of temporal bone
+Groove for middle temporal artery
+Zygomatic process of temporal bone
+Supramastoid crest
+Suprameatal fovea
+(Suprameatal spine)
+Mandibular fossa
+Articular surface of mandibular fossa
+Articular tubercle
+Articular eminence
+Cerebral surface of squamous part of temporal bone
+Petrotympanic fissure
+Petrosquamous fissure
+Tympanosquamous fissure
+Tympanomastoid fissure
+Ethmoid bone
+Cribriform plate
+Cribriform foramina
+Crista galli
+Ala of crista galli
+Perpendicular plate of ethmoid bone
+Ethmoidal labyrinth
+Cells of ethmoid bone
+Anterior cells of ethmoid bone
+Middle cells of ethmoid bone
+Posterior cells of ethmoid bone
+Orbital plate of ethmoidal labyrinth
+(Bony supreme nasal concha)
+Bony superior nasal concha
+Bony middle nasal concha
+Bony ethmoidal bulla
+Uncinate process of ethmoid bone
+Bony ethmoidal infundibulum
+Bony semilunar hiatus
+Inferior nasal concha bone
+Lacrimal process
+Maxillary process of inferior nasal concha
+Ethmoidal process
+Lacrimal bone
+Posterior lacrimal crest
+Lacrimal groove of lacrimal bone
+Lacrimal hamulus
+Nasal bone
+Ethmoidal groove
+Nasal foramen
+Vomer
+Ala of vomer
+Vomerine groove
+Vomerine crest of choana
+Cuneiform part of vomer
+Maxilla
+Body of maxilla
+Orbital surface of maxilla
+Infra-orbital canal
+Infra-orbital groove
+Maxillary part of orbital margin
+Anterior surface of maxilla
+Infra-orbital foramen
+Canine fossa
+Nasal notch
+Anterior nasal spine
+Infratemporal surface of maxilla
+Alveolar foramina
+Posterior superior alveolar foramina
+Middle superior alveolar foramen
+Anterior superior alveolar foramen
+Alveolar canals
+Maxillary tuberosity
+Nasal surface of maxilla
+Lacrimal groove of maxilla
+Conchal crest of maxilla
+Lacrimal margin of maxilla
+Hiatus of maxilla
+Greater palatine groove of maxilla
+Sinus of maxilla
+Frontal process of maxilla
+Anterior lacrimal crest
+Lacrimal notch
+Ethmoidal crest of maxilla
+Zygomatic process of maxilla
+Palatine process
+Nasal crest of maxilla
+Incisive canals
+Palatine spines
+Palatine grooves
+Alveolar process
+Alveolar arch of maxilla
+Dental alveoli of maxilla
+Interalveolar septa of maxilla
+Interradicular septa of maxilla
+Alveolar yokes of maxilla
+Incisive foramina
+Palatine bone
+Perpendicular plate of palatine bone
+Nasal surface of perpendicular plate
+Maxillary surface of palatine bone
+Sphenopalatine notch
+Greater palatine groove of palatine bone
+Pyramidal process
+Lesser palatine canals
+Conchal crest of palatine bone
+Maxillary process of palatine bone
+Ethmoidal crest of palatine bone
+Orbital process
+Sphenoidal process
+Horizontal plate of palatine bone
+Nasal surface of horizontal plate
+Palatine surface of palatine bone
+Lesser palatine foramina
+Posterior nasal spine
+Nasal crest of palatine bone
+Palatine crest
+Zygomatic bone
+(Os japonicum)
+Lateral surface of zygomatic bone
+Temporal surface of zygomatic bone
+Orbital surface of zygomatic bone
+Temporal process of zygomatic bone bone
+Frontal process of zygomatic bone
+Orbital tubercle
+(Marginal tubercle)
+Zygomatico-orbital foramen
+Zygomaticofacial foramen
+Zygomaticotemporal foramen
+Accessory bones of cranium
+(Sutural bone)
+(Interparietal bone)
+(Premaxilla)
+Extracranial bones of head
+Mandible
+Body of mandible
+Base of mandible
+Mandibular symphysis
+Gnathion
+Mental protuberance
+Mental tubercle
+Superior mental spine
+Inferior mental spine
+Genion
+Mental foramen
+Oblique line of mandible
+Digastric fossa
+Mylohyoid line
+(Mandibular torus)
+Sublingual fossa
+Submandibular fossa
+Alveolar part of mandible
+Alveolar arch of mandible
+Dental alveoli of mandible
+Interalveolar septa of mandible
+Interradicular septa of mandible
+Alveolar yokes of mandible
+Retromolar triangle
+Retromolar fossa
+Ramus of mandible
+Angle of mandible
+Gonion
+(Masseteric tuberosity)
+(Pterygoid tuberosity)
+Inferior alveolar foramen
+Lingula of mandible
+Mandibular canal
+Mylohyoid groove
+Coronoid process of mandible
+Temporal crest
+Mandibular notch
+Condylar process
+Mandibular condyle
+Neck of mandible
+Pterygoid fovea
+Hyoid bone
+Body of hyoid bone
+Lesser horn of hyoid bone
+Greater horn of hyoid bone
+Auditory ossicles (part of skeletal system)
+Malleus
+Handle of malleus
+Head of malleus
+Articular facet of head of malleus
+Neck of malleus
+Lateral process of malleus
+Anterior process of malleus
+Incus
+Body of incus
+Articular facet for malleus
+Long limb of incus
+Lenticular process of incus
+Articular facet for stapes
+Short limb of incus
+Stapes
+Head of stapes
+Articular facet of head of stapes
+Anterior limb of stapes
+Posterior limb of stapes
+Base of stapes
+Teeth
+Maxillary dental arch
+Mandibular dental arch
+(Diastema)
+Anterior teeth
+Incisor tooth
+Upper medial incisor
+Lower medial incisor
+Upper lateral incisor
+Lower lateral incisor
+Canine tooth
+Upper canine
+Lower canine
+Posterior teeth
+Premolar tooth
+Upper first premolar
+Lower first premolar
+Upper second premolar
+Lower second premolar
+Molar tooth
+Upper first molar tooth
+Lower first molar tooth
+Upper second molar tooth
+Lower second molar tooth
+Upper third molar tooth
+Lower third molar tooth
+Deciduous teeth
+Permanent teeth
+Tooth
+Crown of tooth
+Occlusal surface of tooth
+Vestibular surface of tooth
+Labial surface of tooth
+Buccal surface of tooth
+Palatal surface of tooth
+Lingual surface of tooth
+Approximal surface of tooth
+Mesial surface of tooth
+Distal surface of tooth
+Cusp of tooth
+Neck of tooth
+Root of tooth
+Root apex
+Accessory root
+Pulp cavity
+Pulp cavity of crown
+Root canal
+Apical foramen
+Dental pulp
+Crown pulp
+Root pulp
+Dentine
+Enamel
+Nasal cartilages (part of skeletal system)
+Major alar cartilage
+Medial crus of major alar cartilage
+Mobile part of nasal septum
+Lateral crus of major alar cartilage
+Minor alar cartilages
+Accessory nasal cartilages
+Nasal septal cartilage
+Lateral process of nasal septal cartilage
+Posterior process of nasal septal cartilage
+Vomeronasal cartilage
+Cartilages of ear
+Auricular cartilage
+Spine of helix
+Tail of helix
+Isthmus of auricular cartilage
+Terminal notch of auricle
+Fissura antitragohelicina
+Groove of crus of helix
+Cartilage of external acoustic meatus (skeletal system)
+Notch in cartilage of external acoustic meatus
+Tragal lamina
+Cartilage of auditory tube
+Medial lamina of cartilage of auditory tube
+Lateral lamina of cartilage of auditory tube
+Laryngeal cartilages (part of skeletal system)
+Epiglottic cartilage
+Stalk of epiglottis
+Thyroid cartilage
+Laryngeal prominence
+Superior thyroid notch
+Inferior thyroid notch
+Lamina of thyroid cartilage
+Superior thyroid tubercle
+Inferior thyroid tubercle
+Oblique line of thyroid cartilage
+Superior horn of thyroid cartilage
+Inferior horn of thyroid cartilage
+(Thyroid foramen)
+Cricoid cartilage
+Arch of cricoid cartilage
+Lamina of cricoid cartilage
+Arytenoid articular surface
+Thyroid articular surface
+Arytenoid cartilage
+Base of arytenoid cartilage
+Articular surface of arytenoid cartilage
+Vocal process
+Muscular process
+Anterolateral surface of arytenoid cartilage
+Arcuate crest
+Colliculus of arytenoid cartilage
+Oblong fovea
+Triangular fovea
+Medial surface of arytenoid cartilage
+Posterior surface of arytenoid cartilage
+Apex of arytenoid cartilage
+Minor laryngeal cartilages
+Corniculate cartilage
+Cuneiform cartilage
+(Triticeal cartilage)
+(Sesamoid cartilage of larynx)
+Vertebral column
+Primary curvatures
+Thoracic kyphosis
+Sacral kyphosis
+Secondary curvatures
+Cervical lordosis
+Lumbar lordosis
+(Scoliosis)
+Vertebral canal
+Bones of vertebral column
+Vertebra
+Vertebral body
+Intervertebral surface
+Annular epiphysis
+Vertebral arch
+Pedicle of vertebral arch
+Lamina of vertebral arch
+Pars interarticularis of vertebral arch
+Intervertebral foramen
+Superior vertebral notch
+Inferior vertebral notch
+Vertebral foramen
+Spinous process
+Transverse process
+Lateral part of transverse process
+Costal part of transverse process
+Superior articular process of vertebra
+Superior articular facet of vertebra
+Inferior articular process of vertebra
+Inferior articular facet of vertebra
+Cervical vertebrae
+Cervical vertebra
+Uncinate process of vertebra
+Foramen transversarium
+Anterior tubercle of transverse process
+Posterior tubercle of transverse process
+Groove for spinal nerve
+Atlas (C1)
+Lateral mass
+Superior articular surface of atlas
+Inferior articular surface of atlas
+Transverse ligament tubercle
+Anterior arch of atlas
+Facet for dens
+Anterior tubercle of atlas
+Posterior arch of atlas
+Groove for vertebral artery
+(Canal for vertebral artery)
+Posterior tubercle of atlas
+Axis (C2)
+Dens axis
+Apex of dens axis
+Anterior articular facet of dens axis
+Posterior articular facet of dens axis
+Vertebra C2
+Vertebra C3
+Vertebra C4
+Vertebra C5
+Vertebra C6
+Vertebra C7
+Vertebra T1
+Vertebra T2
+Vertebra T3
+Vertebra T4
+Vertebra T5
+Vertebra T6
+Vertebra T7
+Vertebra T8
+Vertebra T9
+Vertebra T10
+Vertebra T11
+Vertebra T12
+Vertebra L1
+Vertebra L2
+Vertebra L3
+Vertebra L4
+Vertebra L5
+Carotid tubercle
+Vertebra prominens
+Thoracic vertebrae
+Thoracic vertebra
+Superior costal facet
+Inferior costal facet
+Transverse costal facet
+First thoracic vertebra
+Uncinate process of first thoracic vertebra
+Lower thoracic vertebra
+Costal facet
+Lumbar vertebrae
+Lumbar vertebra
+Accessory process
+Mamillary process
+Sacrum
+Base of sacrum
+Promontory
+Ala of sacrum
+Superior articular process of sacrum
+Lateral part of sacrum
+Auricular surface of sacrum
+Sacral tuberosity
+Pelvic surface of sacrum
+Transverse ridges
+Intervertebral foramina
+Anterior sacral foramina
+Dorsal surface of sacrum
+Median sacral crest
+Posterior sacral foramina
+Intermediate sacral crest
+Lateral sacral crest
+Sacral horn
+Sacral canal
+Sacral hiatus
+Apex of sacrum
+Coccyx
+Base of coccyx
+Coccygeal horn
+Apex of coccyx
+Thoracic skeleton
+Cavity of bony thorax
+Superior thoracic aperture
+Inferior thoracic aperture
+Pulmonary groove
+Costal arch
+Intercostal space
+Infrasternal angle
+Bones of thorax
+Ribs
+True ribs
+First rib
+Scalene tubercle
+Groove for subclavian artery
+Groove for subclavian vein
+Second rib
+Tuberosity for serratus anterior muscle
+Third rib
+Fourth rib
+Fifth rib
+Sixth rib
+Seventh rib
+Eighth rib
+Ninth rib
+Tenth rib
+Eleventh rib
+Twelfth rib
+False ribs
+Floating ribs
+Supernumerary ribs
+(Cervical rib)
+(Lumbar rib)
+Rib
+Head of rib
+Articular facets of head of rib
+Crest of head of rib
+Neck of rib
+Crest of neck of rib
+Body of rib
+Tubercle of rib
+Articular facet of tubercle of rib
+Angle of rib
+Costal groove
+Sternum
+Manubrium of sternum
+Clavicular notch
+Jugular notch of sternum
+Sternal angle
+Body of sternum
+Xiphoid process
+Costal notches
+Accessory bones of thorax
+(Suprasternal bones)
+Costal cartilages
+Costal cartilage of first rib
+Costal cartilage of second rib
+Costal cartilage of third rib
+Costal cartilage of fourth rib
+Costal cartilage of fifth rib
+Costal cartilage of sixth rib
+Costal cartilage of seventh rib
+Costal cartilage of eighth rib
+Costal cartilage of ninth rib
+Costal cartilage of tenth rib
+Bones of upper limb
+Bones of pectoral girdle
+Scapula
+Costal surface of scapula
+Subscapular fossa
+Posterior surface of scapula
+Spine of scapula
+Deltoid tubercle
+Spinoglenoid notch
+Supraspinous fossa
+Infraspinous fossa
+Acromion
+Clavicular facet
+Acromial angle
+Medial border of scapula
+Superior angle of scapula
+Superior border of scapula
+Scapular notch
+Coracoid process
+Lateral angle of scapula
+Glenoid process of scapula
+Glenoid fossa
+Supraglenoid tubercle
+Infraglenoid tubercle
+Neck of scapula
+Lateral border of scapula
+Inferior angle of scapula
+Clavicle
+Sternal end
+Sternal articular surface
+Impression for costoclavicular ligament
+Body of clavicle
+Groove for subclavius muscle
+Acromial end
+Acromial facet
+Tuberosity for coracoclavicular ligament
+Conoid tubercle
+Trapezoid line
+Bones of free part of upper limb
+Humerus
+Head of humerus
+Anatomical neck of humerus
+Surgical neck of humerus
+Greater tubercle
+Lesser tubercle
+Intertubercular sulcus
+Crest of greater tubercle
+Crest of lesser tubercle
+Body of humerus
+Anteromedial surface of humerus
+Anterior border of humerus
+Anterolateral surface of humerus
+Deltoid tuberosity
+Lateral border of humerus
+Lateral supracondylar ridge
+Posterior surface of humerus
+Radial groove
+Medial border of humerus
+Medial supracondylar ridge
+(Supracondylar process)
+Condyle of humerus
+Capitulum of humerus
+Trochlea of humerus
+Olecranon fossa
+Coronoid fossa
+Radial fossa
+Medial epicondyle of humerus
+Groove for ulnar nerve
+Lateral epicondyle of humerus
+Radius
+Head of radius
+Articular facet of head of radius
+Articular circumference of head of radius
+Neck of radius
+Body of radius
+Radial tuberosity
+Anterior surface of radius
+Interosseous border of radius
+Posterior surface of radius
+Posterior border of radius
+Lateral surface of radius
+Pronator tuberosity
+Anterior border of radius
+Suprastyloid crest
+Radial styloid process
+Dorsal radial tubercle
+Grooves for extensor tendons
+Ulnar notch
+Carpal articular surface
+Ulna
+Olecranon
+Coronoid process of ulna
+Tuberosity of ulna
+Radial notch
+Trochlear notch
+Sublime tubercle
+Body of ulna
+Supinator crest
+Anterior surface of ulna
+Interosseous border of ulna
+Posterior surface of ulna
+Posterior border of ulna
+Medial surface of ulna
+Anterior border of ulna
+Head of ulna
+Articular circumference of head of ulna
+Ulnar styloid process
+Bones of hand
+Carpal bones
+Scaphoid bone
+Tubercle of scaphoid bone
+Lunate bone
+Triquetrum bone
+Pisiform bone
+Trapezium bone
+Tubercle of trapezium bone
+Trapezoid bone
+Capitate bone
+Hamate bone
+Hook of hamate bone
+Carpal groove
+Accessory carpal bones
+(Os centrale)
+Metacarpal bones
+Metacarpal bone
+Metacarpal base
+Body of metacarpal bone
+Head of metacarpal bone
+First metacarpal bone
+Second metacarpal bone
+Third metacarpal bone
+Fourth metacarpal bone
+Fifth metacarpal bone
+Styloid process of third metacarpal bone
+Phalanges of hand
+Phalanx of hand
+Base of phalanx of hand
+Body of phalanx of hand
+Head of phalanx of hand
+Trochlea of phalanx of hand
+Proximal phalanx of hand
+Proximal phalanx of first finger of hand
+Proximal phalanx of second finger of hand
+Proximal phalanx of third finger of hand
+Proximal phalanx of fourth finger of hand
+Proximal phalanx of fifth finger of hand
+Middle phalanx of hand
+Middle phalanx of second finger of hand
+Middle phalanx of third finger of hand
+Middle phalanx of fourth finger of hand
+Middle phalanx of fifth finger of hand
+Distal phalanx of hand
+Distal phalanx of first finger of hand
+Distal phalanx of second finger of hand
+Distal phalanx of third finger of hand
+Distal phalanx of fourth finger of hand
+Distal phalanx of fifth finger of hand
+Tuberosity of distal phalanx of hand
+Sesamoid bones of hand
+Bony pelvis
+Cavity of bony pelvis
+Pubic arch
+Subpubic angle
+Greater pelvis
+Lesser pelvis
+Linea terminalis
+Pelvic inlet
+Pelvic outlet
+Axis of pelvis
+Transverse diameter
+Oblique diameter
+Conjugate diameters
+Anatomical conjugate
+Obstetrical conjugate
+Diagonal conjugate
+Straight conjugate
+Median conjugate
+External conjugate
+Interspinous distance
+Intercristal distance
+Intertrochanteric distance
+Pelvic inclination
+Bones of lower limb
+Bones of pelvic girdle
+Hip bone
+Acetabulum
+Acetabular margin
+Acetabular fossa
+Acetabular notch
+Lunate surface
+Ischiopubic ramus
+Obturator foramen
+Greater sciatic notch
+Greater sciatic foramen
+Ilium
+Body of ilium
+Supraacetabular groove
+Arcuate line of ilium
+Ala of ilium
+Iliac crest
+Outer lip of iliac crest
+Iliac tubercle
+Intermediate zone
+Inner lip of iliac crest
+Anterior superior iliac spine
+Anterior inferior iliac spine
+Posterior superior iliac spine
+Posterior inferior iliac spine
+Iliac fossa
+Gluteal surface of ilium
+Anterior gluteal line
+Posterior gluteal line
+Inferior gluteal line
+Sacropelvic surface of ilium
+Auricular surface of ilium
+Iliac tuberosity
+Ischium
+Body of ischium
+Ramus of ischium
+Ischial tuberosity
+Ischial spine
+Lesser sciatic notch
+Lesser sciatic foramen
+Pubis
+Body of pubis
+Pubic tubercle
+Symphyseal surface of pubis
+Pubic crest
+Superior pubic ramus
+Iliopubic eminence
+Pecten pubis
+Obturator crest
+Obturator groove
+Anterior obturator tubercle
+(Posterior obturator tubercle)
+Inferior pubic ramus
+Bones of free part of lower limb
+Femur
+Head of femur
+Fovea for ligament of head of femur
+Neck of femur
+Greater trochanter
+Trochanteric fossa
+Lesser trochanter
+(Third trochanter)
+Intertrochanteric line
+Intertrochanteric crest
+Quadrate tubercle
+Body of femur
+Linea aspera
+Lateral lip of linea aspera
+Medial lip of linea aspera
+Pectineal line of femur
+Gluteal tuberosity
+Popliteal surface of femur
+Medial supracondylar line
+Lateral supracondylar line
+Medial condyle of femur
+Medial epicondyle of femur
+Adductor tubercle
+Lateral condyle of femur
+Lateral epicondyle of femur
+Groove for popliteus muscle
+Patellar surface of femur
+Intercondylar fossa
+Intercondylar line
+Sesamoid bones of knee
+Patella
+Base of patella
+Apex of patella
+Articular surface of patella
+Anterior surface of patella
+(Fabella)
+(Cyamella)
+Tibia
+Tibial plateau
+Superior articular surfaces of tibia
+Articular surface of medial condyle
+Superior articular surface of lateral condyle
+Intercondylar area
+Anterior intercondylar area
+Posterior intercondylar area
+Intercondylar eminence
+Medial intercondylar tubercle
+Lateral intercondylar tubercle
+Medial condyle of tibia
+Lateral condyle of tibia
+Fibular articular facet
+Tubercle of iliotibial tract
+Body of tibia
+Tibial tuberosity
+Medial surface of tibia
+Medial border of tibia
+Posterior surface of tibia
+Soleal line
+Interosseous border of tibia
+Lateral surface of tibia
+Anterior border of tibia
+Medial malleolus
+Malleolar groove of tibia
+Articular facet of medial malleolus
+Posterior malleolus
+Fibular notch
+Inferior articular surface of tibia
+Fibula
+Head of fibula
+Articular facet of head of fibula
+Apex of head of fibula
+Neck of fibula
+Body of fibula
+Lateral surface of fibula
+Anterior border of fibula
+Medial surface of fibula
+Anteromedial surface of fibula
+Interosseous crest of fibula
+Posteromedial surface of fibula
+Medial border of fibula
+Posterior surface of fibula
+Posterior border of fibula
+Lateral malleolus
+Articular facet of lateral malleolus
+Malleolar fossa
+Malleolar groove of fibula
+Bones of foot
+Tarsal bones
+Talus
+Head of talus
+Navicular articular surface
+Facet for plantar calcaneonavicular ligament
+Facet for calcaneonavicular part of bifurcate ligament
+Anterior facet for calcaneus
+Neck of talus
+Middle facet for calcaneus
+Talar sulcus
+Body of talus
+Trochlea of talus
+Superior facet of talus
+Lateral malleolar facet
+Lateral process of talus
+Medial malleolar facet
+Posterior process of talus
+Groove for tendon of flexor hallucis longus of talus
+Lateral tubercle
+Medial tubercle
+Posterior calcaneal articular facet
+Calcaneus
+Calcaneal tuberosity
+Medial process of calcaneal tuberosity
+Lateral process of calcaneal tuberosity
+Calcaneal tubercle
+Sustentaculum tali
+Groove for tendon of flexor hallucis longus of calcaneus
+Calcaneal sulcus
+Tarsal sinus
+Anterior talar articular surface
+Middle talar articular surface
+Posterior talar articular surface
+Groove for tendon of fibularis longus muscle of calcaneus
+Fibular trochlea
+Articular surface for cuboid
+Anterior process of calcaneus
+Navicular bone
+Tuberosity of navicular bone
+Medial cuneiform bone
+Intermediate cuneiform bone
+Lateral cuneiform bone
+Cuboid bone
+Groove for tendon of fibularis longus muscle of cuboid bone
+Tuberosity of cuboid bone
+Calcaneal process
+Accessory tarsal bones
+(Os trigonum)
+Metatarsal bones
+Metatarsal bone
+Base of metatarsal bone
+Body of metatarsal bone
+Head of metatarsal bone
+First metatarsal bone
+Tuberosity of first metatarsal bone
+Second metatarsal bone
+Third metatarsal bone
+Fourth metatarsal bone
+Fifth metatarsal bone
+Tuberosity of fifth metatarsal bone
+Phalanges of foot
+Phalanx of foot
+Base of phalanx of foot
+Body of phalanx of foot
+Head of phalanx of foot
+Trochlea of phalanx of foot
+Proximal phalanx of foot
+Proximal phalanx of first finger of foot
+Proximal phalanx of second finger of foot
+Proximal phalanx of third finger of foot
+Proximal phalanx of fourth finger of foot
+Proximal phalanx of fifth finger of foot
+Middle phalanx of foot
+Middle phalanx of second finger of foot
+Middle phalanx of third finger of foot
+Middle phalanx of fourth finger of foot
+Middle phalanx of fifth finger of foot
+Distal phalanx of foot
+Distal phalanx of first finger of foot
+Distal phalanx of second finger of foot
+Distal phalanx of third finger of foot
+Distal phalanx of fourth finger of foot
+Distal phalanx of fifth finger of foot
+Tuberosity of distal phalanx of foot
+Sesamoid bones of foot
+Joints
+Joint
+Fibrous joints
+Syndesmoses
+Interosseous ligament
+Interosseous membrane
+Gomphosis
+Sutures
+Plane suture
+Limbous suture
+Serrate suture
+Denticulate suture
+Schindylesis
+Cartilaginous joints
+Synchondroses
+Symphysis
+Synostosis
+Synovial joint
+Articular cavity
+Synovial fluid
+Articular capsule
+Fibrous layer of articular capsule
+Synovial membrane of articular capsule
+Synovial fold
+Synovial villus
+Articular fibrocartilage
+Articular labrum
+Articular disc
+Meniscus
+Accessory ligaments
+Intracapsular ligament
+Capsular ligament
+Extracapsular ligament
+Articular recess
+Synarthrosis
+Amphiarthrosis
+Diarthrosis
+Simple joint
+Complex joint
+Plane joint
+Cylindrical joints
+Pivot joint
+Hinge joint
+Bicondylar joint
+Saddle joint
+Ellipsoid joint
+Ball and socket joint
+Joints of skull
+Cranial fibrous joints
+Cranial syndesmoses
+Pterygospinous ligament
+Stylohyoid ligament
+Sphenomandibular ligament
+Stylomandibular ligament
+Ligaments of auricle
+Anterior ligament of auricle
+Superior ligament of auricle
+Posterior ligament of auricle
+Cranial sutures
+Coronal suture
+Sagittal suture
+Lambdoid suture
+Occipitomastoid suture
+(Accessory occipital suture)
+Sphenofrontal suture
+Spheno-ethmoidal suture
+Sphenosquamous suture
+Sphenoparietal suture
+Squamous suture
+(Frontal suture)
+Parietomastoid suture
+(Squamomastoid suture)
+Frontonasal suture
+Fronto-ethmoidal suture
+Frontomaxillary suture
+Frontolacrimal suture
+Frontozygomatic suture
+Zygomaticomaxillary suture
+Ethmoidomaxillary suture
+Ethmoidolacrimal suture
+Sphenovomerine suture
+Sphenozygomatic suture
+Sphenomaxillary suture
+Temporozygomatic suture
+Internasal suture
+Nasomaxillary suture
+Lacrimomaxillary suture
+Lacrimoconchal suture
+Intermaxillary suture
+(Incisive suture)
+Palatomaxillary suture
+Palato-ethmoidal suture
+Median palatine suture
+Transverse palatine suture
+Dento-alveolar syndesmosis
+Periodontal ligament
+Cement
+Cranial cartilaginous joints
+Cranial synchondroses
+Spheno-occipital synchondrosis
+Sphenopetrosal synchondrosis
+Petro-occipital synchondrosis
+(Posterior intra-occipital synchondrosis)
+(Anterior intra-occipital synchondrosis)
+Spheno-ethmoidal synchondrosis
+Cranial synovial joints
+Temporomandibular joint
+Articular disc of temporomandibular joint
+Lateral temporomandibular ligament
+Medial temporomandibular ligament
+Superior synovial membrane of temporomandibular joint
+Inferior synovial membrane of temporomandibular joint
+Superior cavity of temporomandibular joint
+Inferior cavity of temporomandibular joint
+Atlanto-occipital joint
+Anterior atlanto-occipital membrane
+(Anterior atlanto-occipital ligament)
+Posterior atlanto-occipital membrane
+Lateral atlanto-occipital ligament
+Joints of auditory ossicles (part of skeletal system)
+Fibrous joints of auditory assicles
+Tympanostapedial syndesmosis
+Ligaments of auditory ossicles
+Anterior ligament of malleus
+Superior ligament of malleus
+Lateral ligament of malleus
+Superior ligament of incus
+Posterior ligament of incus
+Stapedial membrane
+Annular ligament of stapes
+Incudomallear joint
+Incudostapedial joint
+Laryngeal joints
+Fibrous joints of larynx
+Thyrohyoid membrane
+Median thyrohyoid ligament
+Lateral thyrohyoid ligament
+Ligaments of epiglottis
+Thyro-epiglottic ligament
+Hyo-epiglottic ligament
+Fibro-elastic membrane of larynx
+Quadrangular membrane
+Vestibular ligament
+Conus elasticus
+Vocal ligament
+Median cricothyroid ligament
+Cricotracheal ligament
+Synovial joints of larynx
+Cricothyroid joint
+Ceratocricoid ligament
+Crico-arytenoid joint
+Crico-arytenoid ligament
+Cricopharyngeal ligament
+Joints of vertebral column
+Fibrous joints of vertebral column
+Anterior atlantoaxial membrane
+Posterior atlantoaxial membrane
+Interspinous ligaments
+Ligamenta flava
+Intertransverse ligaments
+Supraspinous ligament
+Nuchal ligament
+Anterior longitudinal ligament
+Posterior longitudinal ligament
+Intercornual ligament
+Cartilaginous joints of vertebral column
+Intervertebral symphysis
+Intervertebral disc
+Anulus fibrosus
+Nucleus pulposus
+Lumbosacral symphysis
+Sacrococcygeal joint
+Superficial posterior sacrococcygeal ligament
+Deep posterior sacrococcygeal ligament
+Anterior sacrococcygeal ligament
+Lateral sacrococcygeal ligament
+Synovial joints of vertebral column
+Median atlanto-axial joint
+Alar ligaments
+(Transverse occipital ligament)
+Apical ligament of dens
+Anterior atlantodental ligament
+Cruciform ligament
+Longitudinal bands of cruciform ligament
+Superior longitudinal band of cruciform ligament
+Inferior longitudinal band of cruciform ligament
+Transverse ligament of atlas
+Tectorial membrane of cervical vertebral column
+Lateral atlanto-axial joint
+Uncovertebral joints
+Zygapophysial joints
+Thoracic joints
+Fibrous joints of thorax
+External intercostal membrane
+Internal intercostal membrane
+Cartilaginous joints of thorax
+Sternochondral synchondrosis of first rib
+Costochondral joints
+Cartilaginous joints of sternum
+Xiphisternal joint
+Manubriosternal joint
+(Manubriosternal synchondrosis)
+Synovial joints of thorax
+Costovertebral joints
+Joint of head of rib
+Radiate ligament of head of rib
+Intra-articular ligament of head of rib
+Costotransverse joint
+Costotransverse ligament
+Superior costotransverse ligament
+Lateral costotransverse ligament
+Lumbocostal ligament
+Costotransverse foramen
+Sternochondral joints
+Intra-articular sternochondral ligament
+Radiate sternochondral ligament
+Sternal membrane
+Xiphichondral ligaments
+Interchondral joints
+Interchondral ligaments
+Joints of upper limb
+Joints of pectoral girdle
+Fibrous joints of pectoral girdle
+Coraco-acromial ligament
+Superior transverse scapular ligament
+Inferior transverse scapular ligament
+Synovial joints of pectoral girdle
+Acromioclavicular joint
+Acromioclavicular ligament
+Articular disc of acromioclavicular joint
+Coracoclavicular ligament
+Trapezoid ligament
+Conoid ligament
+Sternoclavicular joint
+Articular disc of sternoclavicular joint
+Medial cavity of sternoclavicular joint
+Lateral cavity of sternoclavicular joint
+Anterior sternoclavicular ligament
+Posterior sternoclavicular ligament
+Costoclavicular ligament
+Interclavicular ligament
+Joints of free upper limb
+Fibrous joints of free upper limb
+Radio-ulnar syndesmoses
+Interosseous membrane of forearm
+Oblique cord
+Synovial joints of free upper limb
+Glenohumeral joint
+Glenoid labrum
+Glenohumeral ligaments
+Superior glenohumeral ligament
+Middle glenohumeral ligament
+Inferior glenohumeral ligament
+Coracohumeral ligament
+Transverse humeral ligament
+Elbow joint
+Articular capsule of elbow joint
+Humero-ulnar joint
+Humeroradial joint
+Proximal radio-ulnar joint
+Ulnar collateral ligament
+Radial collateral ligament
+Annular ligament of radius
+Quadrate ligament
+Sacciform recess of elbow joint
+Distal radio-ulnar joint
+Articular disc of distal radio-ulnar joint
+Sacciform recess of distal radio-ulnar joint
+Dorsal radio-ulnar ligament
+Palmar radio-ulnar ligament
+Radiocarpal joint
+Articular capsule of radiocarpal joint
+Dorsal radiocarpal ligament
+Palmar radiocarpal ligament
+Radioscaphocapitate ligament
+Radiocapitate ligament
+Long radiolunate ligament
+Short radiolunate ligament
+Radioscapholunate ligament
+Dorsal ulnocarpal ligament
+Palmar ulnocarpal ligament
+Ulnocapitate ligament
+Ulnolunate ligament
+Ulnotriquetral ligament
+Ulnopisiform ligament
+Ulnar collateral ligament of wrist joint
+Radial collateral ligament of wrist joint
+Joints of hand
+Intercarpal joints
+Midcarpal joint
+Radiate carpal ligament
+Dorsal intercarpal ligaments
+Dorsal scaphotriquetral ligament
+Palmar intercarpal ligaments
+Scaphotrapeziotrapezoidal ligament
+Scaphocapitate ligament
+Palmar scaphotriquetral ligament
+Triquetrocapitate ligament
+Triquetrohamate ligament
+Pisotriquetral ligament
+Palmar capitohamate ligament
+Palmar trapezoideocapitate ligament
+Palmar lunotriquetral ligament
+Interosseus intercarpal ligaments
+Scapholunate interosseous ligament
+Trapeziotrapezoidal interosseous ligament
+Capitohamate interosseous ligament
+Trapezoideocapitate interosseous ligament
+Lunotriquetral interosseous ligament
+Pisiform joint
+Pisohamate ligament
+Pisometacarpal ligament
+Carpometacarpal joints
+Dorsal carpometacarpal ligaments
+Palmar carpometacarpal ligaments
+Carpometacarpal joint of thumb
+Intermetacarpal joints
+Dorsal metacarpal ligaments
+Palmar metacarpal ligaments
+Interosseous metacarpal ligaments
+Metacarpophalangeal joints
+Articular capsules of metacarpophalangeal joints
+Collateral metacarpophalangeal ligaments
+Palmar metacarpophalangeal ligaments
+Deep transverse metacarpal ligament
+Interphalangeal joints of hand
+Proximal interphalangeal joints of hand
+Articular capsules of prox. interphalangeal joints of hand
+Distal interphalangeal joints of hand
+Articular capsules of distal interphalangeal joints of hand
+Interphalangeal joint of thumb
+Collateral interphalangeal ligaments of hand
+Palmar interphalangeal ligaments
+Joints of lower limb
+Joints of pelvic girdle
+Fibrous joints of pelvic girdle
+Obturator membrane
+Obturator canal
+Sacrotuberous ligament
+Falciform process
+Sacrospinous ligament
+Iliolumbar ligament
+Cartilaginous joints of pelvic girdle
+Pubic symphysis
+Interpubic disc
+Superior pubic ligament
+Inferior pubic ligament
+Triradiate cartilage
+Synovial joints of pelvic girdle
+Sacro-iliac joint
+Anterior sacro-iliac ligament
+Interosseous sacro-iliac ligament
+Posterior sacro-iliac ligament
+Joints of free lower limb
+Fibrous joints of free lower limb
+Interosseous membrane of leg
+Tibiofibular syndesmosis
+Anterior tibiofibular ligament
+Posterior tibiofibular ligament
+Transverse tibiofibular ligament
+Synovial joints of free lower limb
+Hip joint
+Zona orbicularis
+Iliofemoral ligament
+Transverse part of iliofemoral ligament
+Descending part of iliofemoral ligament
+Ischiofemoral ligament
+Pubofemoral ligament
+Acetabular labrum
+Transverse acetabular ligament
+Ligament of head of femur
+Knee joint
+Articular capsule of knee joint
+Patellar part of knee joint
+Lateral meniscus
+Anterior meniscofemoral ligament
+Posterior meniscofemoral ligament
+Medial meniscus
+Transverse ligament of knee
+Anterior cruciate ligament
+Posterior cruciate ligament
+Infrapatellar synovial fold
+Alar folds
+Ligamentum mucosum
+Fibular collateral ligament
+Tibial collateral ligament
+Superficial part of tibial collateral ligament
+Deep part of tibial collateral ligament
+Oblique popliteal ligament
+Arcuate popliteal ligament
+Lateral meniscotibial ligament
+Medial meniscotibial ligament
+Medial patellofemoral ligament
+Meniscopatellar ligament
+Patellotibial ligament
+Popliteofibular ligament
+Fabellofibular ligament
+Infrapatellar fat pad
+Superior tibiofibular joint
+Anterior ligament of fibular head
+Posterior ligament of fibular head
+Ankle joint
+Medial collateral ligament of ankle
+Tibionavicular ligament
+Tibiocalcaneal ligament
+Anterior tibiotalar ligament
+Posterior tibiotalar ligament
+Lateral collateral ligament of ankle
+Anterior talofibular ligament
+Posterior talofibular ligament
+Calcaneofibular ligament
+Joints of foot
+Intertarsal joints
+Subtalar joint
+Lateral talocalcaneal ligament
+Medial talocalcaneal ligament
+Posterior talocalcaneal ligament
+Talocalcaneal interosseous ligament
+Anterior talocalcaneal ligament
+Transverse tarsal joint
+Bifurcate ligament
+Calcaneonavicular ligament
+Calcaneocuboid ligament
+Long plantar ligament
+Talocalcaneonavicular joint
+Talonavicular ligament
+Plantar calcaneonavicular ligament
+Calcaneocuboid joint
+Dorsal calcaneocuboid ligament
+Plantar calcaneocuboid ligament
+Cuneonavicular joint
+Dorsal cuneonavicular ligaments
+Plantar cuneonavicular ligaments
+Cuneocuboid joint
+Cuneocuboid interosseous ligament
+Dorsal cuneocuboid ligament
+Plantar cuneocuboid ligament
+Cuboideonavicular joint
+Dorsal cuboideonavicular ligament
+Plantar cuboideonavicular ligament
+Intercuneiform joints
+Intercuneiform interosseous ligaments
+Dorsal intercuneiform ligaments
+Plantar intercuneiform ligaments
+Tarsometatarsal joints
+Dorsal tarsometatarsal ligaments
+Plantar tarsometatarsal ligaments
+Cuneometatarsal interosseous ligaments
+Intermetatarsal joints
+Metatarsal interosseous ligaments
+Dorsal metatarsal ligaments
+Plantar metatarsal ligaments
+Intersesamoid ligament
+Metatarsophalangeal joints
+Collateral metatarsophalangeal ligaments
+Plantar metatarsophalangeal ligaments
+Deep transverse metatarsal ligament
+Interphalangeal joints of foot
+Proximal interphalangeal joints of foot
+Distal interphalangeal joints of foot
+Interphalageal joint of great toe
+Collateral interphalangeal ligaments of foot
+Plantar interphalangeal ligaments
+Muscular system
+Muscles
+Skeletal muscle
+Striated cutaneous muscle
+Striated visceral muscle
+Fusiform muscle
+Flat muscle
+Straight muscle
+Triangular muscle
+Quadrate muscle
+Two-bellied muscle
+Two-headed muscle
+Three-headed muscle
+Four-headed muscle
+Unipennate muscle
+Bipennate muscle
+Multipennate muscle
+Orbicular muscle
+Sphincter muscle
+Dilator muscle
+Muscle
+Head of muscle
+Belly of muscle
+Attachment
+Superior attachment
+Inferior attachment
+Medial attachment
+Lateral attachment
+Proximal attachment
+Distal attachment
+Fixed end
+Mobile end
+Muscle fascicle
+Endomysium
+Perimysium
+Epimysium
+Tendon
+Intermediate tendon
+Aponeurosis
+Tendinous arch
+Muscular trochlea
+Fasciae
+Fasciae of muscles
+Investing fascia
+Fascia of individual muscle
+Intermuscular septum
+Compartment
+Retinaculum
+Fasciae of body cavities
+Parietal fascia
+Visceral fascia
+Extraperitoneal fascia
+Extraperitoneal ligament
+Synovial bursae
+Synovial bursa
+Fibrous layer of synovial bursa
+Synovial layer of synovial bursa
+Subcutaneous bursa
+Submuscular bursa
+Subfascial bursa
+Subtendinous bursa
+Tendon sheaths
+Fibrous sheath
+Synovial sheath
+Vinculum tendinis
+Cranial part of muscular system
+Muscles of head
+Extra-ocular muscles
+Superior rectus muscle
+Inferior rectus muscle
+Medial rectus muscle
+Lateral rectus muscle
+Check ligament of lateral rectus muscle
+Common tendinous ring
+Superior oblique muscle
+Trochlea of superior oblique muscle
+Tendon sheath of superior oblique muscle
+Inferior oblique muscle
+Levator palpebrae superioris
+Superficial muscles of head
+Epicranius muscle
+Occipitofrontalis muscle
+Frontalis muscle
+Occipitalis muscle
+Temporoparietalis muscle
+Epicranial aponeurosis
+Facial muscles
+Procerus muscle
+Nasalis muscle
+Transverse part of nasalis
+Alar part of nasalis muscle
+Depressor septi nasi
+Orbicularis oculi muscle
+Palpebral part of orbicularis oculi
+Ciliary bundle of orbicularis oculi
+Deep palpebral part of orbicularis oculi muscle
+Orbital part of orbicularis oculi
+Corrugator supercilii
+Depressor supercilii
+Orbicularis oris muscle
+Marginal part of orbicularis oris muscle
+Labial part of orbicularis oris muscle
+Depressor anguli oris
+Transversus menti muscle
+Risorius muscle
+Zygomaticus major muscle
+Zygomaticus minor muscle
+Levator labii superioris
+Levator nasolabialis
+Depressor labii inferioris
+Levator anguli oris
+Modiolus of angulus oris
+Bucinator
+Mentalis muscle
+Extrinsic auricular muscles
+Auricularis anterior muscle
+Auricularis superior muscle
+Auricularis posterior muscle
+Intrinsic auricular muscles
+Helicis major muscle
+Helicis minor muscle
+Tragicus muscle
+(Muscle of terminal notch)
+Pyramidal muscle of auricle
+Antitragicus muscle
+Transverse muscle of auricle
+Oblique muscle of auricle
+Muscles of auditory ossicles
+Tensor tympani
+Stapedius muscle
+Masticatory muscles
+Masseter
+Superficial part of masseter
+Deep part of masseter
+Temporalis muscle
+Lateral pterygoid muscle
+Superior head of lateral pterygoid muscle
+Inferior head of lateral pterygoid muscle
+(Pterygoideus proprius muscle)
+Medial pterygoid muscle
+Deep head of medial pterygoid muscle
+Superficial head of medial pterygoid muscle
+Muscles of tongue
+Genioglossus muscle
+Hyoglossus muscle
+Chondroglossus muscle
+Ceratoglossus muscle
+Styloglossus muscle
+Superior longitudinal lingual muscle
+Inferior longitudinal lingual muscle
+Transversus linguae muscle
+Verticalis linguae muscle
+Muscles of soft palate (part of muscular system)
+Palatine aponeurosis
+Levator veli palatini
+Tensor veli palatini
+Musculus uvulae
+Palatoglossus muscle
+Palatopharyngeus muscle
+Anterior fascicle of palatopharyngeus muscle
+Posterior fascicle of palatopharyngeus muscle
+Fasciae of head
+Masseteric fascia
+Parotid fascia
+Temporal fascia
+Superficial layer of temporal fascia
+Deep layer of temporal fascia
+Buccal fat pad
+Juxta-oral organ
+Bursae of head
+Bursa of tensor veli palatini
+Cervical part of muscular system
+Muscles of neck
+Platysma
+Longus colli muscle
+Longus capitis muscle
+Rectus anterior capitis muscle
+Rectus lateralis capitis muscle
+Scalenus anterior muscle
+Scalenus medius muscle
+Scalenus posterior muscle
+(Scalenus minimus muscle)
+Sternocleidomastoid muscle
+Sternal head of sternocleidomastoid muscle
+Clavicular head of sternocleidomastoid muscle
+Suprahyoid muscles
+Digastric muscle
+Anterior belly of digastric muscle
+Intermediate tendon of digastric muscle
+Posterior belly of digastric muscle
+Stylohyoid muscle
+Mylohyoid muscle
+Geniohyoid muscle
+Infrahyoid muscles
+Sternohyoid muscle
+Omohyoid muscle
+Superior belly of omohyoid
+Intermediate tendon of omohyoid
+Inferior belly of omohyoid muscle
+Sternothyroid muscle
+Thyrohyoid muscle
+(Levator glandulae thyroideae)
+Pharyngeal muscles
+Pharyngeal raphe
+Pterygomandibular raphe
+Superior pharyngeal constrictor
+Pterygopharyngeal part of superior pharyngeal constrictor
+Buccopharyngeal part of superior pharyngeal constrictor
+Mylopharyngeal part of superior pharyngeal constrictor
+Glossopharyngeal part of superior pharyngeal constrictor
+Middle pharyngeal constrictor
+Chondropharyngeal part of middle pharyngeal constrictor
+Ceratopharyngeal part of middle pharyngeal constrictor
+Inferior pharyngeal constrictor
+Thyropharyngeal part of inferior pharyngeal constrictor
+Cricopharyngeal part of inferior pharyngeal constrictor
+Stylopharyngeus muscle
+Salpingopharyngeus muscle
+Laryngeal muscles
+Cricothyroid muscle
+Straight part of cricothyroid muscle
+Oblique part of cricothyroid muscle
+Posterior crico-arytenoid muscle
+(Ceratocricoid muscle)
+Lateral crico-arytenoid muscle
+Thyro-arytenoid muscle
+External part of thyro-arytenoid muscle
+Thyro-epiglottic part of thyro-arytenoid muscle
+Vocalis muscle
+Oblique arytenoid muscle
+Ary-epiglottic part of oblique arytenoid muscle
+Transverse arytenoid muscle
+Cervical fasciae
+Superficial investing cervical fascia
+Suprasternal space
+Fascia of infrahyoid muscles
+Visceral cervical fascia
+Buccopharyngeal fascia
+Pretracheal fascia
+Suspensory ligament of thyroid gland
+Carotid sheath
+Deep investing cervical fascia
+Prevertebral fascia
+Alar fascia
+Scalene fascia
+Nuchal fascia
+Cervical bursae
+Subcutaneous bursa of laryngeal prominence
+Infrahyoid bursa
+Retrohyoid bursa
+Dorsal part of muscular system
+Hypaxial muscles of back
+Trapezius muscle
+Descending part of trapezius muscle
+Transverse part of trapezius muscle
+Ascending part of trapezius muscle
+(Transversus nuchae muscle)
+Latissimus dorsi muscle
+Rhomboid major muscle
+Rhomboid minor muscle
+Levator scapulae
+Serratus posterior inferior muscle
+Serratus posterior superior muscle
+Anterior intertransversarii colli muscles
+Lateral posterior intertransversarii colli muscles
+Lateral intertransversarii lumborum muscles
+Dorsal parts of lateral intertransversarii lumborum muscles
+Ventral parts of lateral intertransversarii lumborum muscles
+Thoracolumbar fascia
+Posterior layer of thoracolumbar fascia
+Thoracolumbar aponeurosis
+Middle layer of thoracolumbar fascia
+Anterior layer of thoracolumbar fascia
+Epaxial muscles
+Suboccipital muscles
+Rectus posterior major capitis muscle
+Rectus posterior minor capitis muscle
+Obliquus superior capitis muscle
+Obliquus inferior capitis muscle
+Suboccipital triangle
+Erector spinae
+Erector spinae aponeurosis
+Intermuscular septum of erector
+Iliocostalis muscles
+Iliocostalis lumborum muscle
+Iliocostalis thoracis muscle
+Iliocostalis colli muscle
+Longissimus muscles
+Longissimus thoracis muscle
+Lumbar part of longissimus thoracis muscle
+Longissimus colli muscle
+Longissimus capitis muscle
+Spinalis muscles
+Spinalis thoracis muscle
+Spinalis colli muscle
+Spinalis capitis muscle
+Spinotransversales muscles
+Splenius muscles
+Splenius capitis muscle
+Splenius colli muscle
+Transversospinal muscles
+Multifidus muscles
+Multifidus lumborum muscle
+Multifidus thoracis muscle
+Multifidus colli muscle
+Semispinalis muscles
+Semispinalis thoracis muscle
+Semispinalis colli muscle
+Semispinalis capitis muscle
+Rotatores
+(Rotatores lumborum)
+Rotatores thoracis
+Long rotatores
+Short rotatores
+(Rotatores colli)
+Interspinales muscles
+Interspinales lumborum muscles
+Interspinales thoracis muscles
+Interspinales colli muscles
+Intertransversarii muscles
+Medial intertransversarii lumborum muscles
+Thoracic intertransversarii muscles
+Medial posterior intertransversarii colli muscles
+Thoracic part of muscular system
+Muscles of thorax
+(Sternalis muscle)
+Pectoralis major muscle
+Clavicular head of pectoralis major muscle
+Sternocostal head of pectoralis major muscle
+(Abdominal part of pectoralis major muscle)
+Pectoralis minor muscle
+Subclavius muscle
+Serratus anterior muscle
+Levatores costarum
+Levatores longi costarum
+Levatores breves costarum
+External intercostal muscles
+Internal intercostal muscles
+Innermost intercostal muscles
+Subcostal muscles
+Transversus thoracis muscle
+Fasciae of thorax
+Pectoral fascia
+Clavipectoral fascia
+Costocoracoid ligament
+Costocoracoid membrane
+Suspensory ligament of axilla
+Thoracic fascia
+Endothoracic fascia
+Suprapleural membrane
+Phrenicopleural fascia
+Superior phrenico-oesophageal ligament
+Diaphragm
+Right hemidiaphragm
+Left hemidiaphragm
+Muscle of right hemidiaphragm
+Right lumbar part of diaphragm
+Right crus of diaphragm
+Right hiatus for thoracic splanchnic nerves
+Right medial arcuate ligament
+Right lateral arcuate ligament
+Right costal part of diaphragm
+Right sternal part of diaphragm
+Right sternocostal triangle
+Right lumbocostal triangle
+Central tendon
+Caval foramen
+Aortic hiatus
+Median arcuate ligament
+Oesophageal hiatus
+Muscle of left hemidiaphragm
+Left lumbar part of diaphragm
+Left crus of diaphragm
+Left hiatus for thoracic splanchnic nerves
+Left medial arcuate ligament
+Left lateral arcuate ligament
+Left costal part of diaphragm
+Left sternal part of diaphragm
+Left sternocostal triangle
+Left lumbocostal triangle
+Abdominal part of muscular system
+Muscles of abdomen
+Rectus abdominis muscle
+Tendinous intersections
+Rectus sheath
+Anterior layer of rectus sheath
+Posterior layer of rectus sheath
+Arcuate line of rectus sheath
+Pyramidalis muscle
+External abdominal oblique muscle
+Inguinal ligament
+Lacunar ligament
+Pectineal ligament
+Reflected inguinal ligament
+Superficial inguinal ring
+Medial crus of superficial inguinal ring
+Lateral crus of superficial inguinal ring
+Intercrural fibres
+Internal abdominal oblique muscle
+Cremaster
+Transversus abdominis muscle
+Inguinal falx
+Linea alba
+Umbilical ring
+Posterior attachment of linea alba
+Semilunar line
+Inguinal canal
+Quadratus lumborum muscle
+Fasciae of abdomen
+Investing abdominal fascia
+Endo-abdominal fascia
+Iliopsoas fascia
+Psoas fascia
+Iliac fascia
+Transversalis fascia
+Deep inguinal ring
+Interfoveolar ligament
+Iliopubic tract
+Umbilical fascia
+Diaphragmatic fascia
+Inferior phrenico-oesophageal ligament
+Pelvic part of muscular system
+Muscles of pelvis
+Perineal body
+Postanal septum
+Raphe of pelvic diaphragm
+Anococcygeal ligament
+Pelvic diaphragm
+Levator ani
+Iliococcygeus muscle
+Pubococcygeus muscle
+Pubo-analis muscle
+Puboperinealis muscle
+Puboprostaticus muscle
+Pubovaginalis muscle
+Urogenital hiatus
+Anorectal hiatus
+Coccygeus muscle
+Perineal muscles
+Muscles of urogenital triangle
+Superficial perineal space
+Superficial transverse perineal muscle
+Ischiocavernosus muscle
+Bulbospongiosus muscle
+Deep perineal space
+Deep transverse perineal muscle
+Male external urethral sphincter (part of muscular system)
+Female external urethral sphincter (muscular system)
+Compressor urethrae
+Sphincter urethrovaginalis
+Muscle of anal triangle
+External anal sphincter
+Subcutaneous part of external anal sphincter
+Superficial part of external anal sphincter
+Deep part of external anal sphincter
+Pelvic fasciae
+Parietal pelvic fascia
+Obturator fascia
+Supradiaphragmatic part of obturator fascia
+Tendinous arch of levator ani
+Infradiaphragmatic part of obturator fascia
+Pudendal canal
+Piriformis fascia
+Superior fascia of pelvic diaphragm
+Tendinous arch of pelvic fascia
+Inferior fascia of pelvic diaphragm
+Presacral fascia
+Rectosacral fascia
+Perineal fascia
+Perineal membrane
+Transverse perineal ligament
+Ischio-anal fossa
+Fat body of ischio-anal fossa
+Anterior recess of ischio-anal fossa
+Muscular system of upper limb
+Muscles of upper limb
+Scapulohumeral muscles
+Deltoid muscle
+Clavicular part of deltoid muscle
+Acromial part of deltoid muscle
+Scapular spinal part of deltoid muscle
+Rotator cuff muscles
+Supraspinatus muscle
+Infraspinatus muscle
+Teres minor muscle
+Subscapularis muscle
+Musculotendinous cuff
+Teres major muscle
+Anterior compartment of arm
+Biceps brachii muscle
+Long head of biceps brachii
+Short head of biceps brachii
+Bicipital aponeurosis
+Coracobrachialis muscle
+Brachialis muscle
+Posterior compartment of arm
+Triceps brachii muscle
+Long head of triceps brachii
+Lateral head of triceps brachii
+Medial head of triceps brachii
+Articularis cubiti muscle
+Anterior compartment of forearm
+Superficial part of anterior compartment of forearm
+Pronator teres
+Superficial head of pronator teres
+Deep head of pronator teres
+Flexor carpi radialis
+Palmaris longus muscle
+Flexor carpi ulnaris
+Humeral head of flexor carpi ulnaris
+Ulnar head of flexor carpi ulnaris
+Flexor digitorum superficialis
+Humero-ulnar head of flexor digitorum superficialis
+Radial head of flexor digitorum superficialis
+Common flexor tendon
+Deep part of anterior compartment of forearm
+Flexor digitorum profundus
+Flexor pollicis longus
+Pronator quadratus
+Posterior compartment of forearm
+Superficial part of posterior compartment of forearm
+Brachioradialis muscle
+Extensor carpi radialis longus
+Common extensor tendon
+Extensor carpi radialis brevis
+Extensor digitorum
+Intertendinous connections
+Extensor expansion of hand
+Extensor hood
+Central band of extensor expansion of hand
+Collateral bands of extensor expansion of hand
+Extensor digiti minimi
+Extensor carpi ulnaris
+Humeral head of extensor carpi ulnaris
+Ulnar head of extensor carpi ulnaris
+Anconeus muscle
+Deep part of posterior compartment of forearm
+Supinator
+Humeral head of supinator
+Ulnar head of supinator
+Extensor indicis
+Extensor pollicis longus
+Abductor pollicis longus
+Extensor pollicis brevis
+Muscles of hand
+Palmaris brevis muscle
+Abductor pollicis brevis
+Flexor pollicis brevis
+Superficial head of flexor pollicis brevis
+Deep head of flexor pollicis brevis
+Opponens pollicis muscle
+Adductor pollicis
+Oblique head of adductor pollicis
+Transverse head of adductor pollicis
+Abductor digiti minimi of hand
+Flexor digiti minimi of hand
+Opponens digiti minimi muscle of hand
+Lumbrical muscles of hand
+Dorsal interossei muscles of hand
+Palmar interossei muscles
+(Pollical palmar interosseus muscle)
+Fasciae of upper limb
+Axillary fascia
+Supraspinatus fascia
+Infraspinatus fascia
+Deltoid fascia
+Brachial fascia
+Medial intermuscular septum of arm
+Lateral intermuscular septum of arm
+Antebrachial fascia
+Palmar carpal ligament
+Extensor retinaculum of wrist
+Dorsal fascia of hand
+Superficial transverse metacarpal ligament
+Palmar aponeurosis
+Flexor retinaculum of wrist
+Carpal tunnel
+Ulnar canal
+Tendinous chiasm
+Bursae of upper limb
+Subtendinous bursa of trapezius muscle
+(Subcutaneous acromial bursa)
+Subacromial bursa
+Subdeltoid bursa
+(Coracobrachial bursa)
+Subtendinous bursa of infraspinatus muscle
+Subtendinous bursa of subscapularis muscle
+Subtendinous bursa of teres major muscle
+Subtendinous bursa of latissimus dorsi muscle
+Subcutaneous olecranon bursa
+(Intratendinous olecranon bursa)
+Subtendinous bursa of triceps brachii muscle
+Bicipitoradial bursa
+(Interosseous cubital bursa)
+Tendon sheaths of upper limb
+Intertubercular tendon sheath
+Carpal tendon sheaths
+Palmar carpal tendon sheaths
+Tendon sheath of flexor pollicis longus
+Tendon sheath of flexor carpi radialis
+Common flexor tendon sheath
+Dorsal carpal tendon sheaths
+Tendon sheath-abductor longus and extensor pollicis brevis
+Tendon sheath of extensor carpi radialis
+Tendon sheath of extensor digiti minimi of the hand
+Tendon sheath of extensor carpi ulnaris
+Tendon sheaths of digits of hand
+Fibrous sheaths of digits of hand
+Annular part of fibrous sheath
+Cruciform part of fibrous sheath
+Synovial sheaths of digits of hand
+Vincula tendinum of hand
+Vinculum longum
+Vinculum breve
+Muscular system of lower limb
+Muscles of lower limb
+Iliopsoas muscle
+Iliacus muscle
+Psoas major
+Psoas minor
+Superficial gluteal muscles
+Gluteus maximus muscle
+Gluteus medius muscle
+Gluteus minimus muscle
+Guteal aponeurosis
+Tensor fasciae latae
+Deep gluteal muscles
+Piriformis muscle
+Obturator internus
+Superior gemellus muscle
+Inferior gemellus muscle
+Quadratus femoris muscle
+Anterior compartment of thigh
+Sartorius muscle
+Adductor canal
+Pes anserinus
+Quadriceps femoris muscle
+Rectus femoris muscle
+Straight head of rectus femoris
+Reflected head of rectus femoris
+(Third head of rectus femoris)
+Vastus lateralis muscle
+Vastus intermedius muscle
+Vastus medialis muscle
+Tendon of quadriceps femoris muscle
+Patellar ligament
+Medial patellar retinaculum
+Lateral patellar retinaculum
+Articularis genus muscle
+Medial compartment of thigh
+Pectineus muscle
+Adductor longus
+Adductor brevis
+Adductor magnus
+Adductor part of adductor magnus
+(Adductor minimus)
+Ischiocondylar part of adductor magnus
+Adductor hiatus
+Gracilis muscle
+Obturator externus
+Posterior compartment of thigh
+Biceps femoris muscle
+Long head of biceps femoris
+Short head of biceps femoris
+Semitendinosus muscle
+Semimembranosus muscle
+Anterior compartment of leg
+Tibialis anterior muscle
+Extensor digitorum longus
+Extensor expansion of foot
+Central band of extensor expansion of foot
+Collateral bands of extensor expansion of foot
+Fibularis tertius muscle
+Extensor hallucis longus
+Lateral compartment of leg
+Fibularis longus muscle
+Fibularis brevis muscle
+Posterior compartment of leg
+Superficial part of posterior compartment of leg
+Triceps surae muscle
+Gastrocnemius muscle
+Lateral head of gastrocnemius
+Medial head of gastrocnemius
+Soleus muscle
+Tendinous arch of soleus muscle
+Calcaneal tendon
+Plantaris muscle
+Deep part of posterior compartment of leg
+Popliteus muscle
+Tibialis posterior muscle
+Flexor digitorum longus
+Flexor hallucis longus
+Muscles of foot
+Extensor hallucis brevis
+Extensor digitorum brevis
+Abductor hallucis
+Flexor hallucis brevis
+Medial head of flexor hallucis brevis
+Lateral head of flexor hallucis brevis
+Adductor hallucis
+Oblique head of adductor hallucis
+Transverse head of adductor hallucis
+Abductor digiti minimi of foot
+(Abductor of fifth metatarsal)
+(Opponens digiti minimi muscle of foot)
+Flexor digiti minimi of foot
+Flexor digitorum brevis
+Quadratus plantae muscle
+Lumbrical muscles of foot
+Dorsal interossei muscles of foot
+Plantar interossei muscles
+Fasciae of lower limb
+Fascia lata
+Iliotibial tract
+Lateral femoral intermuscular septum
+Medial femoral intermuscular septum
+Vasto-adductor membrane
+Muscular space
+Iliopectineal arch
+Vascular space
+Femoral sheath
+Femoral canal
+Femoral ring
+Femoral septum
+Saphenous hiatus
+Falciform margin of saphenous hiatus
+Superior horn of falciform margin
+Inferior horn of falciform margin
+Cribriform fascia
+Popliteal fascia
+Crural fascia
+Anterior intermuscular septum of leg
+Posterior intermuscular septum of leg
+Transverse intermuscular septum of leg
+Superior extensor retinaculum of ankle
+Inferior extensor retinaculum of ankle
+Flexor retinaculum of ankle
+Superior fibular retinaculum
+Inferior fibular retinaculum
+Dorsal fascia of foot
+Plantar aponeurosis
+Calcaneometatarsal ligament
+Transverse fascicles of plantar aponeurosis
+Superficial transverse metatarsal ligament
+Bursae of lower limb
+Subcutaneous trochanteric bursa
+Trochanteric bursa of gluteus maximus muscle
+Trochanteric bursae of gluteus medius muscle
+Trochanteric bursa of gluteus minimus muscle
+Bursa of piriformis muscle
+Sciatic bursa of obturator internus
+Subtendinous bursa of obturator internus
+Intermuscular gluteal bursae
+Sciatic bursa of gluteus maximus muscle
+(Iliopectineal bursa)
+Subtendinous bursa of iliacus muscle
+Superior bursa of biceps femoris muscle
+Subcutaneous prepatellar bursa
+Subfascial prepatellar bursa
+Subtendinous prepatellar bursa
+Suprapatellar bursa
+Subcutaneous infrapatellar bursa
+Deep infrapatellar bursa
+Subcutaneous bursa of tuberosity of tibia
+Subtendinous bursa of sartorius muscle
+Anserine bursa
+Inferior subtendinous bursa of biceps femoris muscle
+Subpopliteal recess
+Lateral subtendinous bursa of gastrocnemius muscle
+Medial subtendinous bursa of gastrocnemius muscle
+Semimembranosus bursa
+Subcutaneous bursa of lateral malleolus
+Subcutaneous bursa of medial malleolus
+Subtendinous bursa of tibialis anterior
+Subcutaneous calcaneal bursa
+Subtendinous calcaneal bursa
+Tendon sheaths of lower limb
+Anterior tarsal tendon sheaths
+Tendon sheath of tibialis anterior muscle
+Tendon sheath of extensor hallucis longus
+Tendon sheath of extensor digitorum longus
+Tibial tarsal tendon sheaths
+Tendon sheath of flexor digitorum longus
+Tendon sheath of tibialis posterior muscle
+Tendon sheath of flexor hallucis longus
+Fibular tarsal tendon sheaths
+Common tendon sheath of fibularis muscles
+Plantar tendon sheath of fibularis longus muscle
+Tendon sheaths of toes
+Fibrous sheaths of toes
+Annular part of fibrous sheath of digit of foot
+Cruciform part of fibrous sheath of digit of foot
+Synovial sheaths of toes
+Vincula tendinum of foot
+Visceral systems
+Digestive system
+Lips
+Internal surface of cheek
+Papilla of parotid duct
+Palate
+Hard palate
+Soft palate
+Uvula of palate
+Palatine raphe
+Transverse palatine folds
+Incisive papilla
+Mucosa of mouth
+Frenulum of upper lip
+Frenulum of lower lip
+Sublingual caruncle
+Sublingual fold
+Gingiva
+Gingival margin
+Gingival papilla
+Gingival sulcus
+Oral cavity
+Oral opening
+Oral vestibule
+Oral cavity proper
+Salivary glands
+Major salivary glands
+Parotid gland
+Superficial part of parotid gland
+Deep part of parotid gland
+Glenoid process of parotid gland
+Pterygoid process of parotid gland
+Parotid duct
+(Accessory parotid gland)
+Sublingual gland
+Major sublingual duct
+Minor sublingual ducts
+Submandibular gland
+Submandibular duct
+Minor salivary glands
+Labial glands
+Buccal glands
+Molar glands
+Palatine glands
+Lingual glands
+Teeth (part of digestive system)
+Periodontium
+Tongue
+Body of tongue
+Root of tongue
+Apex of tongue
+Dorsum of tongue
+Anterior part of tongue
+Terminal sulcus of tongue
+Posterior part of tongue
+Foramen caecum of tongue
+(Thyroglossal duct)
+Lingual tonsil
+Median sulcus of tongue
+Margin of tongue
+Inferior surface of tongue
+Fimbriated fold
+Mucosa of tongue
+Lingual frenulum
+Lingual papillae
+Filiform papillae
+Fungiform papillae
+Vallate papillae
+Foliate papillae
+Lingual septum
+Lingual aponeurosis
+Fauces
+Isthmus of fauces
+Palatoglossal arch
+(Triangular fold)
+Palatopharyngeal arch
+(Semilunar fold)
+Tonsillar fossa
+Supratonsillar fossa
+Palatine tonsil
+Muscles of soft palate
+Pharynx
+Submucosa of pharynx
+Pharyngobasilar fascia
+Mucosa of pharynx
+Pharyngeal glands
+Cavity of pharynx
+Nasopharynx
+Vault of pharynx
+Pharyngeal hypophysis
+Pharyngeal tonsil
+(Pharyngeal bursa)
+Pharyngeal opening of auditory tube
+Torus tubarius
+Salpingopharyngeal fold
+Salpingopalatine fold
+Torus levatorius
+Tubal tonsil
+Pharyngeal recess
+Palatopharyngeal ridge
+Oropharynx
+Epiglottic vallecula
+Median glosso-epiglottic fold
+Lateral glosso-epiglottic fold
+Laryngopharynx
+Piriform recess
+Fold of superior laryngeal nerve
+Pharyngo-oesophageal constriction
+Peripharyngeal space
+Retropharyngeal space
+Parapharyngeal space
+Digestive canal
+Oesophagus
+Adventitia of oesophagus
+Muscular layer of oesophagus
+Crico-oesophageal tendon
+Submucosa of oesophagus
+Mucosa of oesophagus
+Oesophageal glands
+Cervical part of oesophagus
+Thoracic part of oesophagus
+Broncho-aortic constriction
+Diaphragmatic constriction
+Abdominal part of oesophagus
+Serosa of oesophagus
+Subserosa of oesophagus
+Stomach
+Anterior wall of stomach
+Posterior wall of stomach
+Greater curvature of stomach
+Lesser curvature of stomach
+Angular incisure
+Serosa of stomach
+Subserosa of stomach
+Muscular layer of stomach
+Longitudinal muscular layer of stomach
+Circular muscular layer of stomach
+Oblique muscle fibres of stomach
+Submucosa of stomach
+Mucosa of stomach
+Gastric folds
+Gastric areas
+Villous folds
+Gastric pits
+Gastric glands
+Cardia
+Cardiac orifice
+Fundus of stomach
+Fornix of stomach
+Cardiac notch
+Body of stomach
+Gastric canal
+Pyloric part
+Pyloric antrum
+Pyloric canal
+Pylorus
+Pyloric sphincter
+Pyloric orifice
+Small intestine
+Serosa of small intestine
+Subserosa of small intestine
+Muscular layer of small intestine
+Longitudinal muscular layer of small intestine
+Circular muscular layer of small intestine
+Submucosa of small intestine
+Mucosa of small intestine
+Intestinal villi
+Crypts of small intestine
+Circular folds
+Duodenum
+Superior part of duodenum
+Duodenal bulb
+Superior duodenal flexure
+Descending part of duodenum
+Inferior duodenal flexure
+Horizontal part of duodenum
+Ascending part of duodenum
+Duodenojejunal flexure
+Hidden part of duodenum
+Longitudinal fold of duodenum
+Major duodenal papilla
+Minor duodenal papilla
+Duodenal glands
+Jejunum
+Ileum
+Aggregated lymphoid nodules of ileum
+Terminal ileum
+(Ileal diverticulum)
+Large intestine
+Serosa of large intestine
+Subserosa of large intestine
+Muscular layer of large intestine
+Submucosa of large intestine
+Mucosa of large intestine
+Crypts of large intestine
+Caecum
+Ileal papilla
+Ileal orifice
+Frenulum of ileal orifice
+Ileocolic lip
+Ileocaecal lip
+Vermiform appendix
+Orifice of vermiform appendix
+Aggregated lymphoid nodules of vermiform appendix
+Appendicular fold
+(Precaecocolic fascia)
+Colon
+Ascending colon
+Right colic flexure
+Transverse colon
+Left colic flexure
+Descending colon
+Sigmoid colon
+Semilunar folds of colon
+Haustra of colon
+Omental appendices
+Muscular layer of colon
+Longitudinal muscular layer of colon
+Taeniae coli
+Mesocolic taenia
+Omental taenia
+Free taenia
+Circular muscular layer of colon
+Rectum
+Sacral flexure of rectum
+Lateral flexures of rectum
+Superior lateral flexure of rectum
+Intermediate lateral flexure of rectum
+Inferior lateral flexure of rectum
+Transverse rectal folds
+Rectal ampulla
+Muscular layer of rectum
+Longitudinal muscular layer of rectum
+Circular muscular layer of rectum
+Anal canal
+Anorectal flexure
+Anorectal junction
+Anal columns
+Anal sinuses
+Anal valves
+Pectinate line
+Anal pecten
+Anocutaneous line
+Internal anal sphincter
+Intersphincteric groove
+Corrugator cutis ani
+Anus
+Liver
+Diaphragmatic surface of liver
+Superior surface of liver
+Cardiac impression of liver
+Anterior surface of liver
+Right surface of liver
+Posterior surface of liver
+Bare area of liver
+Groove for inferior vena cava
+Visceral surface of liver
+Porta hepatis
+Main portal fissure
+Fossa for gallbladder
+Right portal fissure
+Umbilical fissure
+Fissure for ligamentum teres
+Fissure for ligamentum venosum
+Omental tuberosity of liver
+Oesophageal impression of liver
+Gastric impression of liver
+Duodenal impression of liver
+Colic impression of liver
+Renal impression of liver
+Suprarenal impression of liver
+Inferior border of liver
+Notch for ligamentum teres
+Right lobe of liver
+Left lobe of liver
+Fibrous appendix of liver
+Quadrate lobe
+Caudate lobe
+Papillary process
+Caudate process
+Serosa of liver
+Subserosa of liver
+Fibrous capsule of liver
+Perivascular fibrous capsule
+Lobules of liver
+Portal tract
+Interlobular arteries of liver
+Interlobular veins of liver
+Interlobular bile ducts
+Central veins
+Left part of liver
+Left lateral division of liver
+Left posterior lateral segment of liver (II)
+Left anterior lateral segment of liver (III)
+Left medial division of liver
+Left medial segment of liver (IV)
+Posterior part of liver
+Posterior segment of liver (I)
+Right part of liver
+Right medial division of liver
+Anterior medial segment of liver (V)
+Posterior medial segment of liver (VIII)
+Right lateral division of liver
+Anterior lateral segment of liver (VI)
+Posterior lateral segment of liver (VII)
+Gallbladder
+Fundus of gallbladder
+Infundibulum of gallbladder
+Body of gallbladder
+Neck of gallbladder
+Serosa of gallbladder
+Subserosa of gallbladder
+Muscular layer of gallbladder
+Mucosa of gallbladder
+Mucosal folds of gallbladder
+Extrahepatic bile ducts
+Common hepatic duct
+Right hepatic duct
+Anterior branch of right hepatic duct
+Posterior branch of right hepatic duct
+Left hepatic duct
+Lateral branch of left hepatic duct
+Medial branch of left hepatic duct
+Right duct of caudate lobe
+Left duct of caudate lobe
+Cystic duct
+Spiral fold
+Bile duct
+Supraduodenal part of bile duct
+Retroduodenal part of bile duct
+Pancreatic part of bile duct
+Sphincter of bile duct
+Superior sphincter of bile duct
+Inferior sphincter of bile duct
+Intramural part of biliary duct
+Hepatopancreatic ampulla
+Sphincter of ampulla
+Glands of bile duct
+Pancreas
+Head of pancreas
+Uncinate process of pancreas
+Pancreatic notch
+Neck of pancreas
+Body of pancreas
+Anterosuperior surface of pancreas
+Posterior surface of pancreas
+Antero-inferior surface of pancreas
+Superior border of pancreas
+Anterior border of pancreas
+Inferior border of pancreas
+Omental eminence of pancreas
+Tail of pancreas
+Pancreatic islets
+Pancreatic duct
+Sphincter of pancreatic duct
+Accessory pancreatic duct
+(Accessory pancreas)
+Respiratory system
+Nose
+Nasal cartilages
+Nasal septum
+Membranous part of nasal septum
+Cartilaginous part of nasal septum
+Vomeronasal organ
+(Incisive duct)
+Lateral wall of nasal cavity
+Limen nasi
+Agger nasi
+Olfactory groove
+Highest nasal concha
+Superior nasal concha
+Middle nasal concha
+Ethmoidal bulla
+Inferior nasal concha
+Cavernous plexuses of conchae
+Semilunar hiatus
+Frontonasal duct
+Ethmoidal infundibulum
+Maxillary hiatus
+Opening of nasolacrimal duct
+Mucosa of nasal cavity
+Vestibular part of nasal mucosa
+Respiratory part of nasal mucosa
+Nasal glands
+Roof of nasal cavity
+Olfactory part of nasal mucosa
+Opening of sphenoidal sinus
+Nasal cavity
+Nostril
+Nasal vestibule
+Spheno-ethmoidal recess
+Superior nasal meatus
+Middle nasal meatus
+Atrium of middle meatus
+Inferior nasal meatus
+Common nasal meatus
+Nasopharyngeal meatus
+Paranasal sinuses
+Maxillary sinus
+Sphenoidal sinus
+Frontal sinus
+Ethmoidal cells
+Anterior ethmoidal cells
+Middle ethmoidal cells
+Posterior ethmoidal cells
+Larynx
+Mucosa of larynx
+Laryngeal glands
+Laryngeal cartilages
+Articulations du larynx
+Epiglottis
+Epiglottic tubercle
+Pre-epiglottic fat body
+Ary-epiglottic fold
+Corniculate tubercle
+Cuneiform tubercle
+Vestibular fold
+Glottis
+Vocal fold
+Fibro-elastic membrane of larynx (respiratory system)
+Interarytenoid fold
+Laryngeal cavity
+Laryngeal inlet
+Interarytenoid notch
+Laryngeal vestibule
+Rima vestibuli
+Laryngeal ventricle
+Laryngeal saccule
+Rima glottidis
+Intermembranous part of rima glottidis
+Intercartilaginous part of rima glottidis
+Infraglottic cavity
+Tracheobronchial tree
+Trachea
+Cervical part of trachea
+Thoracic part of trachea
+Membranous wall of trachea
+Fibromusculocartilaginous layer of trachea
+Tracheal cartilages
+Trachealis muscle
+Annular ligaments of trachea
+Submucosa of trachea
+Mucosa of trachea
+Tracheal glands
+Tracheal bifurcation
+Carina of trachea
+Bronchi
+Main bronchus
+Intrapulmonary bronchi
+Lobar bronchus
+Segmental bronchus
+Intrasegmental bronchus
+Bronchus
+Fibromusculocartilaginous layer of bronchus
+Submucosa of bronchus
+Mucosa of bronchus
+Bronchial glands
+Right main bronchus
+Right superior lobar bronchus
+Apical segmental bronchus of right lung (BI)
+Posterior segmental bronchus of right lung (BII)
+Anterior segmental bronchus of right lung (BIII)
+Intermediate bronchus
+Middle lobar bronchus
+Lateral segmental bronchus of right lung (BIV)
+Medial segmental bronchus of right lung (BV)
+Right inferior lobar bronchus
+Superior segmental bronchus of right lung (BVI)
+Medial basal segmental bronchus of right lung (BVII)
+Anterior basal segmental bronchus of right lung (BVIII)
+Lateral basal segmental bronchus of right lung (BIX)
+Posterior basal segmental bronchus of right lung (BX)
+Left main bronchus
+Left superior lobar bronchus
+Apicoposterior segmental bronchus of left lung (BI+BII)
+Anterior segmental bronchus of left lung (BIII)
+Superior lingular segmental bronchus of left lung (BIV)
+Inferior lingular segmental bronchus of left lung (BV)
+Left inferior lobar bronchus
+Superior segmental bronchus of left lung (BVI)
+Medial basal segmental bronchus of left lung (BVII)
+(Anteromedial basal segmental bronchus of left lung)
+Anterior basal segmental bronchus of left lung (BVIII)
+Lateral basal segmental bronchus of left lung (BIX)
+Posterior basal segmental bronchus of left lung (BX)
+Lungs
+Base of lung
+Apex of lung
+Costal surface of lung
+Medial surface of lung
+Vertebral surface of lung
+Mediastinal surface of lung
+Cardiac impression of lung
+Diaphragmatic surface of lung
+Interlobar surface of lung
+Anterior border of lung
+Inferior border of lung
+Hilum of lung
+Root of lung
+Lobe of lung
+Bronchopulmonary segment
+Lobule of lung
+Bronchiole
+Right lung
+Superior lobe of right lung
+Apical segment of right lung (SI)
+Posterior segment of right lung (SII)
+Anterior segment of right lung (SIII)
+Horizontal fissure of right lung
+Middle lobe of right lung
+Lateral segment of right lung (SIV)
+Medial segment of right lung (SV)
+Oblique fissure of right lung
+Inferior lobe of right lung
+Superior segment of right lung (SVI)
+Medial basal segment of right lung (SVII)
+Anterior basal segment of right lung (SVIII)
+Lateral basal segment of right lung (SIX)
+Posterior basal segment of right lung (SX)
+Left lung
+Superior lobe of left lung
+Apicoposterior segment of left lung (SI+SII)
+Anterior segment of left lung (SIII)
+Cardiac notch of left lung
+Lingula of left lung
+Superior lingular segment of left lung (SIV)
+Inferior lingular segment of left lung (SV)
+Oblique fissure of left lung
+Inferior lobe of left lung
+Superior segment of left lung (SVI)
+Medial basal segment of left lung (SVII)
+(Anteromedial basal segment of left lung)
+Anterior basal segment of left lung (SVIII)
+Lateral basal segment of left lung (SIX)
+Posterior basal segment of left lung (SX)
+Pleural cavity
+Pleural recesses
+Costodiaphragmatic recess
+Costomediastinal recess
+Phrenicomediastinal recess
+Vertebromediastinal recess
+Pleura
+Serosa of pleura
+Subserosa of pleura
+Visceral pleura
+Parietal pleura
+Cervical pleura
+Costal part of pleura
+Vertebral part of pleura
+Mediastinal part of pleura
+Diaphragmatic part of pleura
+Pulmonary ligament
+Mediastinum
+Superior mediastinum
+Inferior mediastinum
+Anterior mediastinum
+Sternopericardial ligaments
+Superior sternopericardial ligament
+Inferior sternopericardial ligament
+Middle mediastinum
+Pericardium
+Serous pericardium
+Serosa of pericardium
+Subserosa of pericardium
+Pericardial sac
+Fibrous pericardium
+Parietal layer of serous pericardium
+Pericardial cavity
+Transverse pericardial sinus
+Oblique pericardial sinus
+Visceral layer of serous pericardium
+Fold of left vena cava
+Posterior mediastinum
+Bronchopericardial membrane
+Bronchoesophageal muscle
+Pleuroesophageal muscle
+Urinary system
+Kidney
+Lateral border of kidney
+Medial border of kidney
+Hilum of kidney
+Renal sinus
+Anterior surface of kidney
+Posterior surface of kidney
+Superior pole of kidney
+Inferior pole of kidney
+Fibrous capsule of kidney
+Renal cortex
+Renal medulla
+Renal columns
+Superior segment of kidney
+Anterior superior segment of kidney
+Anterior inferior segment of kidney
+Inferior segment of kidney
+Posterior segment of kidney
+Kidney lobe
+Cortex of kidney lobe
+Medullary rays
+Renal pyramid
+Base of renal pyramid
+Renal papilla
+Cribriform area
+Openings of papillary ducts
+Renal pelvis
+Major calices
+Superior calix
+Middle calix
+Inferior calix
+Minor calices
+(Ampullary renal pelvis)
+Adventitia of renal pelvis
+Muscular layer of renal pelvis
+Mucosa of renal pelvis
+Ureter
+Abdominal part of ureter
+Pelvic part of ureter
+Intramural part of ureter
+Adventitia of ureter
+Muscular layer of ureter
+Mucosa of ureter
+Urinary bladder
+Apex of bladder
+Body of bladder
+Fundus of bladder
+Neck of bladder
+Uvula of bladder
+Serosa of bladder
+Subserosa of bladder
+Muscular layer of bladder
+Trigonal muscles
+Superficial trigone muscle
+Deep trigone muscle
+Detrusor vesicae
+Unstratified part of detrusor vesicae
+Bladder neck part of detrusor vesicae
+External longitudinal layer of detrusor vesicae
+Circular layer of detrusor vesicae
+Internal longitudinal layer of detrusor vesicae
+Submucosa of bladder
+Mucosa of bladder
+Trigone of bladder
+Interureteric crest
+Ureteric orifice
+Internal urethral orifice
+Urethra
+Female urethra
+Intramural part of female urethra
+Female internal urethral sphincter
+Membranous part of female urethra
+Crest of female urethra
+Female external urethral sphincter
+External orifice of female urethra
+Muscular layer of female urethra
+Circular muscular layer of female urethra
+Longitudinal muscular layer of female urethra
+Spongy layer of female urethra
+Mucosa of female urethra
+Urethral lacunae of female urethra
+Urethral glands of female urethra
+Para-urethral glands of female urethra
+Para-urethral ducts of female urethra
+Male urethra
+Intramural part of male urethra
+Male internal urethral sphincter
+Prostatic urethra
+Crest of male urethra
+Superior part of prostatic urethra
+Seminal colliculus
+Prostatic utricle
+Opening of ejaculatory duct
+Prostatic sinus
+Inferior part of prostatic urethra
+Membranous part of male urethra
+Male external urethral sphincter
+Spongy urethra
+Navicular fossa of urethra
+(Valve of navicular fossa)
+External orifice of male urethra
+Muscular layer of male urethra
+Circular muscular layer of male urethra
+Longitudinal muscular layer of male urethra
+Mucosa of male urethra
+Urethral lacunae of male urethra
+Urethral glands of male urethra
+Para-urethral glands of male urethra
+Para-urethral ducts of male urethra
+Genital systems
+Female genital system
+Female internal genitalia
+Ovary
+Hilum of ovary
+Medial surface of ovary
+Lateral surface of ovary
+Free border of ovary
+Mesovarian border of ovary
+Tubal extremity of ovary
+Uterine extremity of ovary
+Tunica albuginea of ovary
+Ovarian medulla
+Ovarian cortex
+Ovarian stroma
+Vesicular ovarian follicles
+Corpus rubrum
+Corpus luteum
+Corpus albicans
+Uterine tube
+Abdominal ostium of uterine tube
+Infundibulum of uterine tube
+Fimbriae of uterine tube
+Ovarian fimbria
+Ampulla of uterine tube
+Isthmus of uterine tube
+Intramural part of uterine tube
+Uterine ostium of uterine tube
+Serosa of uterine tube
+Subserosa of uterine tube
+Muscular layer of uterine tube
+Mucosa of uterine tube
+Folds of uterine tube
+Uterus
+Fundus of uterus
+Body of uterus
+Uterine cavity
+Border of uterus
+Posterior surface of uterus
+Anterior surface of uterus
+Internal os of uterus
+Cervix of uterus
+Supravaginal part of cervix
+Isthmus of uterus
+Vaginal part of cervix
+External os of uterus
+Anterior lip of external os of uterus
+Posterior lip of external os of uterus
+Cervical canal
+Palmate folds
+Cervical glands
+Perimetrium
+Subserosa of uterus
+Myometrium
+Endometrium
+Uterine glands
+Vagina
+Vaginal fornix
+Anterior part of vaginal fornix
+Posterior part of vaginal fornix
+Lateral part of vaginal fornix
+Anterior wall of vagina
+Posterior wall of vagina
+Hymen
+Hymenal caruncles
+Muscular layer of vagina
+Spongy layer of vagina
+Mucosa of vagina
+Vaginal rugae
+Vaginal columns
+Anterior vaginal column
+Posterior vaginal column
+Urethral carina of vagina
+Epoophoron
+Longitudinal duct of epoophoron
+Transverse ductules of epoophoron
+Vesicular appendices
+Paroophoron
+(Vestige of ductus deferens)
+Female external genitalia
+Vulva
+Mons pubis
+Labium majus of vulva
+Anterior commissure of labia
+Posterior commissure of labia
+Cleft of vulva
+Labium minus of vulva
+Frenulum of labia minora
+Prepuce of clitoris
+Frenulum of clitoris
+Vestibule of vagina
+Vestibular fossa
+Bulb of vestibule
+Commissure of bulbs of vestibule
+Vaginal orifice
+Greater vestibular gland
+Lesser vestibular glands
+Clitoris
+Crus of clitoris
+Body of clitoris
+Glans of clitoris
+Corpus cavernosum of clitoris
+Septum of corpora cavernosa of clitoris
+Fascia of clitoris
+Suspensory ligament of clitoris
+Fundiform ligament of clitoris
+Male genital system
+Male internal genitalia
+Testis
+Superior pole of testis
+Inferior pole of testis
+Scrotal ligament
+Lateral surface of testis
+Medial surface of testis
+Anterior border of testis
+Posterior border of testis
+Tunica vaginalis testis
+Serosa of tunica vaginalis testis
+Subserosa of tunica vaginalis testis
+Parietal layer of tunica vaginalis testis
+Cavity of tunica vaginalis testis
+Visceral layer of tunica vaginalis testis
+Superior ligament of epididymis
+Inferior ligament of epididymis
+Sinus of epididymis
+Tunica albuginea of testis
+Vascular layer of testis
+Mediastinum of testis
+Septa testis
+Lobules of testis
+Parenchyma of testis
+Convoluted seminiferous tubules
+Straight tubules
+Rete testis
+Efferent ductules
+Epididymis
+Head of epididymis
+Lobules of epididymis
+Body of epididymis
+Tail of epididymis
+Duct of epididymis
+Aberrant ductules
+(Superior aberrant ductule)
+(Inferior aberrant ductule)
+Appendix of testis
+(Appendix of epididymis)
+(Paradidymis)
+Spermatic cord
+External spermatic fascia
+Cremasteric fascia
+Internal spermatic fascia
+(Vestige of processus vaginalis)
+Ductus deferens
+Scrotal part of ductus deferens
+Funicular part of ductus deferens
+Inguinal part of ductus deferens
+Pelvic part of ductus deferens
+Ampulla of ductus deferens
+Diverticula of ampulla of ductus deferentis
+Adventitia of ductus deferens
+Muscular layer of ductus deferens
+Mucosa of ductus deferens
+Seminal gland
+Adventitia of seminal gland
+Muscular layer of seminal gland
+Mucosa of seminal gland
+Excretory duct of seminal gland
+Ejaculatory duct
+Prostate
+Base of prostate
+Apex of prostate
+Anterior surface of prostate
+Posterior surface of prostate
+Lateral surface of prostate
+Posterolateral surface of prostate
+Lateral part of prostate
+(Middle lobe of prostate)
+Glandular part of prostate
+Peri-urethral glandular zone of prostate
+Transitional zone of prostate
+Peripheral zone of prostate
+Anterior commissure of prostate
+Parenchyma of prostate
+Prostatic ducts
+Fibromuscular tissue of prostate
+Capsule of prostate
+Fascia of prostate
+Prostatic neurovascular bundle
+Prostato-seminal fascia
+Bulbo-urethral gland
+Duct of bulbo-urethral gland
+Male external genitalia
+Penis
+Root of penis
+Body of penis
+Crus of penis
+Dorsum of penis
+Urethral surface
+Glans penis
+Corona of glans penis
+Septum of glans penis
+Neck of glans penis
+Sulcus of glans penis
+Preputial glands
+Prepuce of penis
+Frenulum of penis
+Raphe of penis
+Corpus cavernosum of penis
+Trabeculae of corpus cavernosum of penis
+Cavernous spaces of corpus cavernosum of penis
+Corpus spongiosum of penis
+Trabeculae of corpus spongiosum of penis
+Cavernous spaces of corpus spongiosum of penis
+Bulb of penis
+Tunica albuginea of corpora cavernosa penis
+Tunica albuginea of corpus spongiosum penis
+Septum penis
+Fascia of penis
+Suspensory ligament of penis
+Subcutaneous tissue of penis
+Fundiform ligament of penis
+Scrotum
+Raphe of scrotum
+Dartos fascia of scrotum
+Septum of scrotum
+Dartos muscle of scrotum
+Perineal raphe
+Abdominopelvic cavity
+Peritoneal cavity
+Omental bursa
+Omental foramen
+Vestibule of omental bursa
+Superior recess of omental bursa
+Inferior recess of omental bursa
+Splenic recess of omental bursa
+Abdominal recesses of peritoneal cavity
+Superior duodenal fossa
+Inferior duodenal fossa
+Paraduodenal recess
+Retroduodenal recess
+Intersigmoid recess
+Superior ileocaecal recess
+Inferior ileocaecal recess
+Retrocaecal recess
+Paracolic gutters
+Subphrenic space
+Subhepatic space
+Hepatorenal recess
+Pelvic recesses of peritoneal cavity
+Paravesical fossa
+Vesico-uterine pouch
+Ovarian fossa
+Recto-uterine pouch
+Recto-vesical pouch
+Pararectal fossa
+Peritoneum
+Serosa of peritoneum
+Subserosa of peritoneum
+Visceral peritoneum
+Mesenteric peritoneum
+Parietal peritoneum
+Diaphragmatic part of peritoneum
+Anterolateral part of peritoneum
+Posterior part of peritoneum
+Pelvic part of peritoneum
+Peritoneal structures
+Mesentery
+Peritoneum of mesentery
+Lamina propria of mesentery
+Root of mesentery
+Mesocolon
+Transverse mesocolon
+(Ascending mesocolon)
+(Descending mesocolon)
+Sigmoid mesocolon
+Meso-appendix
+Lesser omentum
+Hepatophrenic ligament
+Hepato-oesophageal ligament
+Hepatogastric ligament
+Hepatoduodenal ligament
+(Hepatocolic ligament)
+Cystohepatic triangle
+Greater omentum
+Omental apron
+Gastrophrenic ligament
+Gastrosplenic ligament
+Presplenic fold
+Gastrocolic ligament
+(Gastro-omental fold)
+Phrenicosplenic ligament
+Splenorenal ligament
+Pancreaticosplenic ligament
+Pancreaticocolic ligament
+Splenocolic ligament
+Phrenicocolic ligament
+Peritoneal ligaments of liver
+Falciform ligament
+Coronary ligament
+Anterior part of coronary ligament
+Posterior part of coronary ligament
+Right triangular ligament
+Left triangular ligament
+Hepatorenal ligament
+Posterior parietal peritoneal structures
+Gastropancreatic fold
+Hepatopancreatic fold
+Suspensory muscle of duodenum
+Phrenicocoeliac part of suspensory muscle of duodenum
+Coeliacoduodenal part of suspensory muscle of duodenum
+Duodenojejunal fold
+Duodenomesocolic fold
+Paraduodenal fold
+Vascular fold of caecum
+Ileocaecal fold
+Caecal folds
+Anterior parietal peritoneal structures
+Median umbilical fold
+Supravesical fossa
+Medial umbilical fold
+Medial inguinal fossa
+Inguinal triangle
+Lateral umbilical fold
+Lateral inguinal fossa
+Pelvic peritoneal structures
+Transverse vesical fold
+Broad ligament of uterus
+Mesometrium
+Mesosalpinx
+Mesovarium
+Pelvic lateral wall triangle
+Suspensory ligament of ovary
+Recto-uterine fold
+Recto-vesical fold
+Visceral fasciae of abdominopelvic cavity
+Abdominal visceral fasciae
+Fascia of abdominal organ
+Pelvic visceral fasciae
+Fascia of pelvic organ
+Extraperitoneal space
+Retroperitoneal space
+Pararenal fat body
+Perirenal fat capsule
+Retroperitoneal fasciae
+Lateroconal fascia
+Renal fascia
+Anterior layer of renal fascia
+Posterior layer of renal fascia
+Retropubic space
+Retro-inguinal space
+Infraperitoneal space
+Pelvic extraperitoneal fasciae
+Medial puboprostatic ligament
+Medial pubovesical ligament
+Lateral puboprostatic ligament
+Lateral pubovesical ligament
+Lateral ligament of bladder
+Rectoprostatic fascia
+Rectovaginal fascia
+Lateral ligament of rectum
+Proper ovarian ligament
+Round ligament of uterus
+Parametrium
+Paracervix
+Pubocervical ligament
+Cardinal ligament
+Uterosacral ligament
+Smooth muscles of infraperitoneal space
+Pubovesicalis muscle
+Rectovesicalis muscle
+Uterosacralis muscle
+Vesicoprostaticus muscle
+Vesicovaginalis muscle
+Rectococcygeus muscle
+Recto-urethral muscles
+Rectoperinealis muscle
+Anoperinealis muscle
+Integrating system
+Endocrine glands
+Hypophysis
+Pituitary gland
+Adenohypophysis
+Pars tubelaris of hypophysis
+Pars distalis of hypophysis
+Pars intermedia of hypophysis
+Neurohypophysis
+Infundibular stalk
+Pars nervosa of hypophysis
+Pineal gland
+Thyroid gland
+Lobe of thyroid gland
+Lobule of thyroid gland
+Isthmus of thyroid gland
+(Pyramidal lobe)
+Fibrous capsule of thyroid gland
+(Accessory thyroid gland)
+Parathyroid glands
+Superior parathyroid gland
+Inferior parathyroid gland
+Accessory parathyroid gland
+Suprarenal gland
+Anterior surface of suprarenal gland
+Posterior surface of suprarenal gland
+Renal surface of suprarenal gland
+Superior border of suprarenal gland
+Medial border of suprarenal gland
+Fibrous capsule of suprarenal gland
+Cortex of suprarenal gland
+Medulla of suprarenal gland
+Hilum of suprarenal gland
+(Accessory suprarenal gland)
+Paraganglia
+Carotid body
+Jugular body
+Aortopulmonary paraganglia
+Para-aortic paraganglia
+(Coccygeal body)
+Cardiovascular system
+Blood
+Lymph
+Vessels
+Arteries
+Nutrient artery
+Branch of artery
+Communicating artery
+Arteriole
+Capillary
+Sinusoid
+Venule
+Veins
+Vena comitans
+Cutaneous vein
+Nutrient vein
+Perforating vein
+Deep vein
+Superficial vein
+Sinus venosus
+Anastomotic vessel
+Arteriolovenular anastomosis
+Collateral vessel
+Lymphatic vessel
+Superficial lymphatic vessel
+Deep lymphatic vessel
+Lymphatic capillary
+Vessel
+Tunica externa of vessel
+Tunica media of vessel
+Tunica intima of vessel
+Venous valve
+Lymphatic valve
+Vascular plexuses
+Venous plexus
+Arterial plexus
+Rete mirabile
+Articular vascular plexus
+Lymphatic plexus
+Lymphatic rete
+Heart
+Base of heart
+Anterior surface of heart
+Inferior surface of heart
+Right surface of heart
+Left surface of heart
+Right border of heart
+Inferior border of heart
+Left border of heart
+Apex of heart
+Notch of cardiac apex
+Anterior interventricular sulcus
+Inferior interventricular sulcus
+Coronary sulcus
+Sulcus terminalis of heart
+Epicardium
+Serosa of epicaridum
+Subserosa
+Myocardium
+Vortex of heart
+Conducting system of heart
+Sinuatrial node
+Atrioventricular node
+Atrioventricular bundle
+Right bundle branch
+Left bundle branch
+Left anterior branch of atrioventricular bundle
+Left intermediate branch of atrioventricular bundle
+Left posterior branch of atrioventricular bundle
+Subendocardial branches
+Endocardium
+Cardiac septa
+Interatrial septum
+Fossa ovalis of right atrium
+Limbus fossae ovalis
+(Foramen ovale of heart)
+Valve of foramen ovale
+Atrioventricular septum
+Interventricular septum
+Muscular part of interventricular septum
+Membranous part of interventricular septum
+Valvular complex of heart
+Fibrous skeleton of heart
+Right fibrous ring
+Left fibrous ring
+Left fibrous trigone
+Central fibrous body of heart
+Right fibrous trigone
+Inferior pyramidal space
+Tendon of inferior pyramidal space
+Right atrioventricular valve
+Right atrioventricular orifice
+Superior leaflet of right cuspid valve
+Inferior leaflet of right atrioventricular valve
+Septal leaflet of right atrioventricular valve
+Left atrioventricular valve
+Left atrioventricular orifice
+Anterior leaflet of left atrioventricular valve
+Posterior leaflet of left atrioventricular valve
+Commissural leaflets
+Root of aorta
+Aortic valve
+Aortic orifice
+Right coronary leaflet
+Left coronary leaflet
+Non-coronary leaflet
+Nodules of semilunar leaflets of aortic valve
+Lunules of semilunar leaflets of aortic valve
+Commissures of semilunar leaflets of aortic valve
+Aortic sinuses
+Right coronary aortic sinus
+Left coronary aortic sinus
+Noncoronary aortic sinus
+Interleaflet triangles of aortic valve
+Supravalvular ridge of aorta
+Root of pulmonary trunk
+Pulmonary valve
+Opening of pulmonary trunk
+Right semilunar leaflet of pulmonary valve
+Left semilunar leaflet of pulmonary valve
+Anterior semilunar leaflet of pulmonary valve
+Nodules of semilunar leaflets of pulmonary valve
+Lunules of semilunar leaflets of pulmonary valve
+Commissures leaflets of pulmonary valve
+Sinuses of pulmonary trunk
+Right sinus of pulmonary trunk
+Left sinus of pulmonary trunk
+Anterior sinus of pulmonary trunk
+Interleaflet triangles of pulmonary trunk
+Supravalvular ridge of pulmonary trunk
+Right atrium
+Right auricle of heart
+Pectinate muscles of right atrium
+Crista terminalis
+Smooth part of right atrium
+Sinus of venae cavae
+Opening of superior vena cava
+Opening of coronary sinus
+Valve of coronary sinus
+Opening of inferior vena cava
+Valve of inferior vena cava
+Body of right atrium
+Vestibule of right atrioventricular valve
+Triangle of atrioventricular node
+Openings of smallest cardiac veins
+Cavotricuspid isthmus
+Right ventricle
+Inlet of right ventricle
+Supraventricular crest
+Trabecular part of right ventricle
+Papillary muscles of right ventricle
+Anterior papillary muscle of right ventricle
+Inferior papillary muscle of right ventricle
+Septal papillary muscle of right ventricle
+Chordae tendineae of right atrioventricular valve
+Chordae tendineae spuriae of right ventricle
+Trabeculae carneae of right ventricle
+Septomarginal trabecula
+Parietal limb of septomarginal trabecula
+Anterior limb of septomarginal trabecula
+Coarse apical trabeculations
+Left atrium
+Left auricle of heart
+Pectinate muscles of left atrium
+Smooth part of left atrium
+Sinus of pulmonary veins
+Openings of pulmonary veins
+Body of left atrium
+Vestibule of left atrioventricular valve
+Left ventricle
+Inlet of left ventricle
+Aortic vestibule
+Trabecular part of left ventricle
+Papillary muscles of left ventricle
+Superior papillary muscle of left ventricle
+Inferior papillary muscle of left ventricle
+Chordae tendineae of left atrioventricular valve
+Chordae tendineae spuriae of left ventricle
+Trabeculae carneae of left ventricle
+Fine apical trabeculations
+Pulmonary vessels
+Pulmonary arteries
+Pulmonary trunk
+Bifurcation of pulmonary trunk
+Right pulmonary artery
+Superior lobar artery of right lung
+Apical segmental artery of right lung
+Anterior segmental artery of right lung
+Posterior segmental artery of right lung
+Middle lobar artery of right lung
+Medial segmental artery of right lung
+Lateral segmental artery of right lung
+Inferior lobar artery of right lung
+Superior segmental artery of right lung
+Anterior basal segmental artery of right lung
+Lateral basal segmental artery of right lung
+Medial basal segmental artery of right lung
+Posterior basal segmental artery of right lung
+Left pulmonary artery
+Ligamentum arteriosum
+(Ductus arteriosus)
+Superior lobar artery of left lung
+Apical segmental artery of left lung
+Anterior segmental artery of left lung
+Posterior segmental artery of left lung
+Lingular artery of left lung
+Inferior lingular artery of left lung
+Superior lingular artery of left lung
+Inferior lobar artery of left lung
+Superior segmental artery of left lung
+Anterior basal segmental artery of left lung
+Lateral basal segmental artery of left lung
+Medial basal segmental artery of left lung
+Posterior basal segmental artery of left lung
+Pulmonary veins
+Right superior pulmonary vein
+Apical vein of right lung
+Anterior vein of right lung
+Posterior vein of right lung
+Middle lobar vein of right lung
+Lateral vein of right lung
+Medial vein of right lung
+Right inferior pulmonary vein
+Superior vein of right lung
+Superior basal vein of right lung
+Inferior basal vein of right lung
+Left superior pulmonary vein
+Apicoposterior vein of left lung
+Anterior vein of left lung
+Lingular vein of left lung
+Superior lingular vein of left lung
+Inferior lingular vein of left lung
+Left inferior pulmonary vein
+Superior vein of left lung
+Superior basal vein of left lung
+Inferior basal vein of left lung
+Cardiac vessels
+Arteries of heart
+Right coronary artery
+Conal branch of right coronary artery
+Sinu-atrial nodal branch of right coronary artery
+Atrial branches of right coronary artery
+Intermediate atrial branch of right coronary artery
+Anterior ventricular branches of right coronary artery
+Right marginal branch of right coronary artery
+Inferior interventricular artery
+Interventricular branch of right coronary artery
+Septal branches of inferior interventricular artery
+Atrioventricular nodal branch of right coronary artery
+Right inferolateral branch of right coronary artery
+Left coronary artery
+Anterior interventricular artery
+Conal branch of anterior interventricular artery
+Diagonal branch of anterior interventricular artery
+Septal branches of anterior interventricular artery
+Circumflex artery of heart
+Atrial branches of circumflex artery of heart
+Atrial anastomotic branch of circumflex artery of heart
+Intermediate atrial branch of circumflex artery of heart
+Left marginal branch of circumflex artery of heart
+Inferior left ventricular branch of circumf. artery of heart
+(Sinu-atrial nodal branch of circumflex artery of heart)
+(Atrioventricular nodal branch of circumflex artery of heart)
+(Inf. intervent. branch of circumf. art. of heart)
+Cardiac veins
+Coronary sinus
+Great cardiac vein
+Anterior interventricular vein
+Left marginal vein of heart
+Inferior vein of left ventricle
+Oblique vein of left atrium
+Ligament of (left) superior vena cava
+Middle cardiac vein
+Small cardiac vein
+Right marginal vein of heart
+Anterior cardiac veins
+Smallest cardiac veins
+Smallest right atrial veins
+Smallest right ventricular veins
+Smallest left atrial veins
+(Smallest left ventricular veins)
+Systemic arteries
+Aorta
+Ascending aorta
+Aortic arch
+(Aortic isthmus)
+Brachiocephalic trunk
+Thyroidea ima artery
+Right common carotid artery
+Right subclavian artery
+Left common carotid artery
+Left subclavian artery
+Descending aorta
+Thoracic aorta
+Bronchial branches of aorta
+Oesophageal branches of aorta
+Pericardial branches of aorta
+Mediastinal branches of aorta
+Posterior intercostal arteries
+Posterior intercostal artery
+Dorsal branch of posterior intercostal artery
+Medial dorsal cutaneous branch-posterior intercostal artery
+Lateral dorsal cutaneous branch-posterior intercostal artery
+Spinal branch of posterior intercostal artery
+Collateral branch of posterior intercostal artery
+Lateral cutaneous branch of posterior intercostal artery
+Lateral mammary branches of posterior intercostal artery
+(Aberrant artery)
+Superior phrenic arteries
+Subcostal artery
+Dorsal branch of subcostal artery
+Spinal branch of subcostal
+Abdominal aorta
+Inferior phrenic artery
+Superior suprarenal arteries
+Lumbar arteries
+Dorsal branch of lumbar arteries
+Spinal branch of lumbar artery
+Coeliac trunk
+Left gastric artery
+Oesophageal branch of lumbar artery
+Common hepatic artery
+Gastroduodenal artery
+(Supraduodenal artery)
+Posterior superior pancreaticoduodenal artery
+Pancreatic branches of pos. sup. pancreaticoduodenal art.
+Duodenal branches of post. sup. pancreaticoduodenal art.
+Retroduodenal arteries
+Right gastro-omental artery
+Gastric branches of right gastro-omental artery
+Omental branches of right gastro-omental artery
+Arterior superior pancreaticoduodenal artery
+Pancreatic branches of ant. sup. pancreaticoduodenal artery
+Duodenal branches of ant. sup. pancreaticoduodenal artery
+Proper hepatic artery
+Right gastric artery
+Right hepatic artery
+Cystic artery
+Right artery of caudate lobe
+Anterior segmental artery of liver
+Posterior segmental artery of liver
+Left hepatic artery
+Left artery of caudate lobe
+Medial segmental artery of liver
+Lateral segmental artery of liver
+Intermediate branch of left hepatic artery
+Splenic artery
+Pancreatic branches of splenic artery
+Dorsal pancreatic artery
+Inferior pancreatic artery
+Prepancreatic artery
+Great pancreatic artery
+Artery of tail of pancreas
+Posterior gastric artery
+Splenic branches of splenic artery
+Left gastro-omental artery
+Gastric branches of left gastro-omental artery
+Omental branches of left gastro-omental artery
+Short gastric arteries
+Superior mesenteric artery
+Inferior pancreaticoduodenal artery
+Anterior inferior pancreaticoduodenal artery
+Posterior inferior pancreaticoduodenal artery
+Jejunal arteries
+Ileal arteries
+Ileocolic artery
+Anterior caecal artery
+Posterior caecal artery
+Appendicular artery
+Ileal branch of ileocolic artery
+Colic branch of ileocolic artery
+Right colic artery
+Middle colic artery
+Marginal artery
+Intercolic anastomotic artery
+Middle suprarenal artery
+Renal artery
+Capsular branches of renal artery
+Inferior suprarenal artery
+Anterior branch of renal artery
+Superior segmental artery of kidney
+Anterior superior segmental artery of kidney
+Anterior inferior segmental artery of kidney
+Inferior segmental artery of kidney
+Posterior branch of renal artery
+Posterior segmental artery of kidney
+Ureteric branches of renal artery
+Intrarenal arteries
+Interlobar artery of kidney
+Arcuate artery of kidney
+Interlobular artery of kidney
+(Accessory renal artery)
+Ovarian artery
+Ureteric branches of ovarian artery
+Tubal branches of ovarian artery
+Testicular artery
+Ureteric branches of testicular
+Epididymal branches of testicular artery
+Inferior mesenteric artery
+Left colic artery
+Ascending branch of left colic artery
+Descending branch of left colic artery
+Sigmoid arteries
+Superior anorectal artery
+Aortic bifurcation
+Median sacral artery
+Arteriae lumbales imae
+Lateral sacral branches of median sacral artery
+Common iliac artery
+Internal iliac artery
+Posterior division of internal iliac artery
+Iliolumbar artery
+Lumbar branch of iliolumbar artery
+Spinal branch of iliolumbar artery
+Iliacus branch of iliolumbar artery
+Lateral sacral arteries
+Spinal branches of lateral sacral artery
+Superior gluteal artery
+Superficial branch of superior gluteal artery
+Deep branch of superior gluteal artery
+Superior branch of superior gluteal artery
+Inferior branch of superior gluteal artery
+Anterior division of internal iliac artery
+Umbilical artery
+Patent part of umbilical artery
+Artery of ductus deferens
+Ureteric branches of artery of ductus deferens
+Superior vesical arteries
+Pars fibrosa arteriae umbilicalis artery
+Medial umbilical ligament
+Obturator artery
+Pubic branch of obturator artery
+Acetabular branch of obturator artery
+Anterior branch of obturator artery
+Posterior branch of obturator artery
+Inferior vesical artery
+Prostatic branches of inferior vesical artery
+Uterine artery
+Helicine branches of uterine artery
+Vaginal branches of uterine artery
+(Azygos artery of vagina)
+Ovarian branch of uterine artery
+Tubal branch of uterine artery
+Vaginal artery
+Inferior vesical branches of vaginal artery
+Middle anorectal artery
+Vaginal branches of middle anorectal artery
+Prostatic branches of middle anorectal artery
+Internal pudendal artery
+Inferior anorectal artery
+Perineal artery
+Posterior labial arteries
+Posterior scrotal arteries
+Artery of bulb of vestibule
+Artery of bulb of penis
+Urethral artery
+Deep artery of clitoris
+Deep artery of penis
+Helicine branches of deep artery of penis
+Perforating arteries of penis
+Dorsal artery of clitoris
+Dorsal artery of penis
+Inferior gluteal artery
+Arteria comitans of sciatic nerve
+External iliac artery
+Inferior epigastric artery
+Pubic branch of inferior epigastric artery
+(Accessory obturator artery)
+(Aberrant obturator artery)
+Cremasteric artery
+Artery of round ligament of uterus
+Deep circumflex iliac artery
+Ascending branch of deep circumflex iliac artery
+Common carotid artery
+Carotid sinus
+Carotid bifurcation
+External carotid artery
+Superior thyroid artery
+Infrahyoid branch of superior thyroid artery
+Sternocleidomastoid branch of superior thyroid artery
+Superior laryngeal artery
+Cricothyroid branch of superior thyroid artery
+Anterior glandular branch of superior thyroid artery
+Posterior glandular branch of superior thyroid artery
+Lateral glandular branch of superior thyroid artery
+Ascending pharyngeal artery
+Posterior meningeal artery
+Pharyngeal branches of ascending pharyngeal artery
+Inferior tympanic artery
+(Linguofacial trunk)
+Lingual artery
+Suprahyoid branch of lingual artery
+Dorsal lingual branches of lingual artery
+Sublingual artery
+Deep lingual artery
+Facial artery
+Ascending palatine artery
+Tonsillar branch of facial artery
+Submental artery
+Glandular branches of facial artery
+Inferior labial artery
+Superior labial artery
+Nasal septal branch of superior labial artery
+Lateral nasal branch of facial artery
+Angular artery
+Occipital artery
+Mastoid branch of occipital artery
+Auricular branch of occipital artery
+Sternocleidomastoid branches of occipilal artery
+Occipital branches of occipital artery
+(Meningeal branch of occipital artery)
+Descending branch of occipital artery
+Posterior auricular artery
+Stylomastoid artery
+Posterior tympanic artery
+Mastoid branches of posterior tympanic artery
+(Stapedial branch of posterior tympanic artery)
+Auricular branch of posterior auricular artery
+Occipital branch of posterior auricular artery
+Parotid branch of posterior auricular artery
+Superficial temporal artery
+Parotid branch of superficial temporal artery
+Temporomandibular branch of superficial temporal artery
+Transverse facial artery
+Anterior auricular branches of superficial temporal artery
+Zygomatico-orbital artery
+Middle temporal artery
+Frontal branch of superficial temporal artery
+Parietal branch of superficial temporal artery
+Maxillary artery
+Deep auricular artery
+Temporomandibular branch of deep auricular artery
+Anterior tympanic artery
+Inferior alveolar artery
+Mylohyoid branch of inferior alveolar artery
+Dental branches of inferior alveolar artery
+Peridental branches of inferior alveolar artery
+Mental branch of inferior alveolar artery
+Middle meningeal artery
+Accessory branch of middle meningeal artery
+Frontal branch of middle meningeal artery
+Orbital branch of middle meningeal artery
+Parietal branch of middle meningeal artery
+Petrosal branch of middle meningeal artery
+Superior tympanic artery
+Anastomotic branch of middle meningeal artery with lacrimal
+Masseteric artery
+Anterior deep temporal artery
+Posterior deep temporal artery
+Pterygoid branches of posterior deep temporal artery
+Buccal artery
+Posterior superior alveolar artery
+Dental branches of posterior superior alveolar artery
+Peridental branches of posterior superior alveolar artery
+Infra-orbital artery
+Middle superior alveolar artery
+Dental branches of middle superior alveolar artery
+Peridental branches of middle superior alveolar artery
+Anterior superior alveolar artery
+Dental branches of anterior superior alveolar artery
+Peridental branches of anterior superior alveolar artery
+Artery of pterygoid canal
+Pharyngeal branch of artery of pterygoid canal
+Descending palatine artery
+Greater palatine artery
+Lesser palatine arteries
+Pharyngeal branch of descending palatine artery
+Sphenopalatine artery
+Posterior lateral nasal branches of sphenopalatine artery
+Posterior septal branches of sphenopalatine artery
+Internal carotid artery
+Caroticotympanic arteries
+Carotid siphon
+Meningeal branches of internal carotid artery
+Inferior hypophysial artery
+Superior hypophyseal artery
+Ophthalmic artery
+Central retinal artery
+Superior temporal retinal arteriole
+Inferior temporal retinal arteriole
+Superior nasal retinal arteriole
+Inferior nasal retinal arteriole
+Macular arterioles
+Lacrimal artery
+Recurrent meningeal branch of lacrimal artery
+Lateral palpebral arteries
+Short posterior ciliary arteries
+Vascular circle of optic nerve
+Long posterior ciliary arteries
+Major arterial circle of iris
+Minor arterial circle of iris
+Muscular arteries
+Anterior ciliary arteries
+Supra-orbital artery
+Anterior ethmoidal artery
+Anterior meningeal branch of anterior ethmoidal artery
+Anterior septal branches of anterior ethmoidal artery
+Anterior lateral nasal branches of anterior ethmoidal artery
+(Middle ethmoidal artery)
+Posterior ethmoidal artery
+Meningeal branch of posterior ethmoidal artery
+Septal branches of posterior ethmoidal artery
+Lateral nasal branches of posterior ethmoidal artery
+Medial palpebral arteries
+Superior palpebral arch
+Inferior palpebral arch
+Supratrochlear artery
+Dorsal nasal artery
+Anterior choroidal artery
+Anterior cerebral artery
+Anteromedial central branches of anterior cerebral artery
+Orbitofrontal branches of anterior cerebral artery
+Callosomarginal artery
+Frontal branches of callosomarginal artery
+Pericallosal artery
+Parietal branches of pericallosal artery
+Middle cerebral artery (M1-segment)
+Middle cerebral artery (M2-segment)
+Middle cerebral artery (M3-segment)
+Anterolateral central arteries
+Orbitofrontal branches of middle cerebral artery
+Insular branches of middle cerebral artery (M2)
+Temporal branches of middle cerebral artery
+Frontal branches of middle cerebral artery
+Parietal branches of middle cerebral artery
+Cerebral arterial circle
+Anterior communicating artery
+Anteromedial central branches-anterior communicating artery
+Precommunicating cerebral artery
+Communicating carotid artery
+Posterior communicating artery
+Posteromedial central branches of post. communicating artery
+Arteries of spinal cord
+Anterior spinal artery
+Union of anterior spinal branches of vertebral artery
+Posterior spinal arteries
+Spinal arterial branches
+Spinal arterial branch
+Postcentral arterial branch
+Prelaminar arterial branch
+Radicular arteries
+Anterior radicular artery
+Posterior radicular artery
+Arteria medullaris segmentalis
+Great radicular artery
+Subclavian artery
+Vertebral artery
+Spinal branches of vertebral artery
+Muscular branches of vertebral artery
+Meningeal branches of vertebral artery
+Posterior inferior cerebellar artery
+Posterior spinal branch of posterior inf. cerebellar artery
+Choroidal branches to fourth ventricle
+Anterior spinal branch of vertebral artery
+Medial medullary branches of vertebral artery
+Lateral medullary branches of vertebral artery
+Basilar artery
+Union of vertebral arteries
+Anterior inferior cerebellar artery
+Labyrinthine artery
+Anterior vestibular artery
+Common cochlear artery
+Vestibulocochlear artery
+Posterior vestibular branch of vestibulocochlear artery
+Cochlear branch of vestibulocochlear artery
+Proper cochlear artery
+Spiral modiolar artery
+Pontine branches of basilar artery
+Medial pontine branches of basilar artery
+Lateral pontine branches of basilar artery
+Mesencephalic branches of basilar artery
+Superior cerebellar artery
+Bifurcation of basilar artery
+Posterior cerebral artery
+Posteromedial central arteries
+Posterolateral central arteries
+Posterior choroidal branches of posterior cerebral artery
+Medial posterior choroidal branch of post. cerebral artery
+Lateral posterior choroidal branch of post. cerebral artery
+Parieto-occipital artery
+Lateral occipital artery
+Temporal branches of lateral occipital artery
+Medial occipital artery
+Occipital branches of medial occipital artery
+Internal thoracic artery
+Mediastinal branches of internal thoracic artery
+Thymic branches of internal thoracic artery
+(Bronchial branches of internal thoracic artery)
+(Tracheal branches of internal thoracic artery)
+Pericardiacophrenic artery
+Sternal branches of internal thoracic artery
+Perforating branches of internal thoracic artery
+Medial mammary internal thoracic artery
+(Lateral costal branch of internal thoracic artery)
+Anterior intercostal branches of internal thoracic artery
+Musculophrenic artery
+Superior epigastric artery
+(Lateral internal thoracic artery)
+Thyrocervical trunk
+Inferior thyroid artery
+Inferior laryngeal artery
+Glandular branches of inferior thyroid artery
+Pharyngeal branches of inferior thyroid artery
+Oesophageal thyroid artery
+Tracheal branches of inferior thyroid artery
+Ascending cervical artery
+Spinal branches of ascending cervical artery
+Suprascapular artery
+Acromial branch of suprascapular artery
+Transverse cervical artery
+(Superficial branch of transverse cervical artery)
+Ascending branch of transverse cervical artery
+Descending branch of transverse cervical artery
+(Deep branch of transverse cervical artery)
+Dorsal scapular artery
+Costocervical trunk
+Deep cervical artery
+Supreme intercostal artery
+First posterior intercostal artery
+Dorsal branch of first posterior intercostal artery
+Spinal branch of first posterior intercostal artery
+Second posterior intercostal artery
+Dorsal branch of second posterior intercostal artery
+Spinal branch of second posterior intercostal artery
+Axillary artery
+Subscapular branches of axillary artery
+Superior thoracic artery
+Thoraco-acromial artery
+Acromial branch of thoraco-acromial artery
+Acromial anastomosis
+Clavicular branch of thoraco-acromial artery
+Deltoid branch of thoraco-acromial artery
+Pectoral branches of thoraco-acromial artery
+Lateral thoracic artery
+Lateral mammary branches of lateral thoracic artery
+Subscapular artery
+Thoracodorsal artery
+Circumflex scapular artery
+Anterior circumflex humeral artery
+Posterior circumflex humeral artery
+Brachial artery
+(Superficial brachial artery)
+Deep brachial artery
+Nutrient arteries of humerus
+Deltoid branch of deep brachial artery
+Middle collateral artery
+Radial collateral artery
+Superior ulnar collateral artery
+Inferior ulnar collateral artery
+Radial artery
+Radial recurrent artery
+Nutrient artery of radius
+Palmar carpal branch of radial artery
+Superficial palmar branch of radial artery
+Dorsal carpal branch of radial artery
+Dorsal carpal anastomosis
+Dorsal metacarpal arteries
+Dorsal digital arteries of hand
+Princeps pollicis artery
+Radialis indicis artery
+Deep palmar arch
+Palmar metacarpal arteries
+Perforating branches of palmar metacarpal arteries
+Ulnar artery
+(Ulnar recurrent artery)
+Anterior ulnar recurrent artery
+Posterior ulnar recurrent artery
+Cubital anastomosis
+Nutrient artery of ulna
+Common interosseous artery
+Anterior interosseous artery
+Median artery
+(Persistent median artery)
+Posterior interosseous artery
+Recurrent interosseous artery
+Perforating branch of posterior interosseous artery
+Dorsal carpal branch of ulnar artery
+Palmar carpal branch of ulnar artery
+Deep palmar branch of ulnar artery
+Superficial palmar arch
+Common palmar digital arteries
+Proper palmar digital arteries
+Femoral artery
+Superficial epigastric artery
+Superficial circumflex iliac artery
+Superficial external pudendal artery
+Deep external pudendal artery
+Anterior labial arteries
+Anterior scrotal arteries
+Inguinal branches of deep external pudendal artery
+Descending genicular artery
+Saphenous descending genicular artery
+Articular branches of descending genicular artery
+Deep femoral artery
+Medial circumflex femoral artery
+Superficial branch of medial circumflex femoral artery
+Deep branch of medial circumflex femoral artery
+Acetabular branch of medial circumflex femoral artery
+Ascending branch of medial circumflex femoral artery
+Descending branch of medial circumflex femoral artery
+Lateral circumflex femoral artery
+Ascending branch of lateral circumflex femoral artery
+Transverse branch of lateral circumflex femoral artery
+Descending branch of lateral circumflex femoral artery
+Perforating femoral arteries
+Nutrient arteries of femur
+Cruciate anastomosis
+Popliteal artery
+Superior lateral genicular artery
+Superior medial genicular artery
+Middle genicular arteries
+Sural arteries
+Inferior lateral genicular artery
+Inferior medial genicular artery
+Genicular anastomosis
+Patellar anastomosis
+Anterior tibial artery
+Anterior tibial recurrent artery
+(Posterior tibial recurrent artery)
+Anterior lateral malleolar artery
+Anterior medial malleolar artery
+Lateral malleolar network
+Dorsalis pedis artery
+Lateral tarsal artery
+Medial tarsal arteries
+Arcuate artery
+Dorsal metatarsal arteries
+Dorsal digital arteries of foot
+Deep plantar artery
+Posterior tibial artery
+Circumflex fibular branch of posterior tibial artery
+Nutrient arteries of tibia
+Medial malleolar branches of posterior tibial artery
+Medial malleolar network
+Calcaneal branches of posterior tibial artery
+Fibular artery
+Perforating branch of fibular artery
+Communicating artery of fibular artery
+Lateral malleolar branch of fibular artery
+Calcaneal branches of fibular artery
+Calcaneal anastomosis
+Nutrient artery of fibula
+Medial plantar artery
+Deep branch of medial plantar artery
+Superficial branch of medial plantar artery
+Lateral plantar artery
+Plantar arch
+Plantar metatarsal arteries
+Perforating branches of plantar metatarsal arteries
+Common plantar digital arteries
+Proper plantar digital arteries
+(Superficial plantar arch)
+Systemic veins
+Superior vena cava
+Union of brachiocephalic veins
+Azygos vein
+Arch of azygos vein
+Right superior intercostal vein
+Right posterior intercostal veins
+Esophageal tributaries of azygos vein
+Bronchial tributaries of azygos vein
+Pericardial tributaries of azygos vein
+Mediastinal tributaries of azygos vein
+Right superior phrenic vein
+Right subcostal vein
+Right ascending lumbar vein
+Accessory hemi-azygos vein
+Middle left posterior intercostal veins
+Oesophageal accessory hemi-azygos vein
+Bronchial tributaries of accessory hemi-azygos vein
+Pericardial tributaries of accessory hemi-azygos vein
+Mediastinal tributaries of accessory hemi-azygos vein
+Hemi-azygos vein
+Inferior left posterior intercostal veins
+Oesophageal azygos vein
+Pericardial tributaries of hemi-azygos vein
+Mediastinal tributaries of hemi-azygos vein
+Left superior phrenic vein
+Left subcostal vein
+Left ascending lumbar vein
+Brachiocephalic vein
+Thymic veins
+Pericardial tributaries of brachiocephalic vein
+Pericardiacophrenic veins
+Mediastinal tributaries of brachiocephalic vein
+Bronchial tributaries of brachiocephalic vein
+Tracheal veins
+Oesophageal brachiocephalic vein
+Vertebral vein
+Occipital vein
+Anterior vertebral vein
+(Accessory vertebral vein)
+Suboccipital venous plexus
+Deep cervical vein
+Internal thoracic veins
+Superior epigastric veins
+Subcutaneous abdominal veins
+Musculophrenic veins
+Anterior intercostal veins
+Supreme intercostal veins
+Right brachiocephalic vein
+(Right inferior thyroid vein)
+Left brachiocephalic vein
+Inferior thyroid vein
+Unpaired thyroid venous plexus
+Inferior laryngeal vein
+Left superior intercostal vein
+Superior left posterior intercostal vein
+Internal jugular vein
+Superior bulb of internal jugular vein
+Vein of cochlear aqueduct
+Inferior bulb of internal jugular vein
+Menyngeal veins
+Pharyngeal venous plexus
+Pharyngeal veins
+Lingual vein
+Dorsal lingual veins
+Vena comitans of hypoglossal nerve
+Sublingual vein
+Deep lingual vein
+Superior thyroid vein
+Suprerior laryngeal vein
+Middle thyroid vein
+Sternocleidomastoid vein
+Common facial vein
+Facial vein
+Angular vein
+Supratrochlear vein
+Supra-orbital vein
+Superior palpebral vein
+External nasal veins
+Inferior palpebral veins
+Superior labial vein
+Inferior labial veins
+Deep facial vein
+Anterior parotid veins
+External palatine vein
+Submental vein
+Anterior division of retromandibular vein
+Retromandibular vein
+Superficial temporal veins
+Middle temporal vein
+Transverse facial vein
+Maxillary veins
+Pterygoid venous plexus
+Middle meningeal veins
+Deep temporal veins
+Vein of pterygoid canal
+Anterior auricular veins
+Posterior parotid veins
+Temporomandibular articular veins
+Tympanic veins
+Stylomastoid vein
+Cranial veins
+Dural venous sinuses
+Sigmoid sinus
+Marginal sinus
+Transverse sinus
+Superior petrosal sinus
+Petrosquamous sinus
+Confluence of sinuses
+Straight sinus
+Inferior sagittal sinus
+Occipital sinus
+Superior sagittal sinus
+Lateral lacunae
+Inferior petrosal sinus
+Labyrinthine veins
+Cavernous sinus
+Sphenoparietal sinus
+Intercavernous sinuses
+Anterior intercavernous sinus
+Posterior intercavernous sinus
+(Inferior intercavernous sinus)
+Basilar venous plexus
+Diploic veins
+Frontal diploic vein
+Anterior temporal diploic vein
+Posterior temporal diploic vein
+Occipital diploic vein
+Emissary veins
+Parietal emissary vein
+Mastoid emissary vein
+Condylar emissary vein
+Occipital emissary vein
+Venous plexus of hypoglossal canal
+Venous plexus of foramen ovale
+Sphenoidal vein
+Internal carotid venous plexus
+Portal veins of hypophysis
+Superficial petrosal vein
+Vein of foramen caecum
+Veins of foramen lacerum
+Clival veins
+Orbital veins
+Superior ophthalmic vein
+Nasofrontal vein
+Anterior ethmoidal vein
+Posterior ethmoidal vein
+Lacrimal vein
+Vorticose veins
+Posterior ciliary veins
+Anterior ciliary veins
+Central retinal vein
+Retinal venules
+Episcleral veins
+Palpebral veins
+Conjunctival veins
+Inferior ophthalmic vein
+Veins of brain
+Superficial veins of brain
+Super or cerebral veins
+Frontopolar vein
+Frontal veins
+Parietal veins
+Occipital veins
+Superficial middle cerebral vein
+Superior anastomotic vein
+Inferior anastomotic vein
+Inferior cerebral veins
+Orbitofrontal veins
+Vein of uncus
+Temporal veins
+Deep cerebral veins
+Basal vein
+Anterior cerebral vein
+Deep middle cerebral vein
+Insular veins
+Inferior thalamostriate veins
+Inferior choroidal vein
+Great cerebral vein
+Internal cerebral vein
+Superior choroid vein
+Superior thalamostriate vein
+Veins of septum pellucidum
+Lateral direct cerebral veins
+Posterior vein of corpus callosum
+Veins of brainstem
+Pontomesencephalic vein
+Pontine veins
+Veins of medulla oblongata
+Vein of lateral recess of fourth ventricle
+Vein of cerebellomedullary cistern
+Cerebellar veins
+Superior vein of vermis
+Inferior vein of vermis
+Superior veins of cerebellar hemisphere
+Inferior veins of cerebellar hemisphere
+Precentral cerebellar vein
+Petrosal vein
+Veins of vertebral column
+Intervertebral veins
+Radicular veins
+Anterior spinal veins
+Posterior spinal veins
+Anterior internal vertebral venous plexus
+Basivertebral veins
+Posterior internal vertebral venous plexus
+External vertebral venous plexuses
+Anterior external vertebral venous plexus
+Posterior external vertebral venous plexus
+Subclavian vein
+Pectoral veins
+Dorsal scapular vein
+External jugular vein
+Posterior division of retromandibular vein
+Posterior auricular vein
+Anterior jugular vein
+Jugular venous arch
+Suprascapular vein
+Transverse cervical veins
+Axillary vein
+Cephalic vein
+Thoraco-acromial vein
+(Accessory cephalic vein)
+Dorsal venous network of hand
+Intercapitular veins of hand
+Dorsal metacarpal veins
+Dorsal digital veins of hand
+Lateral thoracic vein
+Subscapular vein
+Circumflex scapular vein
+Thoracodorsal vein
+Posterior circumflex humeral vein
+Anterior circumflex humeral vein
+Thoraco-epigastric veins
+Areolar venous plexus
+Basilic vein
+Median cubital vein
+Median antebrachial vein
+Brachial veins
+Anterior interosseous veins
+Posterior interosseous veins
+Ulnar veins
+Superficial venous palmar arch
+Palmar digital veins
+Radial veins
+Deep venous palmar arch
+Palmar metacarpal veins
+Inferior vena cava
+Inferior vena cava (thoracic part)
+Inferior vena cava (abdominal part)
+Inferior phrenic veins
+Lumbar veins
+Hepatic veins
+Right hepatic vein
+Intermediate hepatic vein
+Left hepatic vein
+Right suprarenal vein
+Central vein of right suprarenal gland
+Right renal vein
+Capsular veins of right kidney
+Intrarenal veins of right kidney
+Interlobar vein of right kidney
+Arcuate vein of right kidney
+Interlobular vein of right kidney
+Left renal vein
+Capsular veins of left kidney
+Intrarenal veins of left kidney
+Interlobar vein of left kidney
+Arcuate vein of left kidney
+Interlobular vein of left kidney
+Left suprarenal vein
+Central vein of left suprarenal gland
+Left ovarian vein
+Left testicular vein
+Left pampiniform plexus
+Right ovarian vein
+Right testicular vein
+Right pampiniform plexus
+Union of common iliac veins
+Common iliac vein
+Median sacral vein
+Iliolumbar vein
+Internal iliac vein
+Superior gluteal veins
+Inferior gluteal veins
+Obturator veins
+Lateral sacral veins
+Sacral venous plexus
+Middle anorectal veins
+Anorectal venous plexus
+Internal pudendal vein
+Inferior anorectal veins
+Posterior labial veins
+Posterior scrotal veins
+Vein of bulb of vestibule
+Vein of bulb of penis
+Vesical veins
+Vesical venous plexus
+Deep dorsal vein of clitoris
+Deep vein of clitoris
+Veins of prostate
+Prostatic venous plexus
+Deep dorsal vein of penis
+Deep vein of penis
+Uterine veins
+Uterine venous plexus
+Vaginal veins
+Vaginal venous plexus
+External iliac vein
+Inferior epigastric vein
+Pubic vein
+(Accessory obturator vein)
+Deep circumflex iliac vein
+Femoral vein
+Medial circumflex femoral veins
+Lateral circumflex femoral veins
+Great saphenous vein
+External pudendal veins
+Deep external pudendal vein
+Superficial external pudendal vein
+Superficial dorsal veins of clitoris
+Superficial dorsal veins of penis
+Anterior labial veins
+Anterior scortal veins
+Superficial circumflex iliac vein
+Superficial epigastric vein
+Accessory saphenous vein
+Medial marginal vein of foot
+Deep femoral vein
+Perforating veins
+Popliteal vein
+Sural veins
+Genicular veins
+Anterior tibial veins
+Dorsalis pedis veins
+Posterior tibial veins
+Fibular veins
+Medial plantar veins
+Plantar venous network
+Lateral plantar veins
+Plantar venous arch
+Plantar metatarsal veins
+Plantar digital veins
+Small saphenous vein
+Lateral marginal vein of foot
+Dorsal venous network of foot
+Dorsal venous arch of foot
+Dorsal metatarsal veins
+Dorsal digital veins of foot
+Intercapitular veins of foot
+Hepatic portal vein
+Branches of hepatic portal vein
+Right branch of hepatic portal vein
+Anterior right branch of hepatic
+Posterior right branch of hepatic
+Left branch of hepatic portal vein
+Transverse part of left branch of hepatic portal vein
+Caudate branches of hepatic portal vein
+Umbilical part of left branch of hepatic portal vein
+Ligamentum venosum
+Lateral left branches of hepatic portal vein
+Umbilical vein
+Round ligament of liver
+Medial left branches of hepatic portal vein
+Tributaries of hepatic portal vein
+Cystic veins
+Para-umbilical veins
+Posterior superior pancreaticoduodenal vein
+Left gastric vein
+Right gastric vein
+Prepyloric vein
+Superior mesenteric vein
+Jejunal veins
+Ileal veins
+Right gastro-omental vein
+Veins of head of pancreas
+Pancreaticoduodenal veins
+Lleocolic vein
+Appendicular vein
+Right colic vein
+Middle colic vein
+Splenic vein
+Pancreatic veins
+Short gastric veins
+Left gastro-omental vein
+Inferior mesenteric vein
+Left colic vein
+Sigmoid veins
+Superior anorectal vein
+Great lymphatic vessels
+Right lymphatic duct
+Right jugular lymphatic trunk
+Right subclavian lymphatic trunk
+Left bronchomediastinal lymphatic trunk
+Thoracic duct
+Cervical part of thoracic duct
+Arch of thoracic duct
+Left jugular lymphatic trunk
+Left subclavian lymphatic trunk
+Thoracic part of thoracic duct
+Intercostal lymphatic trunks
+Abdominal part of thoracic duct
+(Cisterna chyli)
+Right lumbar lymphatic trunk
+Left lumbar lymphatic trunk
+Intestinal lymphatic trunk
+Lymphoid organs
+Lymphoid system
+Primary lymphoid organs
+Thymus
+Lobe of thymus
+Lobules of thymus
+Cortex of thymus
+Medulla of thymus
+(Accessory thymic lobules)
+Secondary lymphoid organs
+Spleen
+Diaphragmatic surface of spleen
+Visceral surface of spleen
+Renal impression of spleen
+Gastric impression of spleen
+Colic impression of spleen
+(Pancreatic impression of spleen)
+Anterior extremity of spleen
+Posterior extremity of spleen
+Inferior border of spleen
+Superior border of spleen
+Hilum of spleen
+Serosa of spleen
+Fibrous capsule of spleen
+Splenic trabeculae
+Splenic pulp
+Red pulp
+White pulp
+(Accessory spleen)
+Pharyngeal lymphoid ring
+Crypts of lingual tonsil
+Capsule of palatine tonsil
+Pits of palatine tonsil
+Crypts of palatine tonsil
+Cleft of palatine tonsil
+Pits of pharyngeal tonsil
+Crypts of pharyngeal tonsil
+Lymph nodes
+Lymph node
+Capsule of lymph node
+Hilum of lymph node
+Trabeculae of lymph node
+Cortex of lymph node
+Medulla of lymph node
+Lymph nodes of head
+Occipital nodes
+Mastoid nodes
+Superficial parotid nodes
+Deep parotid nodes
+Pre-auricular nodes
+Infra-auricular nodes
+Intraglandular parotid nodes
+Facial nodes
+Bucinator node
+Nasolabial node
+Malar node
+Mandibular node
+Lingual nodes
+Lymph nodes of neck
+Submental nodes
+Submandibular nodes
+Anterior cervical nodes
+Superficial anterior cervical nodes
+Deep anterior cervical nodes
+Infrahyoid nodes
+Prelaryngeal nodes
+Thyroid nodes
+Pretracheal nodes
+Paratracheal cervical nodes
+Lateral cervical nodes
+Superficial lateral cervical nodes
+Superior deep lateral cervical nodes
+Jugulodigastric node
+Lateral superior jugular node
+Anterior superior jugular node
+Inferior deep lateral cervical nodes
+Jugulo-omohyoid node
+Lateral inferior jugular node
+Anterior inferior jugular nodes
+Supraclavicular nodes
+Retropharyngeal nodes
+Lymph nodes of upper limb
+Axillary nodes
+Apical axillary nodes
+Central axillary nodes
+Lateral axillary nodes
+Posterior axillary nodes
+Anterior axillary nodes
+Interpectoral nodes
+Infraclavicular nodes
+Brachial nodes
+Cubital nodes
+Supratrochlear nodes
+Thoracic lymph nodes
+Parietal thoracic lymph nodes
+Paramammary nodes
+Parasternal nodes
+Intercostal nodes
+Prevertebral nodes
+Superior diaphragmatic nodes
+Mediastinal lymph nodes
+Brachiocephalic nodes
+(Node of ligamentum arteriosum)
+(Node of arch of azygos vein)
+Prepericardial nodes
+Lateral pericardial nodes
+Paratrachéal thoracic nodes
+Tracheobronchial nodes
+Superior tracheobronchial nodes
+Inferior tracheobronchial nodes
+Juxta-oesophageal nodes
+Pulmonary nodes
+Bronchopulmonary nodes
+Intrapulmonary nodes
+Abdominal nodes
+Parietal abdominal lymph nodes
+Left lumbar nodes
+Lateral aortic nodes
+Pre-aortic nodes
+Retro-aortic nodes
+Intermediate lumbar nodes
+Right lumbar nodes
+Lateral caval nodes
+Precaval nodes
+Retrocaval nodes
+Inferior diaphragmatic nodes
+Inferior epigastric nodes
+Visceral abdominal lymph nodes
+Coeliac nodes
+Right gastric nodes
+Left gastric nodes
+(Nodes around cardia)
+Right gastro-omental nodes
+Left gastro-omental nodes
+Pyloric nodes
+(Suprapyloric node)
+(Subpyloric nodes)
+(Retropyloric nodes)
+Pancreatic nodes
+Superior pancreatic nodes
+Inferior pancreatic nodes
+Splenic nodes
+Pancreaticoduodenal nodes
+Superior pancreaticoduodenal nodes
+Inferior pancreaticoduodenal nodes
+Hepatic nodes
+Cystic node
+Node of anterior border of omental foramen
+Superior mesenteric nodes
+Juxta-intestinal mesenteric nodes
+Central superior mesenteric nodes
+Ileocolic nodes
+Precaecal nodes
+Retrocaecal nodes
+Appendicular nodes
+Paracolic superior mesenteric nodes
+Right colic nodes
+Middle colic nodes
+Inferior mesenteric nodes
+Paracolic inferior mesenteric nodes
+Left colic nodes
+Sigmoid nodes
+Superior anorectal nodes
+Pelvic lymph nodes
+Parietalpelvic lymph nodes
+Common iliac nodes
+Medial common iliac nodes
+Intermediate common iliac nodes
+Lateral common iliac nodes
+Subaortic nodes
+Median sacral nodes
+External iliac nodes
+Medial external iliac nodes
+Intermediate external iliac nodes
+Lateral external iliac nodes
+(Medial lacunar node)
+(Intermediate lacunar node)
+(Lateral lacunar node)
+Interiliac nodes
+Obturator nodes
+Internal iliac nodes
+Gluteal nodes
+Superior gluteal nodes
+Inferior gluteal nodes
+Lateral sacral nodes
+Visceral pelvic lymph nodes
+Paravesical nodes
+Prevesical nodes
+Postvesical nodes
+Lateral vesical nodes
+Para-uterine nodes
+Paravaginal nodes
+Anorectal nodes
+Lymph nodes of lower limb
+Inguinal nodes
+Superficial inguinal nodes
+Superomedial superficial inguinal nodes
+Superolateral superficial inguinal nodes
+Inferior superficial inguinal nodes
+Deep inguinal nodes
+(Proximal deep inguinal node)
+(Intermediate deep inguinal node)
+Distal deep inguinal node
+Popliteal nodes
+Superficial popliteal nodes
+Deep popliteal nodes
+(Anterior tibial node)
+(Posterior tibial node)
+(Fibular node)
+Sense organs
+Integrating systems
+Nervous system
+Central nervous system
+Grey matter
+White matter
+Reticular formation
+Ependyma
+Meninges
+Dura
+Cranial dura
+Periosteal cranial dura
+Meningeal cranial dura
+Falx cerebri
+Tentorium cerebelli
+Tentorial notch
+Falx cerebelli
+Diaphragma sellae
+Trigeminal cave
+(Subdural space)
+(Cranial epidural space)
+Spinal dura
+Spinal epidural space
+Filum terminale externum
+Leptomeninges
+Arachnoid
+Subarachnoid space
+Cerebrospinal fluid
+Arachnoid granulations
+Arachnoid trabeculae
+Cranial arachnoid
+Cranial subarachnoid cisterns
+Pericallosal cistern
+Cistern of lateral cerebral fossa
+Cistern of lamina terminalis
+Chiasmatic cistern
+Interpeduncular cistern
+Ambient cistern
+Quadrigeminal cistern
+Pontocerebellar cistern
+Lateral cerebellomedullary cistern
+Posterior cerebellomedullary cistern
+Spinal arachnoid
+Lumbar cistern
+Pia
+Cranial pia
+Taenia choroidea
+Tela choroidea
+Choroid plexus
+Spinal pia
+Denticulate ligament
+Intermediate cervical septum
+Linea splendens
+Filum terminale internum
+Brain
+Cerebrum
+Longitudinal cerebral fissure
+Cerebral hemisphere
+Frontal pole
+Temporal pole
+Occipital pole
+Superolateral surface of cerebral hemisphere
+Superior margin of cerebral hemisphere
+Medial surface of cerebral hemisphere
+Inferomedial margin of cerebral hemisphere
+Inferior surface of cerebral hemisphere
+Inferolateral margin of cerebral hemisphere
+Transverse cerebral fissure
+Lateral cerebral fossa
+Telencephalon
+Cerebral lobes
+Cerebral gyri
+Cerebral sulci
+Interlobar sulci
+Central sulcus
+Lateral sulcus
+Parieto-occipital sulcus
+Pre-occipital notch
+Sulcus of corpus callosum
+Cingulate sulcus
+Subparietal sulcus
+Collateral sulcus
+Rhinal sulcus
+Circular sulcus of insula
+Frontal lobe
+Frontal operculum
+Inferior frontal gyrus
+Orbital part of inferior frontal gyrus
+Anterior ramus of lateral sulcus
+Triangular part of inferior frontal gyrus
+Ascending ramus of lateral sulcus
+Opercular part of inferior frontal gyrus
+Inferior frontal sulcus
+Middle frontal gyrus
+Superior frontal sulcus
+Superior frontal gyrus
+Precentral sulcus
+Precentral gyrus
+Anterior paracentral gyrus
+Paracentral sulcus
+Medial frontal gyrus
+Straight gyrus
+Olfactory sulcus
+Orbital gyri
+Orbital sulci
+Paracentral lobule
+Parietal lobe
+Parietal operculum
+Postcentral gyrus
+Postcentral sulcus
+Inferior parietal lobule
+Angular gyrus
+Supramarginal gyrus
+Posterior ramus of lateral sulcus
+Intraparietal sulcus
+Superior parietal lobule
+Posterior paracentral gyrus
+Marginal branch of cingulate sulcus
+Precuneus
+Occipital lobe
+Superior occipital gyri
+Lateral occipital gyri
+(Lunate sulcus)
+Transverse occipital sulcus
+Cuneus
+Calcarine sulcus
+Lingual gyrus
+Temporal lobe
+Superior temporal gyrus
+Temporal operculum
+Transverse temporal gyri
+Transverse temporal sulci
+Temporal plane
+Superior temporal sulcus
+Middle temporal gyrus
+Inferior temporal sulcus
+Inferior temporal gyrus
+Occipitotemporal sulcus
+Occipitotemporal gyri
+Lateral occipitotemporal gyrus
+Medial occipitotemporal gyrus
+Insula
+Limen insulae
+Short gyri of insula
+Central sulcus of insula
+Long gyrus of insula
+Limbic lobe
+Limbic gyrus
+Subcallosal area
+Para-olfactory gyri
+Para-olfactory sulci
+Fornicate gyrus
+Cingulate gyrus
+Isthmus of cingulate gyrus
+Parahippocampal gyrus
+Uncus
+Paraterminal gyrus
+Hippocampus
+Subiculum
+Cornu ammonis
+Dentate gyrus
+Hippocampal sulcus
+Alveus
+Fimbria of hippocampus
+Fasciolar gyrus
+Indusium griseum
+Pallium
+Cerebral cortex
+Allocortex
+Archicortex
+Palaeocortex
+Neocortex
+Juxtallocortex
+Isocortex
+Claustrum
+Basal forebrain
+Olfactory structures
+Olfactory bulb
+Olfactory tract
+Medial olfactory stria
+Lateral olfactory stria
+Olfactory trigone
+Anterior olfactory nucleus
+Anterior perforated substance
+Magnocellular nuclei of basal forebrain
+Nucleus basalis
+Diagonal band
+Septal nuclei
+Amygdaloid body
+Peri-amygdaloid cortex
+Basolateral amygdaloid nuclei
+Centromedial amygdaloid nuclei
+Transition areas of amygdala
+Sublenticular extended amygdala
+Bed nucleus of stria terminalis
+Ventral pallidum
+Ventral striatum
+Nucleus accumbens
+Corpus striatum
+Dorsal striatum
+Caudate nucleus
+Head of caudate nucleus
+Body of caudate nucleus
+Tail of caudate nucleus
+Caudatolenticular grey bridges
+Putamen
+Lentiform nucleus
+Lateral medullary lamina
+Globus pallidus
+Lateral segment of globus pallidus
+Medial medullary lamina
+Medial segment of globus pallidus
+White matter of telencephalon
+Semi-oval centre
+Corona radiata
+Internal capsule
+Anterior limb of internal capsule
+Anterior thalamic radiation
+Genu of internal capsule
+Posterior limb of internal capsule
+Central thalamic radiation
+Thalamoparietal fibres
+Retrolentiform limb of internal capsule
+Optic radiation
+Posterior thalamic radiation
+Sublentiform limb of internal capsule
+Acoustic radiation
+External capsule
+Extreme capsule
+Lateral longitudinal stria
+Medial longitudinal stria
+Stria terminalis
+Association fibres of telencephalon
+Short association fibres
+Cerebral arcuate fibres
+Long association fibres
+Cingulum
+Inferior longitudinal fasciculus
+Superior longitudinal fasciculus
+Uncinate fasciculus of cerebrum
+Inferior occipitofrontal fasciculus
+Superior occipitofrontal fasciculus
+Commissural fibres of telencephalon
+Corpus callosum
+Rostrum of corpus callosum
+Genu of corpus callosum
+Body of corpus callosum
+Splenium of corpus callosum
+Radiation of corpus callosum
+Frontal forceps
+Occipital forceps
+Tapetum
+Anterior commissure
+Anterior part of anterior commissure
+Posterior part of anterior commissure
+Hippocampal commissure
+Projection fibres of telencephalon
+Corticospinal fibres
+Corticopontine fibres
+Frontopontine fibres
+Parietopontine fibres
+Occipitopontine fibres
+Temporopontine fibres
+Corticonuclear fibres
+Mesencephalic corticonuclear fibres
+Pontine corticonuclear fibres
+Medullary corticonuclear fibres
+Corticoreticular fibres
+Corticomesencephalic fibres
+Corticorubral fibres
+Corticotectal fibres
+Corticothalamic fibres
+Fornix
+Crus of fornix
+Body of fornix
+Column of fornix
+Precommissural fibres
+Postcommissural fibres
+Lateral ventricle
+Frontal horn
+Interventricular foramen
+Body of lateral ventricle
+Atrium of lateral ventricle
+Occipital horn
+Temporal horn
+Walls of lateral ventricle
+Septum pellucidum
+Cave of septum pellucidum
+Laminae of septum pellucidum
+Lamina affixa
+Choroid line of lateral ventricle
+Choroid fissure
+Taenia of fornix
+Choroid plexus of lateral ventricle
+Choroidal enlargement
+Pes hippocampi
+Collateral trigone
+Collateral eminence
+Bulb of occipital horn
+Calcarine spur
+Diencephalon
+Habenula
+Habenular trigone
+Habenular sulcus
+Pulvinar
+Lateral geniculate body
+Medial geniculate body
+Optic chiasm
+Optic tract
+Lateral root of optic tract
+Medial root of optic tract
+Infundibulum of hypothalamus
+Tuber cinereum
+Mamillary body
+Epithalamus
+Lateral habenular nucleus
+Medial habenular nucleus
+Thalamus
+Anterior nuclei of thalamus
+Medial nuclei of thalamus
+Mediodorsal nucleus
+Thalamic medullary laminae
+External medullary lamina of thalamus
+Internal medullary lamina of thalamus
+Intralaminar nuclei of thalamus
+Lateral nuclei of thalamus
+Ventral nuclei of thalamus
+Ventral anterior nucleus
+Ventral lateral nuclei
+Ventral medial nuclei
+Ventral posterior nuclei
+Ventral posterolateral nucleus
+Ventral posteromedial nucleus
+Ventral posterior inferior nucleus
+Dorsal nuclei of thalamus
+Lateral dorsal nucleus
+Lateral posterior nucleus
+Pulvinar nuclei
+Periventricular nuclei of thalamus
+Nuclei of geniculate bodies
+Lateral geniculate nucleus
+Medial geniculate nuclei
+Prethalamus
+Reticular nucleus of prethalamus
+Pregeniculate nucleus
+Nuclei of perizonal fields
+Zona incerta
+Subthalamus
+Subthalamic nucleus
+Preoptic area
+Periventricular preoptic nucleus
+Medial preoptic nucleus
+Lateral preoptic nucleus
+Hypothalamus
+Periventricular hypothalamic zone
+Medial hypothalamic zone
+Lateral hypothalamic zone
+Anterior hypothalamic area
+Anterior periventricular hypothalamic nucleus
+Suprachiasmatic nucleus
+Supra-optic nucleus
+Paraventricular hypothalamic nucleus
+Anterior part of lateral hypothalamic zone
+Intermediate hypothalamic area
+Posterior periventricular hypothalamic nucleus
+Arcuate nucleus of hypothalamus
+Perifornical nucleus
+Dorsomedial hypothalamic nucleus
+Ventromedial hypothalamic nucleus
+Tuberal part of lateral hypothalamic zone
+Posterior hypothalamic area
+Medial mamillary nucleus
+Lateral mamillary nucleus
+Tuberomamillary nucleus
+Lateral tuberal nucleus
+Posterior part of lateral hypothalamic zone
+Dorsal hypothalalmic area
+Posterior hypothalamic nucleus
+Pretectum
+Pretectal nuclei
+Nucleus of posterior commissure
+Accessory nuclei of optic tract
+Prerubral tegmentum
+Interstitial nucleus
+Elliptic nucleus
+White matter of diencephalon
+Stria medullaris thalami
+Habenular commissure
+Posterior commissure
+Habenulo-interpeduncular tract
+Ansa lenticularis
+Lenticular fasciculus
+Ansa peduncularis
+Fasciculus peduncularis
+Fasciculus subthalamicus
+Fasciculus thalamicus
+Mamillothalamic fasciculus
+Mamillotegmental fasciculus
+Supra-optic commissures
+Dorsal supra-optic commissure
+Ventral supra-optic commissure
+Periventricular fibres of thalamus
+Periventricular fibres of hypothalamus
+Medial forebrain bundle
+Hypothalamohypophysial tract
+Supraopticohypophysial tract
+Paraventriculohypophysial tract
+Retinohypothalamic tract
+Third ventricle
+Suprapineal recess
+Pineal recess
+Infundibular recess
+Supra-optic recess
+Superior opening of aqueduct of midbrain
+Walls of third ventricle
+Lamina terminalis
+Anterior thalamic tubercle
+Interthalamic adhesion
+Hypothalamic sulcus
+Periventricular organs of third ventricle
+Vascular organ of lamina terminalis
+Subfornical organ
+Subcommissural organ
+Median eminence
+Taenia thalami
+Choroid plexus of third ventricle
+Tela choroidea of third ventricle
+Cerebellum
+Arbor vitae
+Cerebellar fissures
+Folia of cerebellum
+Body of cerebellum
+Anterior lobe of cerebellum
+Primary fissure
+Posterior lobe of cerebellum
+Horizontal fissure
+Secondary fissure
+Posterolateral fissure
+Flocculonodular lobe
+Vallecula of cerebellum
+Pontocerebellum
+Spinocerebellum
+Vestibulocerebellum
+Hemisphere of cerebellum
+Wing of central lobule
+Lobule II of cerebellar hemisphere
+Lobule III of cerebellar hemisphere
+Anterior quadrangular lobule
+Lobule IV of cerebellar hemisphere
+Lobule V of cerebellar hemisphere
+Posterior quadrangular lobule
+Semilunar lobules
+Superior semilunar lobule
+Inferior semilunar lobule
+Gracile lobule
+Biventral lobule
+Tonsil of cerebellum
+Flocculus
+Vermis of cerebellum
+Lingula of cerebellum
+Central lobule
+Lobule II of vermis
+Lobule III of vermis
+Culmen
+Lobule IV of vermis
+Lobule V of Vermis
+Declive
+Folium of vermis
+Tuber of vermis
+Pyramis of vermis
+Uvula of vermis
+Nodule of vermis
+Grey matter of cerebellum
+Cerebellar cortex
+Cerebellar nuclei
+Dentate nucleus
+Hilum of dentate nucleus
+Emboliform nucleus
+Globose nucleus
+Fastigial nucleus
+White matter of cerebellum
+Medullary lamellae of cerebellum
+Cerebellar commissure
+Peduncle of flocculus
+Cerebellar peduncles
+Superior cerebellar peduncle
+Dentatothalamic tract
+Middle cerebellar peduncle
+Pontocerebellar fibres
+Inferior cerebellar peduncle
+Restiform body
+Cuneocerebellar fibres
+Olivocerebellar tract
+Juxtarestiform body
+Uncinate fasciculus of cerebellum
+Brainstem
+Nuclei of cranial nerves
+Nucleus of origin of cranial nerve
+Terminal nucleus of cranial nerve
+White matter of brainstem
+Medial lemniscus
+Trigeminal lemniscus
+Anterior trigeminothalamic tract
+Posterior trigeminothalamic tract
+Spinal lemniscus
+Lateral lemniscus
+Medial longitudinal fasciculus
+Posterior longitudinal fasciculus
+Central tegmental tract
+Rubro-olivary tract
+Cerebello-olivary tract
+Spinal tract of trigeminal nerve
+Mesencephalic tract of trigeminal nerve
+Midbrain
+Interpeduncular fossa
+Posterior perforated substance
+Lateral groove of midbrain
+Cerebral peduncle
+Base of peduncle
+Crus cerebri
+Substantia nigra
+Compact part of substantia nigra
+Reticular part of substantia nigra
+Lateral part of substantia nigra
+Tegmentum of midbrain
+Grey matter of tegmentum of midbrain
+Mesencephalic nucleus of midbrain
+Nucleus of brachium of inferior colliculi
+Parabigeminal nucleus
+Nucleus of trochlear nerve
+Oculomotor complex
+Nucleus of oculomotor nerve
+Accessory nucleus of oculomotor nerve
+Lateroposterior tegmental nucleus
+Pedunculopontine tegmental nucleus
+Nuclei of anterior tegmental area
+Interpeduncular nucleus
+Red nucleus
+Reticular formation of midbrain
+Cuneiform nucleus
+Subcuneiform nucleus
+Intracuneiform nucleus
+White matter of tegmentum of midbrain
+Decussation of superior cerebellar peduncles
+Tegmental decussations
+Anterior tegmental decussation
+Posterior tegmental decussation
+Central mesencephalic structures
+Peri-aqueductal grey substance
+Aqueduct of midbrain
+Tectum of midbrain
+Superior colliculus
+Layers of superior colliculus
+Brachium of superior colliculus
+Commissure of superior colliculi
+Inferior colliculus
+Nuclei of inferior colliculus
+Brachium of inferior colliculus
+Commissure of inferior colliculi
+Trochlear decussation
+Pons
+Cerebellopontine angle
+Basilar sulcus
+Medullopontine sulcus
+Basilar part of pons
+Pontine nuclei
+Longitudinal pontine fibres
+Transverse pontine fibres
+Tegmentum of pons
+Grey matter of pontine tegmentum
+Oral part of spinal nuclei of trigeminal nerve
+Principal sensory nucleus of trigeminal nerve
+Vestibular nuclei
+Superior vestibular nucleus
+Lateral vestibular nucleus
+Nuclei of trapezoid body
+Superior olivary nucleus
+Nuclei of lateral lemniscus
+Motor nucleus of facial nerve
+Motor nucleus of trigeminal nerve
+Nucleus of abducens nerve
+Superior salivatory nucleus
+Lacrimal nucleus
+Caerulean nucleus
+Parabrachial nuclei
+Pontine central grey matter
+Posterior tegmental nucleus
+Pontine reticular formation
+Caudal pontine reticular nucleus
+Rostral pontine reticular nucleus
+Anterior tegmental nucleus
+Reticulotegmental nucleus
+White matter of pontine tegmentum
+Raphe of pons
+Pontine raphe nuclei
+Median raphe nucleus
+Posterior raphe nucleus
+Supragenual nucleus
+Genu of fibres of facial nerve
+Trapezoid body
+Olivocochlear tract
+Anterior acoustic stria
+Intermediate acoustic stria
+Posterior acoustic stria
+Auditory commissure of pons
+Fourth ventricle
+Inferior opening of aqueduct of midbrain
+Lateral recess of fourth ventricle
+Lateral aperture of fourth ventricle
+Median aperture of fourth ventricle
+Rhomboid fossa
+Median sulcus of rhomboid fossa
+Sulcus limitans
+Roof of fourth ventricle
+Fastigium
+Superior medullary velum
+Frenulum of superior medullary velum
+Inferior medullary velum
+Tela choroidea of fourth ventricle
+Choroid plexus of fourth ventricle
+Taenia cinerea
+Obex
+Medulla oblongata
+Anterior median fissure of medulla oblongata
+Pyramid of medulla oblongata
+Anterolateral sulcus of medulla oblongata
+Lateral funiculus of medulla oblongata
+Olive
+Retro-olivary groove
+Trigeminal tubercle
+Posterolateral sulcus of medulla oblongata
+Cuneate tubercle
+Gracile tubercle
+Posterior median sulcus of medulla oblongata
+Superior medulla oblongata
+Inferior medulla oblongata
+Grey matter of medulla oblongata
+Gracile nucleus
+Cuneate nucleus
+Accessory cuneate nucleus
+Spinal nucleus of trigeminal nerve
+Caudal part of spinal trigeminal nucleus
+Interpolar part of spinal trigeminal nucleus
+Medial vestibular nucleus
+Inferior vestibular nucleus
+Anterior cochlear nucleus
+Posterior cochlear nucleus
+Nucleus of solitary tract
+Area postrema
+Nucleus of hypoglossal nerve
+Nucleus ambiguus
+Retrofacial nucleus
+Posterior nucleus of vagus nerve
+Inferior salivatory nucleus
+Retroambiguus nucleus
+Arcuate nucleus of medulla oblongata
+Perihypoglossal nuclei
+Subhypoglossal nucleus
+Intercalated nucleus
+Prepositus nucleus
+Inferior olivary complex
+Principal inferior olivary nucleus
+Hilum of inferior olivary nucleus
+Posterior accessory olivary nucleus
+Medial accessory olivary nucleus
+Medullary reticular formation
+Central reticular nucleus
+Gigantocellular nucleus
+Lateral paragigantocellular nucleus
+Parvocellular reticular nucleus
+Posterior paragigantocellular nucleus
+Lateral reticular nucleus
+White matter of medulla oblongata
+Raphe of medulla oblongata
+Raphe nuclei of medulla oblongata
+Pallidus raphe nucleus
+Obscurus raphe nucleus
+Magnus raphe nucleus
+Posterior paramedian nucleus
+Pyramidal tract
+Decussation of pyramids
+Internal arcuate fibres
+Decussation of medial lemniscus
+Anterior external arcuate fibres
+Posterior external arcuate fibres
+Medullary striae of fourth ventricle
+Amiculum of olive
+Sollitary tract
+Spinal cord
+Cervical enlargement
+Lumbosacral enlargement
+Conus medullaris
+Anterior median fissure of spinal cord
+Anterolateral sulcus of spinal cord
+Posterolateral sulcus of spinal cord
+Posterior intermediate sulcus of spinal cord
+Posterior median sulcus of spinal cord
+Cervical part of spinal cord
+Thoracic part of spinal cord
+Lumbar part of spinal cord
+Sacral part of spinal cord
+Coccygeal part of spinal cord
+Grey matter of spinal cord
+Posterior horn of spinal cord
+Apex of posterior horn
+Head of posterior horn
+Gelatinous substance of posterior horn
+Nucleus proprius
+Neck of posterior horn
+Base of posterior horn
+Spinal reticular process
+Intermediate zone of spinal cord
+Central intermediate substance
+Posterior thoracic nucleus
+Lateral intermediate substance
+Sacral parasympathetic nucleus
+Lateral horn of spinal cord
+Intermediolateral nucleus
+Anterior horn of spinal cord
+Medial motor nuclei of spinal nerves
+Lateral motor nuclei of spinal nerves
+Nucleus of accessory nerve
+Nucleus of phrenic nerve
+Nucleus of pudendal nerve
+White matter of spinal cord
+Posterior funiculus
+Posterior fasciculus proprius
+Gracile fasciculus
+Cuneate fasciculus
+Spinogracile fibres
+Spinocuneate fibres
+Posterolateral tract
+Lateral funiculus
+Lateral fasciculus proprius
+Lateral corticospinal tract
+Lateral reticulospinal tract
+Rubrospinal tract
+Hypothalamospinal fibres
+Posterior spinocerebellar tract
+Anterior spinocerebellar tract
+Anterolateral fasciculus
+Spinothalamic tracts
+Anterior spinothalamic tract
+Lateral spinothalamic tract
+Spinoreticular tract
+Spinomesencephalic tract
+Spinotectal tract
+Spinoperiaqueductal fibres
+Spino-olivary tract
+Anterior funiculus
+Anterior fasciculus proprius
+Anterior corticospinal tract
+Lateral vestibulospinal tract
+Medial vestibulospinal tract
+Reticulospinal fibres of anterior funiculus
+Anterolateral reticulospinal tract
+Anterior reticulospinal tract
+Medial reticulospinal tract
+Tectospinal tract
+Central structures of spinal cord
+Spinal area x
+Anterior grey commissure
+Central gelatinous substance
+Posterior grey commissure
+Anterior white commissure
+Posterior white commissure
+Central canal
+Terminal ventricle
+Peripheral nervous system nerves
+Motor nerve
+Sensory nerve
+Cutaneous nerve
+Mixed nerve
+Cutaneous branch of nerve
+Articular branch of nerve
+Muscular branch of nerve
+Autonomic branch of nerve
+Communicating branch of nerve
+Ganglionic branch of nerve
+Autonomic nerve
+Cranial nerve
+Spinal nerve
+Trunk of spinal nerve
+Anterior root of spinal nerve
+Posterior root of spinal nerve
+Anterior ramus of spinal nerve
+Meningeal branch of spinal nerve
+Grey communicating branch of spinal nerve
+White communicating branch of spinal nerve
+Posterior ramus of spinal nerve
+Medial branch of posterior ramus of spinal nerve
+Lateral branch of posterior ramus of spinal nerve
+Nerve
+Epineurium
+Perineurium
+Nerve fascicle
+Endoneurium
+Peripheral nerve fibres
+Roots of nerves
+Root of nerve
+Rootlet of nerve
+Cauda equina
+Ganglia
+Sensory ganglia
+Sensory ganglion of cranial nerve
+Spinal ganglion
+Autonomic ganglia
+Sympathetic ganglion
+Parasympathetic ganglion
+Visceral ganglion
+Nerve plexuses
+Spinal nerve plexus
+Autonomic plexuses
+Visceral plexus
+Perivascular plexus
+Peri-arterial plexus
+Cranial nerves
+Terminal nerve
+Terminal ganglion
+Olfactory nerve (I)
+Olfactory fibre bundle
+Optic nerve (II)
+Outer sheath of optic nerve
+Inner sheath of optic nerve
+Subarachnoid space of optic nerve
+Oculomotor nerve (III)
+Superior branch of oculomotor nerve
+Inferior branch of oculomotor nerve
+Branch of oculomotor nerve to ciliary ganglion
+Trochlear nerve (IV)
+Trigeminal nerve (V)
+Sensory root of trigeminal nerve
+Trigeminal ganglion
+Motor root of trigeminal nerve
+Ophthalmic nerve
+Tentorial branch of ophthalmic nerve
+Lacrimal nerve
+Frontal nerve
+Supra-orbital nerve
+Lateral branch of supra-orbital nerve
+Medial branch of supra-orbital nerve
+Supratrochlear nerve
+Nasociliary nerve
+Branch of nasociliary nerve to ciliary ganglion
+Long ciliary nerves
+Posterior ethmoidal nerve
+Anterior ethmoidal nerve
+Internal nasal branches of anterior ethmoidal nerve
+Lateral nasal branches of anterior ethmoidal nerve
+Medial nasal branches of anterior ethmoidal nerve
+External nasal branch of anterior ethmoidal nerve
+Anterior meningeal branch of anterior ethmoidal nerve
+Infratrochlear nerve
+Palpebral branches of infratrochlear nerve
+Maxillary nerve
+Meningeal branch of maxillary nerve
+Branches of maxillary nerve to pterygopalatine ganglion
+Lateral superior posterior nasal branches of maxillary nerve
+Medial superior posterior nasal branches of maxillary nerve
+Nasopalatine nerve
+Gingival branches of nasopalatine nerve
+Pharyngeal nerve
+Greater palatine nerve
+Inferior posterior nasal branches of greater palatine nerve
+Gingival branches of greater palatine nerve
+Lesser palatine nerves
+Middle palatine nerve
+Posterior palatine nerve
+Tonsillar branches of lesser palatine nerves
+Zygomatic nerve
+Zygomaticotemporal nerve
+(Communic. branch of zygomaticotemporal n. to lacrimal n.)
+Zygomaticofacial nerve
+Posterior superior alveolar nerve
+Superior dental plexus
+Superior dental branches of superior alveolar nerves
+Gingival branches of superior alveolar nerves
+Infra-orbital nerve
+Middle superior alveolar nerve
+Anterior superior alveolar nerve
+Palpebral branches of infra-orbital nerve
+External nasal branches of infra-orbital nerve
+Internal nasal branches of infra-orbital nerve
+Superior labial branches of infra-orbital nerve
+Mandibular nerve
+Meningeal branch of mandibular nerve
+Branches of mandibular nerve to otic ganglion
+Anterior division of mandibular nerve
+Nerve to medial pterygoid muscle
+Nerve to tensor veli palatini
+Nerve to tensor tympani
+Masseteric nerve
+Deep temporal nerves
+Posterior deep temporal nerve
+Anterior deep temporal nerve
+Nerve to lateral pterygoid muscle
+Buccal nerve
+Gingival branches of buccal nerve
+Posterior division of mandibular nerve
+Auriculotemporal nerve
+Nerve to external acoustic meatus
+Branches of auriculotemporal nerve to tympanic membrane
+Parotid branches of auriculotemporal nerve
+Anterior auricular nerves
+Superficial temporal branches of auriculotemporal nerve
+Lingual nerve
+Branches of lingual nerve to isthmus of fauces
+Sublingual nerve
+Lingual branches of lingual nerve
+Posterior branch of lingual nerve to submandibular ganglion
+(Branches of lingual nerve to sublingual ganglion)
+Gingival branches of lingual nerve
+Inferior alveolar nerve
+Nerve to mylohyoid muscle
+Inferior dental plexus
+Dental branches of inferior alveolar nerve
+Gingival branches of inferior alveolar nerve
+Mental nerve
+Mental branches of mental nerve
+Inferior labial branches of mental nerve
+Gingival branches of mental nerve
+Abducens nerve (VI)
+Facial nerve (VII)
+Motor root of facial nerve
+Sensory root of facial nerve
+Genigulate ganglion
+Geniculum of facial nerve
+Greater petrosal nerve
+Nerve of pterygoid canal
+Nerve to stapedius muscle
+Chorda tympani
+Branch of chorda tympani to otic ganglion
+Facial nerve proper
+Posterior auricular nerve
+Occipital branch of posterior auricular nerve
+Auricular branch of posterior auricular nerve
+Digastric branch of facial nerve
+Stylohyoid branch of facial nerve
+(Lingual branch of facial nerve)
+Parotid plexus
+Temporal branches of facial nerve
+Zygomatic branches of facial nerve
+Buccal branches of facial nerve
+Marginal mandibular branch of facial nerve
+Cervical branch of facial nerve
+Vestibulocochlear nerve (VIII)
+Vestibular nerve
+Vestibular ganglion
+Cochlear communicating branch of vestibular nerve
+Superior branch of vestibular nerve
+Utricular nerve
+Anterior ampullary nerve
+Lateral ampullary nerve
+Inferior branch of vestibular nerve
+Posterior ampullary nerve
+Saccular nerve
+Cochlear nerve
+Cochlear ganglion
+Glossopharyngeal nerve (IX)
+Superior ganglion of glossopharyngeal nerve
+Inferior ganglion of glossopharyngeal nerve
+Tympanic nerve
+Tympanic plexus
+Tubal branch of tympanic nerve
+Lesser petrosal nerve
+Carotid sinus nerve
+Stylopharyngeal branch of glossopharyngeal nerve
+Pharyngeal branches of glossopharyngeal nerve
+Tonsillar branches of glossopharyngeal nerve
+Lingual branches of glossopharyngeal nerve
+Vagus nerve (X)
+Superior ganglion of vagus nerve
+Meningeal branch of vagus nerve
+Auricular branch of vagus nerve
+Inferior ganglion of vagus nerve
+Pharyngeal branch of vagus nerve
+Pharyngeal plexus
+Superior laryngeal nerve
+External branch of superior laryngeal nerve
+Internal branch of superior laryngeal nerve
+Superior cervical cardiac branches of vagus nerve
+Inferior cervical cardiac branches of vagus nerve
+Recurrent laryngeal nerve
+Tracheal branches of recurrent laryngeal nerve
+Oesophageal branches of recurrent laryngeal nerve
+Pharyngeal branches of recurrent laryngeal nerve
+Laryngeal branches of recurrent laryngeal nerve
+Thoracic cardiac branches of vagus nerve
+Bronchial branches of vagus nerve
+Oesophageal branches of vagus nerve
+Accessory nerve (XI)
+Cranial root of accessory nerve
+Spinal root of accessory nerve
+Vagal communicating branch of accessory nerve
+Spinal accessory nerve
+Hypoglossal nerve (XII)
+Superior root of ansa cervicalis
+Thyrohyoid branch of hypoglossal nerve
+Geniohyoid branch of hypoglossal nerve
+Lingual branches of hypoglossal nerve
+Spinal nerves
+Cervical nerves
+Posterior rami of cervical nerves
+Suboccipital nerve
+Greater occipital nerve
+Third occipital nerve
+Posterior cervical plexus
+Posterior cutaneous branches of fourth cervical nerve
+Posterior cutaneous branches of fifth cervical nerve
+Anterior rami of cervical nerves
+Hypoglossal communicating branch of first cervical nerve
+Hypoglossal communicating branch of second cervical nerve
+Cervical plexus
+Deep branches of cervical plexus
+Ansa cervicalis
+Inferior root of ansa cervicalis
+Infrahyoid branches of ansa cervicalis
+Muscular branches of cervical plexus
+Phrenic nerve
+Pericardial branch of phrenic nerve
+Phrenico-abdominal branches of phrenic nerve
+Superficial branches of cervical plexus
+Lesser occipital nerve
+Great auricular nerve
+Posterior branch of great auricular nerve
+Anterior branch of great auricular nerve
+Transverse cervical nerve
+Superior branches of transverse cervical nerve
+Inferior branches of transverse cervical nerve
+Supraclavicular nerves
+Medial supraclavicular nerves
+Intermediate supraclavicular nerves
+Lateral supraclavicular nerves
+Brachial plexus
+Supraclavicular part of brachial plexus
+Roots of brachial plexus
+Superior trunk of brachial plexus
+Anterior division of superior trunk of brachial plexus
+Posterior division of superior trunk of brachial plexus
+Middle trunk of brachial plexus
+Anterior division of middle trunk of brachial plexus
+Posterior division of middle trunk of brachial plexus
+Inferior trunk of brachial plexus
+Anterior division of inferior trunk of brachial plexus
+Posterior division of inferior trunk of brachial plexus
+Supraclavicular branches of brachial plexus
+Muscular branches of brachial plexus
+Dorsal scapular nerve
+Long thoracic nerve
+Suprascapular nerve
+Subclavian nerve
+(Accessory phrenic nerves)
+Infraclavicular part of brachial plexus
+Lateral cord of brachial plexus
+Posterior cord of brachial plexus
+Medial cord of brachial plexus
+Branches of lateral cord of brachial plexus
+Lateral pectoral nerve
+Ansa pectoralis
+Musculocutaneous nerve
+Muscular branches of musculocutaneous nerve
+Lateral antebrachial cutaneous nerve
+Lateral root of median nerve
+(Lateral root of ulnar nerve)
+Branches of posterior cord of brachial plexus
+Subscapular nerves
+Superior subscapular nerve
+Inferior subscapular nerve
+Thoracodorsal nerve
+Radial nerve
+Posterior brachial cutaneous nerve
+Inferior lateral brachial cutaneous nerve
+Posterior antebrachial cutaneous nerve
+Muscular branches of radial nerve
+Deep branch of radial nerve
+Posterior interosseous nerve of forearm
+Superficial branch of radial nerve
+Dorsal digital branches of radial nerve
+Axillary nerve
+Muscular branches of axillary nerve
+Superior lateral brachial cutaneous nerve
+Branches of medial cord of brachial plexus
+Medial pectoral nerve
+Medial brachial cutaneous nerve
+Medial antebrachial cutaneous nerve
+Anterior branch of medial antebrachial cutaneous nerve
+Posterior branch of medial antebrachial cutaneous nerve
+Ulnar nerve
+Muscular branches of ulnar nerve
+Dorsal branch of ulnar nerve
+Dorsal digital branches of ulnar nerve
+Palmar branch of ulnar nerve
+Superficial branch of ulnar nerve
+Common palmar digital branches of ulnar nerve
+Proper palmar digital branches of ulnar nerve
+Deep branch of ulnar nerve
+Medial root of median nerve
+Median nerve
+Anterior interosseous nerve of forearm
+Muscular branches of median nerve
+Palmar branch of median nerve
+(Communicating branch of median nerve with ulnar nerve)
+Recurrent branch of median nerve
+Common palmar digital branches of median nerve
+Proper palmar digital branches of median nerve
+Thoracic nerves
+Posterior branches of thoracic nerves
+Posterior cutaneous branches of thoracic nerves
+Anterior branches of thoracic nerves
+Intercostal nerves
+Intercostal nerve
+Muscular branches of intercostal nerve
+Collateral branch of intercostal nerve
+Lateral cutaneous branch of intercostal nerve
+Intercostobrachial nerve
+(Accessory intercostobrachial nerve)
+Lateral pectoral cutaneous branch of intercostal nerve
+Lateral mammary branches of intercostal nerve
+Lateral abdominal cutaneous branch of intercostal nerve
+Anterior cutaneous branch of intercostal nerve
+Anterior pectoral cutaneous branch of intercostal nerve
+Medial mammary branches of intercostal nerve
+Anterior abdominal cutaneous branch of intercostal nerve
+Subcostal nerve
+Muscular branches of subcostal nerve
+Lateral cutaneous branch of subcostal nerve
+Anterior cutaneous branch of subcostal nerve
+Lumbar nerves
+(Furcal nerve)
+Posterior rami of lumbar nerves
+Posterior cutaneous branches of lumbar nerves
+Superior gluteal cutaneous nerves
+Posterior lumbar plexus
+Anterior rami of lumbar nerves
+Iliohypogastric nerve
+Lateral cutaneous branch of iliohypogastric nerve
+Anterior cutaneous branch of iliohypogastric nerve
+Ilio-inguinal nerve
+Anterior labial nerves
+Anterior scrotal nerves
+Posterior divisions of anterior rami of lumbar nerves
+Anterior divisions of anterior rami of lumbar nerves
+Lumbosacral trunk
+Posterior division of lumbosacral trunk
+Anterior division of lumbosacral trunk
+Sacral nerves
+Posterior rami of sacral nerves
+Middle gluteal cutaneous nerves
+Anterior rami of sacral nerves
+Posterior divisions of anterior rami of sacral nerves
+Anterior divisions of anterior rami of sacral nerves
+Coccygeal nerve
+Posterior ramus of coccygeal nerve
+Anterior ramus of coccygeal nerve
+Lumbosacral plexus
+Lumbar plexus
+Posterior part of lumbar plexus
+Anterior part of lumbar plexus
+Branches of posterior part of lumbar plexus
+Lateral femoral cutaneous nerve
+Femoral nerve
+Muscular branches of femoral nerve
+Anterior cutaneous branches of femoral nerve
+Saphenous nerve
+Infrapatellar branch of saphenous nerve
+Medial crural cutaneous branches of saphenous nerve
+Branches of anterior part of lumbar plexus
+Genitofemoral nerve
+Genital branch of genitofemoral nerve
+Femoral branch of genitofemoral nerve
+Obturator nerve
+Anterior branch of obturator nerve
+Cutaneous branch of obturator nerve
+Anterior muscular branches of obturator nerve
+Posterior branch of obturator nerve
+Posterior muscular branches of obturator nerve
+(Accessory obturator nerve)
+Sacral plexus
+Posterior part of sacral plexus
+Anterior part of sacral plexus
+Branches of posterior part of sacral plexus
+Superior gluteal nerve
+Inferior gluteal nerve
+Nerve to piriformis muscle
+Perforating cutaneous nerve
+Posterior root of posterior femoral cutaneous nerve
+Posterior root of sciatic nerve
+Branches of anterior part of sacral plexus
+Nerve to obturator internus
+Nerve to quadratus femoris muscle
+Nerve to levator ani
+Nerve to coccygeus muscle
+Pudendal nerve
+Inferior anal nerve
+Perineal nerve
+Superficial branch of perineal nerve
+Posterior labial nerves
+Posterior scrotal nerves
+Deep branch of perineal nerve
+Muscular branches of perineal nerve
+Dorsal nerve of clitoris
+Dorsal nerve of penis
+Anterior root of posterior femoral cutaneous nerve
+Anterior root of sciatic nerve
+Posterior femoral cutaneous nerve
+Inferior gluteal cutaneous nerves
+Perineal branches of posterior femoral cutaneous nerve
+Sciatic nerve
+Muscular branches of sciatic nerve
+Common fibular nerve
+Lateral sural cutaneous nerve
+Sural communicating branch of common fibular nerve
+Superficial fibular nerve
+Muscular branches of superficial fibular nerve
+Medial dorsal cutaneous nerve of foot
+Intermediate dorsal cutaneous nerve of foot
+Dorsal digital branches of superficial fibular nerve
+Deep fibular nerve
+Muscular branches of deep fibular nerve
+Dorsal digital branches of deep fibular nerve
+Tibial nerve
+Muscular branches of tibial nerve
+Crural interosseous nerve
+Medial sural cutaneous nerve
+Sural nerve
+Lateral dorsal cutaneous nerve of foot
+Lateral calcaneal branches of sural nerve
+Medial calcaneal branches of tibial nerve
+Medial plantar nerve
+Common plantar digital branches of medial plantar nerve
+Proper plantar digital branches of medial plantar nerve
+Lateral plantar nerve
+Superficial branch of lateral plantar nerve
+Common plantar digital branches of lateral plantar nerve
+Proper plantar digital branches of lateral plantar nerve
+Deep branch of lateral plantar nerve
+Coccygeal plexus
+Anococcygeal nerve
+Autonomic division of peripheral nervous system
+Thoracolumbar part of autonomic division
+Sympathetic trunk
+Interganglionic branches
+Paravertebral ganglia
+Intermediate ganglia
+Ganglia of sympathetic trunk
+Cervical ganglia
+Superior cervical ganglion
+Middle cervical ganglion
+(Vertebral ganglion)
+(Inferior cervical ganglion)
+Cervicothoracic ganglion
+Thoracic ganglia
+Lumbar ganglia
+Sacral ganglia
+Ganglion impar
+Sympathetic nerves
+Jugular nerve
+Internal carotid nerve
+External carotid nerves
+Laryngopharyngeal nerves
+Superior cervical cardiac nerve
+Middle cervical cardiac nerve
+Ansa subclavia
+Inferior cervical cardiac nerve
+Vertebral nerve
+Thoracic visceral nerves
+Thoracic cardiac nerves
+Thoracic pulmonary nerves
+Oesophageal nerves
+Greater thoracic splanchnic nerve
+Lesser thoracic splanchnic nerve
+Renal branch of lesser thoracic splanchnic nerve
+Least thoracic splanchnic nerve
+Lumbar splanchnic nerves
+Sacral splanchnic nerves
+Prevertebral ganglia
+Thoracic splanchnic ganglion
+Coeliac ganglia
+Aorticorenal ganglia
+Superior mesenteric ganglion
+Inferior mesenteric ganglion
+Perivascular plexuses
+Common carotid plexus
+Internal carotid plexus
+Sympathetic root of ciliary ganglion
+Deep petrosal nerve
+Caroticotympanic nerves
+Pineal nerve
+Cavernous plexus
+External carotid plexus
+Sympathetic root of submandibular ganglion
+(Sympathetic root of sublingual ganglion)
+Sympathetic root of otic ganglion
+Subclavian plexus
+Brachial autonomic plexus
+Vertebral plexus
+Thoracic aortic plexus
+Iliac plexus
+Femoral plexus
+Craniosacral part of autonomic division
+Cranial part
+Ciliary ganglion
+Short ciliary nerves
+Pterygopalatine ganglion
+Orbital branches of maxillary nerve
+Submandibular ganglion
+Anterior branch of lingual nerve to submandibular ganglion
+Submandibular nerves
+(Sublingual ganglion)
+Otic ganglion
+Branch of auriculotemporal nerve to otic ganglion
+Vagal part of autonomic division
+Anterior vagal trunk
+Anterior gastric branches of anterior vagal trunk
+Anterior nerve of lesser curvature
+Hepatic branches of anterior vagal trunk
+Pyloric branch of anterior vagal trunk
+Posterior vagal trunk
+Posterior gastric branches of posterior vagal trunk
+Posterior nerve of lesser curvature
+Coeliac branches of posterior vagal trunk
+Renal branches of posterior vagal trunk
+Sacral part of autonomic division
+Pelvic splanchnic nerves
+Visceral part of autonomic division
+Thoracic plexuses
+Cardiac plexus
+Cardiac ganglia
+Oesophageal plexus
+Pulmonary plexus
+Abdominal plexuses
+Phrenic plexus
+Phrenic ganglia
+Abdominal aortic plexus
+Coeliac plexus
+Hepatic plexus
+Splenic plexus
+Gastric plexuses
+Pancreatic plexus
+Suprarenal plexus
+Renal plexus
+Renal ganglia
+Ureteric plexus
+Superior mesenteric plexus
+Ovarian plexus
+Testicular plexus
+Intermesenteric plexus
+Inferior mesenteric plexus
+Superior anorectal plexus
+Superior hypogastric plexus
+Pelvic plexuses
+Pelvic ganglia
+Hypogastric nerve
+Inferior hypogastric plexus
+Middle anorectal plexus
+Rectal plexus
+Superior anal nerves
+Vesical plexus
+Deferential plexus
+Uterovaginal plexus
+Vaginal nerves
+Cavernous nerves of clitoris
+Prostatic plexus
+Cavernous nerves of penis
+Enteric plexus
+Myenteric plexus
+Submucosal plexus
+Olfactory organ
+Olfactory epithelium
+Olfactory glands
+Eye
+Eyeball
+Anterior pole of eyeball
+Posterior pole of eyeball
+Equator of eyeball
+Meridians of eyeball
+External axis of eyeball
+Internal axis of eyeball
+Optic axis
+Fibrous layer of eyeball
+Cornea
+Corneal vertex
+Anterior surface of cornea
+Posterior surface of cornea
+Corneoscleral junction
+Conjunctival ring
+Sclera
+Sulcus sclerae
+Vascular layer of eyeball
+Iris
+Pupil
+Pupillary margin of iris
+Inner zone of iris
+Folds of iris
+Outer zone of iris
+Ciliary margin of iris
+Anterior surface of iris
+Posterior surface of iris
+Sphincter pupillae
+Dilator pupillae
+(Pupillary membrane)
+Ciliary body
+Corona ciliaris
+Ciliary processes
+Ciliary folds
+Orbiculus ciliaris
+Ciliary muscle
+Meridional fibres of ciliary muscle
+Radial fibres of ciliary muscle
+Circular fibres of ciliary muscle
+Choroid
+Inner layer of eyeball
+Retina
+Nonvisual retina
+Iridal part of retina
+Ciliary part of retina
+Ora serrata
+Optic part of retina
+Pigmented layer of optical retina
+Neural layer of optical retina
+Macula
+Fovea centralis
+Foveola
+Intraocular part of optic nerve
+Optic disc
+Depression of optic disc
+Anterior segment of eyeball
+Aqueous humor
+Anterior chamber of eyeball
+Iridocorneal angle
+Posterior chamber of eyeball
+Ciliary zonule
+Zonular fibres
+Zonular spaces
+Lens
+Anterior surface of lens
+Anterior pole of lens
+Posterior surface of lens
+Posterior pole of lens
+Axis of lens
+Equator of lens
+Radii of lens
+Posterior segment of eyeball
+Postremal chamber of eyeball
+Retrozonular space
+Vitreous body
+Hyaloid fossa
+Hyaloid canal
+(Hyaloid artery)
+Vitreous membrane
+Vitreous humor
+Accessory visual structures
+Episcleral layer
+Fascial sheath of eyeball
+Suspensory ligament of eyeball
+Orbital fat body
+Orbitalis muscle
+Eyelids
+Anterior surface of eyelid
+Anterior palpebral margin
+Posterior palpebral margin
+Posterior surface of eyelid
+Superior tarsus
+Superior tarsal muscle
+Inferior tarsus
+Inferior tarsal muscle
+Lateral palpebral ligament
+Medial palpebral ligament
+Tarsal glands
+Ciliary glands
+Sebaceous glands of eyelids
+Bulbar conjunctiva
+Saccus conjunctivae
+Tunica conjunctiva palpebrarum
+Fornix conjunctivae superior
+Plica semilunaris of conjunctive
+Fornix conjunctivae inferior
+Conjunctival glands
+Lacrimal caruncle
+Lacrimal apparatus
+Lacrimal gland
+Orbital part of lacrimal gland
+Palpebral part of lacrimal gland
+Excretory ducts of lacrimal gland
+(Accessory lacrimal glands)
+Rivus lacrimalis
+Lacus lacrimalis
+Lacrimal papilla
+Lacrimal punctum
+Lacrimal canaliculus
+Ampulla of lacrimal canaliculus
+Lacrimal sac
+Fornix of lacrimal sac
+Nasolacrimal duct
+Lacrimal fold
+Ear
+External ear
+External acoustic meatus
+External acoustic pore
+Cartilage of external acoustic meatus
+Tympanic membrane
+Pars flaccida of tympanic
+Pars tensa of tympanic membrane
+Mallear prominence
+Mallear stria
+Umbo of tympanic membrane
+Fibrocartilaginous ring
+Middle ear
+Tympanic cavity
+Epitympanic recess
+Cupular part of epitympanic recess
+Tympanic cavity proper
+Mesotympanum
+Hypotympanum
+Recesses of tympanic membrane
+Anterior recess of tympanic membrane
+Superior recess of tympanic membrane
+Posterior recess of tympanic membrane
+Walls of tympanic cavity
+Mucosa of tympanic cavity
+Tegmental wall of tympanic cavity
+Jugular wall of tympanic cavity
+Styloid prominence
+Tympanic cells
+Carotid wall of tympanic cavity
+Tympanic opening of auditory tube
+Labyrinthine wall of tympanic cavity
+Vestibular window
+Fossa of vestibular window
+Promontory of tympanic cavity
+Groove of promontory
+Subiculum of promontory
+Ponticle of promontory
+Sinus tympani
+Cochlear window
+Secondary tympanic membrane
+Fossa of cochlear window
+Crest of cochlear window
+Processus cochleariformis
+Mastoid wall of tympanic cavity
+Aditus to mastoid antrum
+Prominence of lateral semicircular canal
+Prominence of facial canal
+Pyramidal eminence
+Fossa of incus
+Posterior sinus
+Tympanic aperture of posterior tympanic canaliculus
+Membranous wall of tympanic cavity
+Posterior fold of malleus
+Anterior fold of malleus
+Fold of chorda tympani
+Fold of incus
+Fold of stapedius
+Auditory ossicles
+Joints of auditory ossicles
+Auditory tube
+Bony part of auditory tube
+Isthmus of auditory tube
+Tubal cells
+Cartilaginous part of auditory tube
+Membranous lamina of auditory tube
+Mucosa of auditory tube
+Tubal glands
+Internal ear
+Perilymphatic space
+Perilymph
+Perilymphatic ducts
+Vestibular aqueduct
+Vestibule
+Elliptical recess
+Internal opening of vestibular canaliculus
+Spherical recess
+Cochlear recess
+Walls of vestibule
+Vestibular crest
+Pyramid of vestibule
+Maculae cribrosae
+Macula cribrosa superior
+Macula cribrosa media
+Macula cribrosa inferior
+Semicircular canals
+Anterior semicircular canal
+Anterior bony ampulla
+Posterior semicircular canal
+Posterior bony ampulla
+Common bony limb
+Ampullary bony limbs
+Lateral semicircular canal
+Lateral bony ampulla
+Simple bony limb
+Cochlea
+Cochlear cupula
+Base of cochlea
+Spiral canal of cochlea
+Scala vestibuli
+Helicotrema
+Scala tympani
+Internal opening of cochlear canaliculus
+Walls of cochlea
+Osseous spiral lamina
+Vestibular lamella
+Tympanic lamella
+Foramina nervosa
+Hamulus of spiral lamina
+Secondary spiral lamina
+Cochlear septum
+Modiolous of cochlea
+Base of modiolus
+Lamina of modiolus
+Spiral canal of modiolus
+Longitudinal canals of modiolus
+Fundus of internal acoustic meatus
+Transverse crest
+Facial area
+Vertical crest
+Superior vestibular area
+Inferior vestibular area
+Foramen singulare
+Cochlear area
+Tractus spiralis foraminosus
+Membranous labyrinth
+Endolymphatic space
+Endolymph
+Vestibular labyrinth
+Utricle
+Macula of utricle
+Saccule
+Macula of saccule
+Utriculosaccular duct
+Utricular duct
+Saccular duct
+Endolymphatic duct
+Endolymphatic sac
+Ductus reuniens
+Semicircular ducts
+Anterior semicircular duct
+Anterior membranous ampulla
+Anterior ampullary crest
+Posterior semicircular duct
+Posterior membranous ampulla
+Posterior ampullary crest
+Common membranous limb
+Ampullary membranous limbs
+Lateral semicircular duct
+Lateral membranous ampulla
+Lateral ampullary crest
+Simple membranous limb
+Cochlear duct
+Scala media
+Vestibular caecum
+Cupular caecum
+Vestibular membrane
+External wall of cochlear duct
+Stria vascularis
+Spiral prominence
+Spiral ligament of cochlea
+Spiral membrane
+Basilar membrane
+Spiral limbus
+Tectorial membrane
+Spiral organ
+Gustatory organs
+Taste bud
+Taste pore
+Gustatory gland
+The integument
+Skin
+Skin sulci
+Dermal ridges
+Tactile elevations
+Cleavage lines
+Epidermis
+Dermis
+Papillary layer
+Papillae of dermis
+Reticular layer
+Arrector muscle of hair
+Skin appendages
+Hairs
+Downy hair
+Hairs of head
+Hairs of eyebrow
+Eyelashes
+Hairs of beard
+Hairs of tragus
+Hairs of vestibule of nose
+Axillary hairs
+Pubic hairs
+Hair shaft
+Hair follicle
+Nail
+Nail plate
+Lunule of nail
+Hidden border of nail
+Lateral border of nail
+Free border of nail
+Perionyx
+Perionyx (foot)
+Eponychium
+Hyponychium
+Nail bed
+Nail wall
+Nail root
+Nail matrix
+Skin glands
+Sweat glands
+Eccrine sweat gland
+Apocrine sweat gland
+Sebaceous gland
+Subcutaneous tissue
+Fatty layer of subcutaneous tissue
+Skin ligaments
+Muscle layer of panniculus adiposus
+Fibrous layer of panniculus adiposus
+Membranous layer of subcutaneous tissue
+Subcutaneous loose connective tissue
+Retinaculum caudale
+Subcutaneous tissue of perine
+Fatty layer of abdominal subcutaneous tissue
+Membranous layer of abdominal subcutaneous tissue
+Membranous layer of perineal subcutaneous tissue
+Subcutaneous perineal space
+Breast
+Body of breast
+Mammary gland
+Axillary process
+Lobes of mammary gland
+Lobules of mammary gland
+Lactiferous ducts
+Lactiferous sinuses
+Nipple
+Areola
+Areolar glands
+Areolar tubercles
+Suspensory ligaments of breast
+Intermammary cleft
+(Accessory nipple)
+(Accessory breast)
+Scalp
+1: Skeletal system
+2: Muscular insertions
+3: Joints
+4: Muscular system
+5: Cardiovascular system
+6: Lymphoid organs
+7: Nervous system & Sense organs
+8: Visceral systems
+9: Regions of human body
+Reference lines, reference planes, movements
+Left side
+Right side
+Limbs
+Upper limbs
+Left upper limb
+Right upper limb
+Lower limbs
+Left lower limb
+Right lower limb
+Axial insertions
+Appendicular insertions
+Peripheral nervous system
+Nerves
+Muscular insertions
+Articular capsule of glenohumeral joint
+Articular capsules of metatarsophalangeal joints
+Articular capsules of proximal interphalangeal joints
+Articular capsules of distal interphalangeal joints
+Articular capsule of hip joint
+Articular capsule of interphalangeal joint of great toe
+Articular capsules of distal interphalangeal joints of foot
+Articular capsules of proximal interphalangeal joints of foot
+Anterior meniscotibial ligament (Lateral meniscus)
+Anterior meniscotibial ligament (Medial meniscus)
+Posterior meniscotibial ligament (Lateral meniscus)
+Posterior meniscotibial ligament (Medial meniscus)
+Articular capsule of superior tibiofibular joint
+Articular capsule of temporomandibular joint
+Articular capsule of acromioclavicular joint
+Articular capsule of sternoclavicular joint
+Intervertebral disc C2-C3
+Intervertebral disc C3-C4
+Intervertebral disc C4-C5
+Intervertebral disc C5-C6
+Intervertebral disc C6-C7
+Intervertebral disc C7-T1
+Intervertebral disc L1-L2
+Intervertebral disc L2-L3
+Intervertebral disc L3-L4
+Intervertebral disc L4-L5
+Intervertebral disc L5-S1
+Intervertebral disc T1-T2
+Intervertebral disc T2-T3
+Intervertebral disc T3-T4
+Intervertebral disc T4-T5
+Intervertebral disc T5-T6
+Intervertebral disc T6-T7
+Intervertebral disc T7-T8
+Intervertebral disc T8-T9
+Intervertebral disc T9-T10
+Intervertebral disc T10-T11
+Intervertebral disc T11-T12
+Intervertebral disc T12-L1
+Sacrococcygeal symphysis
+Nucleus pulposus C2-C3
+Nucleus pulposus C3-C4
+Nucleus pulposus C4-C5
+Nucleus pulposus C5-C6
+Nucleus pulposus C6-C7
+Nucleus pulposus C7-T1
+Nucleus pulposus L1-L2
+Nucleus pulposus L2-L3
+Nucleus pulposus L3-L4
+Nucleus pulposus L4-L5
+Nucleus pulposus L5-S1
+Nucleus pulposus T1-T2
+Nucleus pulposus T2-T3
+Nucleus pulposus T3-T4
+Nucleus pulposus T4-T5
+Nucleus pulposus T5-T6
+Nucleus pulposus T6-T7
+Nucleus pulposus T7-T8
+Nucleus pulposus T8-T9
+Nucleus pulposus T9-T10
+Nucleus pulposus T10-T11
+Nucleus pulposus T11-T12
+Nucleus pulposus T12-L1
+Tendon of extensor digitorum longus
+Left renal artery
+Right renal artery
+Intrarenal arteries of left kidney
+Intrarenal arteries of right kidney
+Left testicular artery
+Right testicular artery
+Nail plate (foot)
+Interscapular region
+Transverse frontopolar gyrus and sulcus
+Left subclavian vein
+Right subclavian vein
+Bones of left foot
+Bones of right foot
+Bones of left hand
+Bones of right hand
+Cartilages
+Planes
+Directions
+Reference lines, planes & movements

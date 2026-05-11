@@ -1,0 +1,26 @@
+import bpy
+import os
+
+# 1. Set the folder where you want to save the files
+# Since you're on Windows/Hamilton, this path is an example. 
+# Change it to a real folder on your PC.
+output_dir = r"C:\Users\wcher\Downloads\script"
+
+# Create the folder if it doesn't exist
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+# 2. Iterate through all text blocks in the blender file
+for text_block in bpy.data.texts:
+    # Clean the filename (remove spaces or illegal characters if necessary)
+    filename = text_block.name.replace("/", "_").replace("\\", "_") + ".txt"
+    filepath = os.path.join(output_dir, filename)
+    
+    try:
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(text_block.as_string())
+        print(f"Exported: {filename}")
+    except Exception as e:
+        print(f"Failed to export {text_block.name}: {e}")
+
+print(f"\n--- Done! Check your folder at: {output_dir} ---")

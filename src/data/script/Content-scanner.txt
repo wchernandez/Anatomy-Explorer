@@ -1,0 +1,28 @@
+import bpy
+D = bpy.data
+
+input = D.texts['SHEET_INPUT'].as_string()
+
+print('')
+
+if 'SHEET_OUTPUT' in bpy.data.texts:
+    output = bpy.data.texts['SHEET_OUTPUT']
+    output.clear()
+else:
+    output = bpy.data.texts.new('SHEET_OUTPUT')
+
+
+def check_name(prefix, sufixes):
+    for sufix in sufixes:
+        if D.objects.find(prefix+sufix) != -1:
+            return "TRUE"
+    return "FALSE"
+
+
+body = ""
+for line in input.splitlines():
+    Label = check_name(line, ['.t', '.g', '.st', '-line'])
+    Object = check_name(line, ['', '.r', '.l'])
+    Text = "TRUE" if D.texts.find(line) != -1 else "FALSE"
+    body += f"{Label} {Object} {Text}\n"
+output.write(body)
