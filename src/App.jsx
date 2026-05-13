@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
+import LayerControls from './components/LayerControls.jsx'
 import questions from './data/questions.json'
 
 function formatName(raw) {
@@ -15,6 +16,12 @@ export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
   const [quizStarted, setQuizStarted] = useState(false)
   const [quiz, setQuiz] = useState(initialQuiz)
+
+  // Layer state
+  const [showSkeleton, setShowSkeleton] = useState(true)
+  const [showMuscles, setShowMuscles] = useState(false)
+  const [activeGroup, setActiveGroup] = useState('All Muscles')
+  const [filterMode, setFilterMode] = useState('fade') // 'fade' | 'hide'
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
@@ -57,14 +64,32 @@ export default function App() {
 
   return (
     <>
-      <Scene selectedBone={selectedBone} onSelect={handleBoneSelect} />
+      <Scene
+        selectedBone={selectedBone}
+        onSelect={handleBoneSelect}
+        showSkeleton={showSkeleton}
+        showMuscles={showMuscles}
+        activeGroup={activeGroup}
+        filterMode={filterMode}
+      />
 
       <div id="topbar">
         <div>
-          <div className="title-main">Skeletal Atlas</div>
+          <div className="title-main">Anatomy Explorer</div>
           <div className="title-sub">Human Anatomy · Interactive Model</div>
         </div>
       </div>
+
+      <LayerControls
+        showSkeleton={showSkeleton}
+        setShowSkeleton={setShowSkeleton}
+        showMuscles={showMuscles}
+        setShowMuscles={setShowMuscles}
+        activeGroup={activeGroup}
+        setActiveGroup={setActiveGroup}
+        filterMode={filterMode}
+        setFilterMode={setFilterMode}
+      />
 
       <QuizPanel
         quiz={quiz}
