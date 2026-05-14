@@ -2,6 +2,22 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGLTF, useCursor } from '@react-three/drei'
 import * as THREE from 'three'
 
+const SKULL_KEYS = [
+  'frontal bone','parietal bone','occipital bone','temporal bone','sphenoid bone',
+  'zygomatic','nasal bone','maxilla','mandible','vomer','palatine bone','lacrimal',
+  'inferior nasal','ethmoid','sinus of','malleus','incus','stapes','hyoid',
+  'tooth','incisor','molar','premolar','upper canine','lower canine',
+]
+const isSkull = n => SKULL_KEYS.some(k => n.toLowerCase().includes(k))
+
+const LOWER_KEYS = [
+  'femur','tibia','fibula','patella','hip','sacrum','coccyx','gluteus','iliacus',
+  'psoas','calcaneus','talus','navicular','cuneiform','metatarsal',
+  'phalanx of foot','sesamoid','cuboid','gastrocnemius','soleus','tibialis',
+  'peroneus','fibularis','popliteus','adductor','quadriceps','hamstring',
+]
+const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
+
 // ── Override materials (guaranteed colours, no reliance on GLB materials) ─────
 const baseForceMat = new THREE.MeshStandardMaterial({
   color: 0xC87832, roughness: 0.38, metalness: 0.15,
@@ -137,7 +153,7 @@ function getBaseMat(mesh) {
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function MuscleModel({ visible, selectedBone, onSelect, activeGroup, filterMode }) {
+export default function MuscleModel({ visible, selectedBone, onSelect, activeGroup, filterMode, heightPreset = 'short', statureScale = 1, shoulderScale = 1, hipScale = 1 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
   const groupRef = useRef()
@@ -167,15 +183,50 @@ export default function MuscleModel({ visible, selectedBone, onSelect, activeGro
     })
   }, [visible, meshes])
 
+  const snapRef = useRef(null)
+
   useEffect(() => {
     if (!groupRef.current) return
-    const box = new THREE.Box3().setFromObject(groupRef.current)
+
+    if (!snapRef.current) {
+      const skull = [], lower = []
+      scene.traverse(child => {
+        if (!child.isMesh) return
+        const entry = { mesh: child, ox: child.scale.x, oz: child.scale.z }
+        if      (isSkull(child.name)) skull.push(entry)
+        else if (isLower(child.name)) lower.push(entry)
+      })
+      snapRef.current = { skull, lower }
+    }
+
+    for (const { mesh, ox, oz } of snapRef.current.skull)  { mesh.scale.x = ox; mesh.scale.z = oz }
+    for (const { mesh, ox, oz } of snapRef.current.lower)  { mesh.scale.x = ox; mesh.scale.z = oz }
+
+    groupRef.current.scale.set(1, 1, 1)
+    groupRef.current.position.set(0, 0, 0)
+    const box  = new THREE.Box3().setFromObject(groupRef.current)
     const size = box.getSize(new THREE.Vector3())
-    const center = box.getCenter(new THREE.Vector3())
-    const scale = 3 / Math.max(size.x, size.y, size.z)
-    groupRef.current.scale.setScalar(scale)
-    groupRef.current.position.sub(center.multiplyScalar(scale))
-  }, [scene])
+    const base = 3 / Math.max(size.x, size.y, size.z)
+
+    groupRef.current.scale.set(
+      base * shoulderScale,
+      base * statureScale,
+      base * shoulderScale
+    )
+    const scaled = new THREE.Box3().setFromObject(groupRef.current)
+    const cx = (scaled.min.x + scaled.max.x) / 2
+    const cz = (scaled.min.z + scaled.max.z) / 2
+    groupRef.current.position.set(-cx, -1.5 - scaled.min.y, -cz)
+
+    for (const { mesh, ox, oz } of snapRef.current.skull) {
+      mesh.scale.x = ox / shoulderScale
+      mesh.scale.z = oz / shoulderScale
+    }
+    for (const { mesh, ox, oz } of snapRef.current.lower) {
+      mesh.scale.x = ox * hipScale / shoulderScale
+      mesh.scale.z = oz * hipScale / shoulderScale
+    }
+  }, [scene, heightPreset, statureScale, shoulderScale, hipScale])
 
   // Faded versions cache
   const fadedMats = useMemo(() => new Map(), [])

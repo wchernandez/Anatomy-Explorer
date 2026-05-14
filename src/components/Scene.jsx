@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import SkeletonModel from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
 
-export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscles, activeGroup, filterMode }) {
+export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscles, activeGroup, filterMode, heightPreset, statureScale = 1, shoulderScale = 1, hipScale = 1 }) {
   return (
     <div id="canvas-container">
       <Canvas
@@ -34,7 +34,14 @@ export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscle
         <pointLight color="#ffddbb" intensity={0.6} distance={12} position={[2, 3, 2]} />
 
         {showSkeleton && (
-          <SkeletonModel selectedBone={selectedBone} onSelect={onSelect} />
+          <SkeletonModel
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            heightPreset={heightPreset}
+            statureScale={statureScale}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+          />
         )}
 
         <MuscleModel
@@ -43,6 +50,10 @@ export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscle
           onSelect={onSelect}
           activeGroup={activeGroup}
           filterMode={filterMode}
+          heightPreset={heightPreset}
+          statureScale={statureScale}
+          shoulderScale={shoulderScale}
+          hipScale={hipScale}
         />
 
         <OrbitControls
