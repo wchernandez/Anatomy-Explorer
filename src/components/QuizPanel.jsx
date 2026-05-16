@@ -1,7 +1,13 @@
-export default function QuizPanel({ quiz, questions, started, quizLevel, onLevelChange, onStart, onEnd, onNext, onAnswer }) {
+import { useState, useEffect } from 'react'
+
+export default function QuizPanel({ quiz, questions, started, quizLevel, onLevelChange, onStart, onEnd, onNext, onAnswer, onTypeAnswer }) {
+  useEffect(() => {
+    setTypeInput('')
+  }, [quiz.currentQ])
   const { currentQ, answered, result, feedback } = quiz
   const q = questions[currentQ]
   const hasOptions = Array.isArray(q?.options) && q.options.length > 0
+  const [typeInput, setTypeInput] = useState('')
 
   return (
     <div id="quiz-panel" className="panel">
@@ -78,7 +84,31 @@ export default function QuizPanel({ quiz, questions, started, quizLevel, onLevel
               Click the correct bone on the skeleton
             </div>
           )}
-
+          {/* Level 4: user types the name of the bone - for simplicity we just check if the answer includes the target keyword */}
+          {quizLevel === 4 && !answered && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', margin: '0.5rem 0' }}>
+              <input
+                type="text"
+                placeholder="Type the bone name..."
+                value={typeInput}
+                onChange={e => setTypeInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && onTypeAnswer(typeInput)}
+                style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '2px solid rgba(0,102,255,0.4)',
+                  borderRadius: '8px',
+                  padding: '0.7rem 1rem',
+                  color: 'var(--text-bright)',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  width: '100%',
+                }}
+              />
+              <button onClick={() => onTypeAnswer(typeInput)}>
+                Submit Answer
+              </button>
+            </div>
+          )}
           {/* Feedback after answering */}
           {answered && (
             <div className={`quiz-feedback ${result}`}>

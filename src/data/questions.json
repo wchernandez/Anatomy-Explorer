@@ -3,22 +3,118 @@
     "prompt": "What bone is highlighted?",
     "target": "femur",
     "level": 1,
+    "answer": "Femur",
     "options": ["Femur", "Tibia", "Fibula", "Patella"]
   },
+  {
+    "prompt": "What bone is highlighted?",
+    "target": "frontal_bone",
+    "level": 1,
+    "answer": "Frontal Bone",
+    "options": ["Frontal Bone", "Parietal Bone", "Temporal Bone", "Occipital Bone"]
+  },
+  {
+    "prompt": "What bone is highlighted?",
+    "target": "humerus",
+    "level": 1,
+    "answer": "Humerus",
+    "options": ["Humerus", "Radius", "Ulna", "Clavicle"]
+  },
+  {
+    "prompt": "What bone is highlighted?",
+    "target": "tibia",
+    "level": 1,
+    "answer": "Tibia",
+    "options": ["Tibia", "Femur", "Fibula", "Patella"]
+  },
+  {
+    "prompt": "What bone is highlighted?",
+    "target": "coccyx",
+    "level": 1,
+    "answer": "Coccyx",
+    "options": ["Coccyx", "Sacrum", "Femur", "Sternum"]
+  },
+
   {
     "prompt": "Click the FEMUR on the skeleton.",
     "target": "femur",
     "level": 2
   },
   {
-  "prompt": "This bone forms the ball of the hip joint and is the longest in the body.",
-  "target": "femur",
-  "level": 3
+    "prompt": "Click the FRONTAL BONE on the skeleton.",
+    "target": "frontal_bone",
+    "level": 2
   },
   {
-    "prompt": "Type the name of this bone.",
-    "target": "femur",
-    "level": 4
-  }
+    "prompt": "Click the HUMERUS on the skeleton.",
+    "target": "humerus",
+    "level": 2
+  },
+  {
+    "prompt": "Click the TIBIA on the skeleton.",
+    "target": "tibia",
+    "level": 2
+  },
+  {
+    "prompt": "Click the COCCYX on the skeleton.",
+    "target": "coccyx",
+    "level": 2
+  },
 
+  {
+    "prompt": "This bone forms the ball of the hip joint and is the longest bone in the body.",
+    "target": "femur",
+    "level": 3
+  },
+  {
+    "prompt": "This bone forms the forehead and the upper part of the eye sockets.",
+    "target": "frontal_bone",
+    "level": 3
+  },
+  {
+    "prompt": "This is the single bone of the upper arm, connecting the shoulder to the elbow.",
+    "target": "humerus",
+    "level": 3
+  },
+  {
+    "prompt": "This is the larger of the two lower leg bones and the primary weight-bearing bone of the leg.",
+    "target": "tibia",
+    "level": 3
+  },
+  {
+    "prompt": "This small, triangular bone at the base of the spine is often called the tailbone.",
+    "target": "coccyx",
+    "level": 3
+  },
+
+  {
+    "prompt": "Type the name of the highlighted bone.",
+    "target": "frontal_bone",
+    "level": 4,
+    "synonyms": ["frontal bone", "forehead bone"]
+  },
+  {
+    "prompt": "Type the name of the highlighted bone.",
+    "target": "femur",
+    "level": 4,
+    "synonyms": ["thigh bone", "thighbone"]
+  },
+  {
+    "prompt": "Type the name of the highlighted bone.",
+    "target": "humerus",
+    "level": 4,
+    "synonyms": ["upper arm bone"]
+  },
+  {
+    "prompt": "Type the name of the highlighted bone.",
+    "target": "tibia",
+    "level": 4,
+    "synonyms": ["shin bone", "shinbone"]
+  },
+  {
+    "prompt": "Type the name of the highlighted bone.",
+    "target": "coccyx",
+    "level": 4,
+    "synonyms": ["tailbone"]
+  }
 ]

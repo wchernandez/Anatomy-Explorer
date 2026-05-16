@@ -30,6 +30,7 @@ export default function App() {
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
+    console.log('clicked:', mesh.name, '| parent:', mesh.parent?.name) // add this
     // Level 2 and Level 3 use model clicks during a quiz
     if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
 
@@ -56,7 +57,27 @@ export default function App() {
     if (quiz.answered) return
     if (!q) return
 
-    const correct = option.toLowerCase() === q.target.toLowerCase()
+    const correct = option.toLowerCase() === q.answer.toLowerCase()
+    
+    setQuiz(prev => ({
+      ...prev,
+      answered: true,
+      result: correct ? 'correct' : 'wrong',
+      feedback: correct
+        ? 'Correct! Well done.'
+        : `Not quite — the answer was ${q.answer}.`,
+    }))
+  }
+
+  // Level 4: user types the name of the bone
+  function handleTypeAnswer(input) {
+    if (quiz.answered || !input.trim()) return
+
+    const typed = input.trim().toLowerCase()
+    const target = q.target.toLowerCase()
+    const synonyms = q.synonyms || []
+
+    const correct = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
 
     setQuiz(prev => ({
       ...prev,
@@ -64,7 +85,7 @@ export default function App() {
       result: correct ? 'correct' : 'wrong',
       feedback: correct
         ? 'Correct! Well done.'
-        : `Not quite — the answer was ${q.options.find(o => o.toLowerCase() === q.target.toLowerCase())}.`,
+        : `Not quite — the answer was "${q.target}".`,
     }))
   }
 
@@ -114,6 +135,7 @@ export default function App() {
         onEnd={handleEndQuiz}
         onNext={handleNextQuestion}
         onAnswer={handleMultipleChoiceAnswer}
+        onTypeAnswer={handleTypeAnswer}
       />
       <InfoPanel selectedBone={selectedBone} />
 
