@@ -23,8 +23,8 @@ export default function QuizPanel({ quiz, questions, started, quizLevel, onLevel
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
             {[
               { level: 1, label: 'Level 1', desc: 'Multiple choice' },
-              { level: 2, label: 'Level 2', desc: 'Spot test — click the bone' },
-              { level: 3, label: 'Level 3', desc: 'Description — click the bone' },
+              { level: 2, label: 'Level 2', desc: 'Spot test' },
+              { level: 3, label: 'Level 3', desc: 'Description' },
               { level: 4, label: 'Level 4', desc: 'Type the name' },
             ].map(({ level, label, desc }) => (
               <div
