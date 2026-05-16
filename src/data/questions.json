@@ -1,3 +1,24 @@
 [
-  { "prompt": "Click the femur (thigh bone).", "target": "femur" }
+  {
+    "prompt": "What bone is highlighted?",
+    "target": "femur",
+    "level": 1,
+    "options": ["Femur", "Tibia", "Fibula", "Patella"]
+  },
+  {
+    "prompt": "Click the FEMUR on the skeleton.",
+    "target": "femur",
+    "level": 2
+  },
+  {
+  "prompt": "This bone forms the ball of the hip joint and is the longest in the body.",
+  "target": "femur",
+  "level": 3
+  },
+  {
+    "prompt": "Type the name of this bone.",
+    "target": "femur",
+    "level": 4
+  }
+
 ]

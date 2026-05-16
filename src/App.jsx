@@ -14,14 +14,30 @@ const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Wai
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
   const [quizStarted, setQuizStarted] = useState(false)
+  const [quizLevel, setQuizLevel] = useState(1)
   const [quiz, setQuiz] = useState(initialQuiz)
+
+  const levelQuestions = questions.filter(q => q.level === quizLevel)
+  const q = levelQuestions[quiz.currentQ]
+
+
+  // Level 2 and 3 the model is clickable, user clicks the correct bone
+  const modelClickable = quizLevel === 2 || quizLevel === 3 || !quizStarted
+
+  // Level 1 and 4 highlights a bone for the user to identify
+  const highlightBone = quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && q ? q.target : null
+
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
-    if (!quizStarted || quiz.answered || !mesh) return
+    // Level 2 and Level 3 use model clicks during a quiz
+    if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
 
-    const q = questions[quiz.currentQ]
+
+    const q = levelQuestions[quiz.currentQ]
     const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
+    if (!q) return
+
     const correct = q.target === null || clickedName.includes(q.target)
     const boneName = formatName(mesh.name || mesh.parent?.name)
 
@@ -32,6 +48,23 @@ export default function App() {
       feedback: correct
         ? (q.target === null ? `Good job! That's the ${boneName}.` : 'Correct! Well done.')
         : `Not quite — that's the ${boneName}.`,
+    }))
+  }
+
+  // Level 1: user clicks one of the multiple choice buttons
+  function handleMultipleChoiceAnswer(option) {
+    if (quiz.answered) return
+    if (!q) return
+
+    const correct = option.toLowerCase() === q.target.toLowerCase()
+
+    setQuiz(prev => ({
+      ...prev,
+      answered: true,
+      result: correct ? 'correct' : 'wrong',
+      feedback: correct
+        ? 'Correct! Well done.'
+        : `Not quite — the answer was ${q.options.find(o => o.toLowerCase() === q.target.toLowerCase())}.`,
     }))
   }
 
@@ -51,13 +84,18 @@ export default function App() {
     setSelectedBone(null)
     setQuiz(prev => ({
       ...initialQuiz,
-      currentQ: (prev.currentQ + 1) % questions.length,
+      currentQ: (prev.currentQ + 1) % levelQuestions.length,
     }))
   }
 
   return (
     <>
-      <Scene selectedBone={selectedBone} onSelect={handleBoneSelect} />
+      <Scene
+        selectedBone={selectedBone}
+        onSelect={handleBoneSelect}
+        highlightBone={highlightBone}
+        clickable={modelClickable}
+      />
 
       <div id="topbar">
         <div>
@@ -68,11 +106,14 @@ export default function App() {
 
       <QuizPanel
         quiz={quiz}
-        questions={questions}
+        questions={levelQuestions}
         started={quizStarted}
+        quizLevel={quizLevel}
+        onLevelChange={setQuizLevel}
         onStart={handleStartQuiz}
         onEnd={handleEndQuiz}
         onNext={handleNextQuestion}
+        onAnswer={handleMultipleChoiceAnswer}
       />
       <InfoPanel selectedBone={selectedBone} />
 
