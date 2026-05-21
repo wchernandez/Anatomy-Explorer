@@ -7,7 +7,7 @@ export default function Scene({ selectedBone, onSelect }) {
   return (
     <div id="canvas-container">
       <Canvas
-        camera={{ position: [0, 1.6, 4], fov: 50, near: 0.01, far: 200 }}
+        camera={{ position: [0, 1.8, 4], fov: 50, near: 0.01, far: 200 }}
         shadows
         gl={{
           antialias: true,
@@ -39,6 +39,7 @@ export default function Scene({ selectedBone, onSelect }) {
           dampingFactor={0.06}
           minDistance={0.5}
           maxDistance={12}
+          target={[0, 0.55, 0]}
         />
       </Canvas>
     </div>
