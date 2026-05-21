@@ -14,6 +14,7 @@ const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Wai
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
   const [quiz, setQuiz] = useState(initialQuiz)
+  const [showMenu, setShowMenu] = useState(true)
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
@@ -40,6 +41,22 @@ export default function App() {
       ...initialQuiz,
       currentQ: (prev.currentQ + 1) % questions.length,
     }))
+  }
+
+  function handleStart() {
+    setShowMenu(false)
+  }
+
+  if (showMenu) {
+    return (
+      <div className="main-menu">
+        <div className="menu-card panel">
+          <div className="menu-title">Smokes and Mirrors</div>
+          <div className="menu-subtitle">Step into the interactive skeletal atlas and test your anatomy knowledge.</div>
+          <button onClick={handleStart}>Start now</button>
+        </div>
+      </div>
+    )
   }
 
   return (
