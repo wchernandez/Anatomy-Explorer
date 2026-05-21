@@ -41,12 +41,8 @@ export default function App() {
   const [showPanel,     setShowPanel]     = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
-  const [quiz, setQuiz]               = useState(initialQuiz)
-
-  const [showSkeleton, setShowSkeleton] = useState(true)
-  const [showMuscles,  setShowMuscles]  = useState(false)
-  const [activeGroup,  setActiveGroup]  = useState('All Muscles')
-  const [filterMode,   setFilterMode]   = useState('fade')
+  const [quiz, setQuiz] = useState(initialQuiz)
+  const [showMenu, setShowMenu] = useState(true)
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
@@ -68,24 +64,38 @@ export default function App() {
   function handleEndQuiz()    { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(false) }
   function handleNextQuestion() {
     setSelectedBone(null)
-    setQuiz(prev => ({ ...initialQuiz, currentQ: (prev.currentQ + 1) % questions.length }))
+    setQuiz(initialQuiz)
+    setQuizStarted(true)
   }
 
-  /** Called by height preset buttons — snaps scales to anatomically correct proportions */
-  function handlePresetChange(key) {
-    setHeightPreset(key)
-    const sy  = presetStatureScale(key)
-    const sxz = HEIGHT_PRESETS[key].sxz
-    setStatureScale(sy)
-    setShoulderScale(sxz)
-    setHipScale(sxz)
+  function handleEndQuiz() {
+    setSelectedBone(null)
+    setQuiz(initialQuiz)
+    setQuizStarted(false)
   }
 
-  /** Called by ProportionPanel — fine-grained ANSUR overrides */
-  function handleScaleChange({ statureScale: sY, shoulderScale: sXZ, hipScale: sHip }) {
-    setStatureScale(sY)
-    setShoulderScale(sXZ)
-    setHipScale(sHip ?? 1)
+  function handleNextQuestion() {
+    setSelectedBone(null)
+    setQuiz(prev => ({
+      ...initialQuiz,
+      currentQ: (prev.currentQ + 1) % questions.length,
+    }))
+  }
+
+  function handleStart() {
+    setShowMenu(false)
+  }
+
+  if (showMenu) {
+    return (
+      <div className="main-menu">
+        <div className="menu-card panel">
+          <div className="menu-title">Smokes and Mirrors</div>
+          <div className="menu-subtitle">Step into the interactive skeletal atlas and test your anatomy knowledge.</div>
+          <button onClick={handleStart}>Start now</button>
+        </div>
+      </div>
+    )
   }
 
   return (
