@@ -1,0 +1,38 @@
+
+
+ANTERIOR SPINOCEREBELLAR TRACT
+
+
+The ventral spinocerebellar tract (or anterior spinocerebellar tract) conveys proprioceptive information from the body to the cerebellum. 
+
+Historically, it has also been known as Gowers' column (or fasciculus or tract), after Sir William Richard Gowers.
+
+It is part of the somatosensory system and runs in parallel with the dorsal spinocerebellar tract. Both these tracts involve two neurons. 
+
+The ventral spinocerebellar tract will cross to the opposite side of the body first in the spinal cord as part of the anterior white commissure and then cross again to end in the cerebellum (referred to as a "double cross"), as compared to the dorsal spinocerebellar tract, which does not decussate, or cross sides, at all through its path.
+
+The ventral tract (under L2/L3) gets its proprioceptive/fine touch/vibration information from a first order neuron, with its cell body in a dorsal ganglion. 
+
+The axon runs via the fila radicularia to the dorsal horn of the grey matter. 
+
+There it makes a synapse with the dendrites of two neurons: they send their axons bilaterally to the ventral border of the lateral funiculi. 
+
+The fibers of the ventral spinocerebellar tract then enters the cerebellum via the superior cerebellar peduncle. 
+
+This is in contrast with the dorsal spinocerebellar tract (C8 - L2/L3), which only has 1 unilateral axon that has its cell body in Clarke's column (only at the level of C8 - L2/L3).
+
+Originates from ventral horn at lumbosacral spinal levels. 
+
+Axons first cross midline in the spinal cord and run in the ventral border of the lateral funiculi. 
+
+These axons ascend to the pons where they join the superior cerebellar peduncle to enter the cerebellum. Once in the deep white matter of the cerebellum, the axons recross the midline, give off collaterals to the globose and emboliform nuclei, and terminate in the cortex of the anterior lobe and vermis of the posterior lobe.
+
+Comparison with dorsal spinocerebellar tract:
+    
+When the dorsal roots are cut in a cat performing a step cycle, peripheral excitation is lost, and the dorsal spinocerebellar tract has no activity; the ventral spinocerebellar tract continues to show activity. 
+
+This suggests that the dorsal spinocerebellar tract carries sensory information to the spinocerebellum through the inferior cerebellar peduncle during movement (since the inferior peduncle is known to contain fibres from the dorsal tract), and that the ventral spinocerebellar tract carries internally generated motor information about the movement through the superior cerebellar peduncle.
+
+
+
+https://en.wikipedia.org/wiki/Spinocerebellar_tract#Ventral_spinocerebellar_tract

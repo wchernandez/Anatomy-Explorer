@@ -1,0 +1,74 @@
+
+
+SPINAL GANGLION
+
+
+A dorsal root ganglion (or spinal ganglion; also known as a posterior root ganglion) is a cluster of neurons (a ganglion) in a dorsal root of a spinal nerve.
+
+The cell bodies of sensory neurons known as first-order neurons are located in the dorsal root ganglia.
+
+The axons of dorsal root ganglion neurons are known as afferents.
+
+In the peripheral nervous system, afferents refer to the axons that relay sensory information into the central nervous system (i.e. the brain and the spinal cord). 
+
+Structure
+
+The neurons comprising the dorsal root ganglion are of the pseudo-unipolar type, meaning they have a cell body (soma) with two branches that act as a single axon, often referred to as a distal process and a proximal process.
+
+Unlike the majority of neurons found in the central nervous system, an action potential in posterior root ganglion neuron may initiate in the distal process in the periphery, bypass the cell body, and continue to propagate along the proximal process until reaching the synaptic terminal in the posterior horn of spinal cord.
+
+Distal section
+
+The distal section of the axon may either be a bare nerve ending or encapsulated by a structure that helps relay specific information to nerve. 
+
+Two examples where the nerve ending of the distal process is encapsulated as such are, Meissner's corpuscles, which render the distal processes of mechanosensory neurons sensitive to stroking only, and Pacinian corpuscles, which make neurons more sensitive to vibration.
+
+Location
+
+The dorsal root ganglia lie in the intervertebral foramina. 
+
+The anterior and posterior spinal nerve roots join just beyond (lateral) to the location of the dorsal root ganglion.
+Development
+
+The dorsal root ganglia develop in the embryo from neural crest cells, not neural tube. Hence, the spinal ganglia can be regarded as gray matter of the spinal cord that became translocated to the periphery.
+
+Function
+
+Nociception
+
+Proton-sensing G protein-coupled receptors are expressed by DRG sensory neurons and might play a role in acid-induced nociception.
+
+
+Mechanosensitive channels
+
+The nerve endings of dorsal root ganglion neurons have a variety of sensory receptors that are activated by mechanical, thermal, chemical, and noxious stimuli.
+
+In these sensory neurons, a group of ion channels thought to be responsible for somatosensory transduction have been identified.
+
+Compression of the dorsal root ganglion by a mechanical stimulus lowers the voltage threshold needed to evoke a response and causes action potentials to be fired.
+
+This firing may even persist after the removal of the stimulus.
+
+Two distinct types of mechanosensitive ion channels have been found in the posterior root ganglion neurons. 
+
+The two channels are broadly classified as either high-threshold (HT) or low threshold (LT).
+
+As their names suggest, they have different thresholds as well as different sensitivities to pressure. 
+
+These are cationic channels whose activity appears to be regulated by the proper functioning of the cytoskeleton and cytoskeleton associated proteins.
+
+The presence of these channels in the posterior root ganglion gives reason to believe that other sensory neurons may contain them as well.
+
+High-threshold mechanosensitive channels
+
+High-threshold channels have a possible role in nociception. 
+
+These channels are found predominantly in smaller sensory neurons in the dorsal root ganglion cells and are activated by higher pressures, two attributes that are characteristic of nociceptors.
+
+Also, the threshold of HT channels was lowered in the presence of PGE2 (a compound that sensitizes neurons to mechanical stimuli and mechanical hyperalgesia) which further supports a role for HT channels in the transduction of mechanical stimuli into nociceptive neuronal signals.
+
+Presynaptic control
+
+The presynaptic regulation of the dorsal nerve ending discharge in the spinal cord can occur through certain types of GABAA receptors but not through the activation of glycine receptors which are absent from these types of terminals. 
+
+Thus GABAA receptors but not glycine receptors can presynaptically control nociception and pain transmission.

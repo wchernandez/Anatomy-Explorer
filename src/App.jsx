@@ -13,12 +13,13 @@ const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Wai
 
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
+  const [quizStarted, setQuizStarted] = useState(false)
   const [quiz, setQuiz] = useState(initialQuiz)
   const [showMenu, setShowMenu] = useState(true)
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
-    if (quiz.answered || !mesh) return
+    if (!quizStarted || quiz.answered || !mesh) return
 
     const q = questions[quiz.currentQ]
     const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
@@ -33,6 +34,18 @@ export default function App() {
         ? (q.target === null ? `Good job! That's the ${boneName}.` : 'Correct! Well done.')
         : `Not quite — that's the ${boneName}.`,
     }))
+  }
+
+  function handleStartQuiz() {
+    setSelectedBone(null)
+    setQuiz(initialQuiz)
+    setQuizStarted(true)
+  }
+
+  function handleEndQuiz() {
+    setSelectedBone(null)
+    setQuiz(initialQuiz)
+    setQuizStarted(false)
   }
 
   function handleNextQuestion() {
@@ -70,7 +83,14 @@ export default function App() {
         </div>
       </div>
 
-      <QuizPanel quiz={quiz} questions={questions} onNext={handleNextQuestion} />
+      <QuizPanel
+        quiz={quiz}
+        questions={questions}
+        started={quizStarted}
+        onStart={handleStartQuiz}
+        onEnd={handleEndQuiz}
+        onNext={handleNextQuestion}
+      />
       <InfoPanel selectedBone={selectedBone} />
 
       <div id="controls-hint">
