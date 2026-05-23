@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 
 // Glob all txt files in the script directory lazily
 const scriptFiles = import.meta.glob('/src/data/script/*.txt', { as: 'raw' })
@@ -37,8 +37,6 @@ export default function InfoPanel({ selectedBone }) {
 
   useEffect(() => {
     async function loadDescription() {
-      setIsExpanded(false) // Reset expansion state when bone changes
-
       if (!boneName) {
         setDescription('')
         return
@@ -76,8 +74,6 @@ export default function InfoPanel({ selectedBone }) {
     loadDescription()
   }, [boneName])
 
-  const truncated = description.length > 180 ? description.substring(0, 180) + '...' : description
-
   return (
     <div id="info-panel" className={`panel ${selectedBone ? '' : 'empty'}`}>
       <div className="panel-label">Selected Structure</div>
@@ -89,17 +85,9 @@ export default function InfoPanel({ selectedBone }) {
         {loading ? (
           <span style={{ opacity: 0.5 }}>Retrieving data…</span>
         ) : selectedBone ? (
-          <>
-            <div>{isExpanded ? description : truncated}</div>
-            {description.length > 180 && (
-              <button 
-                className="show-more-btn" 
-                onClick={() => setIsExpanded(!isExpanded)}
-              >
-                {isExpanded ? 'Show Less ↑' : 'Show More ↓'}
-              </button>
-            )}
-          </>
+          <div className="description-box description-box--scroll">
+            {description}
+          </div>
         ) : (
           'Hover or click a bone to inspect it.'
         )}

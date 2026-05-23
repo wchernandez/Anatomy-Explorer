@@ -283,7 +283,31 @@ body::before {
   font-size: 0.8rem;
   line-height: 1.6;
   color: var(--text-dim);
+}
+
+.description-box {
   white-space: pre-line;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.description-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.description-box::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+
+.description-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.description-box {
+  scrollbar-color: rgba(255, 255, 255, 0.18) rgba(255, 255, 255, 0.05);
 }
 
 /* Button styling */
