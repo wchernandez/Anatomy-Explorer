@@ -8,13 +8,14 @@ export default function LayerControls({
   showMuscles, setShowMuscles,
   activeGroup, setActiveGroup,
   filterMode, setFilterMode,
+  embedded = false,
 }) {
   const [panelOpen, setPanelOpen] = useState(true)
 
   return (
     <>
-      {/* Layer toggle bar */}
-      <div id="layer-bar">
+      {/* Layer toggle controls */}
+      <div id={embedded ? 'layer-bar-embedded' : 'layer-bar'}>
         <div className="layer-label">Layers</div>
         <button
           className={`layer-btn ${showSkeleton ? 'active skeleton' : 'inactive'}`}
@@ -32,8 +33,8 @@ export default function LayerControls({
         </button>
       </div>
 
-      {/* Muscle group panel — only shown when muscles are visible */}
-      {showMuscles && (
+      {/* Muscle group panel — only shown when muscles are visible and not embedded */}
+      {showMuscles && !embedded && (
         <div id="muscle-panel" className="panel">
           <div className="panel-label">
             <button

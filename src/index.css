@@ -107,12 +107,49 @@ body::before {
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%);
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.48) 100%);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.12);
   pointer-events: none;
+}
+
+#menu-toggle {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  width: auto;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.2s ease;
+}
+
+#menu-toggle:hover {
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.25);
+  color: #00ff88;
+}
+
+#menu-toggle.open {
+  background: rgba(0, 255, 136, 0.15);
+  border-color: #00ff88;
+  color: #00ff88;
+}
+
+#menu-toggle .hamburger {
+  font-size: 1rem;
+  display: inline-flex;
+  line-height: 1;
 }
 
 /* Topbar right-side controls container */
@@ -123,10 +160,155 @@ body::before {
   pointer-events: all;
 }
 
-/* Height preset buttons */
-#height-presets {
+/* Left-side application menu */
+#app-menu {
+  position: fixed;
+  top: 5.5rem;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  width: min(360px, calc(100vw - 3rem));
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  z-index: 9;
+}
+
+#app-menu > .panel {
+  position: static;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  border-radius: 24px;
+}
+
+#app-menu .menu-item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+#app-menu .menu-toggle {
+  all: unset;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1rem;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+#app-menu .menu-toggle:hover {
+  color: #00ff88;
+}
+
+#app-menu .menu-toggle.active {
+  color: #00ff88;
+}
+
+#app-menu .menu-section-body {
+  padding: 0 1rem 1rem;
+}
+
+#app-menu .menu-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+#app-menu .menu-height-presets {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+#app-menu .panel .panel-label {
+  margin-bottom: 1rem;
+}
+
+#app-menu .panel-label::before {
+  display: none;
+}
+
+#app-menu .panel {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(10, 15, 40, 0.92);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.35);
+}
+
+#app-menu .panel .panel {
+  position: static;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  animation: none;
+}
+
+#app-menu .panel .panel-label {
+  margin-bottom: 0.75rem;
+}
+
+#app-menu button {
+  width: auto;
+  margin-top: 0.6rem;
+}
+
+#app-menu .preset-btn {
+  padding: 0.6rem 0.9rem !important;
+  min-width: 0;
+}
+
+#app-menu #camera-panel,
+#app-menu #muscle-panel,
+#app-menu #quiz-panel {
+  position: static;
+  width: 100%;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  animation: none;
+}
+
+#app-menu #camera-panel .panel-label,
+#app-menu #muscle-panel .panel-label,
+#app-menu #quiz-panel .panel-label {
+  margin-bottom: 0.75rem;
+}
+
+#app-menu #camera-panel .camera-grid,
+#app-menu #muscle-panel .group-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+#app-menu #camera-panel .camera-btn,
+#app-menu #muscle-panel .group-btn {
+  width: 100%;
+}
+
+#topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.48) 100%);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.12);
+  pointer-events: none;
+}
+
+#topbar > div {
+  pointer-events: all;
 }
 
 /* Percentile slider control */

@@ -17,6 +17,31 @@
   animation: slideDown 0.5s ease-out;
 }
 
+#layer-bar-embedded {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+#layer-bar-embedded .layer-label {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+#layer-bar-embedded .layer-btn {
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .layer-label {
   font-size: 0.65rem;
   letter-spacing: 0.15em;
@@ -96,9 +121,9 @@
 /* ── Muscle group panel ─────────────────────────────────────────────────── */
 #muscle-panel {
   position: fixed;
-  top: 9rem;
-  left: 2rem;
-  width: 210px;
+  right: 1.5rem;
+  bottom: 18.5rem;
+  width: 220px;
   z-index: 10;
   border-color: rgba(255, 80, 80, 0.4);
   background: linear-gradient(135deg, rgba(180, 20, 20, 0.12) 0%, rgba(255, 80, 0, 0.06) 100%);
@@ -258,8 +283,8 @@
   }
 
   #muscle-panel {
-    top: 8rem;
-    left: 1rem;
+    right: 1rem;
+    bottom: 14.5rem;
     width: 185px;
   }
 }
@@ -371,9 +396,9 @@
 /* ── Bone group panel ──────────────────────────────────────────────────── */
 #bone-panel {
   position: fixed;
-  top: 9rem;
-  left: 2rem;
-  width: 210px;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  width: 240px;
   z-index: 10;
   border-color: rgba(200, 168, 120, 0.4);
   background: linear-gradient(135deg, rgba(102, 76, 40, 0.12) 0%, rgba(180, 140, 80, 0.06) 100%);
@@ -389,6 +414,15 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
+}
+
+#bone-panel .subsection-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
 }
 
 #bone-panel .panel-label::before {
@@ -409,14 +443,14 @@
   }
 
   #muscle-panel {
-    top: 8rem;
-    left: 1rem;
+    right: 1rem;
+    bottom: 14.5rem;
     width: 185px;
   }
 
   #bone-panel {
-    top: 14rem;
-    left: 1rem;
+    right: 1rem;
+    bottom: 1.5rem;
     width: 185px;
   }
 
@@ -429,6 +463,7 @@
   .camera-grid {
     grid-template-columns: 1fr 1fr;
   }
+}
 
 @media (max-width: 640px) {
   #layer-bar {
@@ -442,5 +477,4 @@
   #camera-panel {
     display: none;
   }
-}
 }

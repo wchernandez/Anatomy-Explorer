@@ -45,7 +45,9 @@ export default function App() {
   const [quizStarted, setQuizStarted] = useState(false)
   const [quizLevel, setQuizLevel] = useState(1)
   const [quiz, setQuiz] = useState(initialQuiz)
-  const [showMenu, setShowMenu] = useState(true)
+  const [showStartScreen, setShowStartScreen] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [activeMenuItem, setActiveMenuItem] = useState('Quiz')
 
   const levelQuestions = questions.filter(q => q.level === quizLevel)
 
@@ -152,10 +154,14 @@ export default function App() {
   }
 
   function handleStart() {
-    setShowMenu(false)
+    setShowStartScreen(false)
   }
 
-  if (showMenu) {
+  function toggleMenuItem(item) {
+    setActiveMenuItem(prev => (prev === item ? '' : item))
+  }
+
+  if (showStartScreen) {
     return (
       <div className="main-menu">
         <div className="menu-card panel">
@@ -187,39 +193,134 @@ export default function App() {
       />
 
       <div id="topbar">
+        <button
+          id="menu-toggle"
+          type="button"
+          className={menuOpen ? 'open' : ''}
+          onClick={() => setMenuOpen(open => !open)}
+        >
+          <span className="hamburger">☰</span>
+          <span>Menu</span>
+        </button>
         <div>
           <div className="title-main">Anatomy Explorer</div>
           <div className="title-sub">Human Anatomy · Interactive Model</div>
         </div>
-
-        <div id="topbar-controls">
-          {/* Body proportion presets */}
-          <div id="height-presets">
-            {Object.entries(HEIGHT_PRESETS).map(([key, p]) => (
-              <button
-                key={key}
-                id={`preset-${key}`}
-                className={`preset-btn${heightPreset === key ? ' active' : ''}`}
-                onClick={() => handlePresetChange(key)}
-              >
-                <span className="preset-ft">{p.label}</span>
-                <span className="preset-sub">{p.sub}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Proportions panel toggle */}
-          <button
-            id="proportion-toggle"
-            className={`preset-btn${showPanel ? ' active' : ''}`}
-            onClick={() => setShowPanel(v => !v)}
-            title="ANSUR II Proportion Controls"
-          >
-            <span className="preset-ft">⚖</span>
-            <span className="preset-sub">Proportions</span>
-          </button>
-        </div>
       </div>
+
+      {menuOpen && (
+        <aside id="app-menu" className="panel">
+          <div className="panel-label">Menu</div>
+
+        <div className="menu-item">
+          <button
+            type="button"
+            className={`menu-toggle${activeMenuItem === 'Quiz' ? ' active' : ''}`}
+            onClick={() => toggleMenuItem('Quiz')}
+          >
+            <span>Quiz</span>
+            <span>{activeMenuItem === 'Quiz' ? '▾' : '▸'}</span>
+          </button>
+          {activeMenuItem === 'Quiz' && (
+            <div className="menu-section-body">
+              <QuizPanel
+                quiz={quiz}
+                questions={levelQuestions}
+                started={quizStarted}
+                quizLevel={quizLevel}
+                onLevelChange={setQuizLevel}
+                onStart={handleStartQuiz}
+                onEnd={handleEndQuiz}
+                onNext={handleNextQuestion}
+                onAnswer={handleMultipleChoiceAnswer}
+                onTypeAnswer={handleTypeAnswer}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="menu-item">
+          <button
+            type="button"
+            className={`menu-toggle${activeMenuItem === 'Measurements' ? ' active' : ''}`}
+            onClick={() => toggleMenuItem('Measurements')}
+          >
+            <span>Measurements</span>
+            <span>{activeMenuItem === 'Measurements' ? '▾' : '▸'}</span>
+          </button>
+          {activeMenuItem === 'Measurements' && (
+            <div className="menu-section-body">
+              <div className="menu-subtitle">Choose a height preset or open proportions.</div>
+              <div id="height-presets" className="menu-height-presets">
+                {Object.entries(HEIGHT_PRESETS).map(([key, p]) => (
+                  <button
+                    key={key}
+                    id={`preset-${key}`}
+                    className={`preset-btn${heightPreset === key ? ' active' : ''}`}
+                    onClick={() => handlePresetChange(key)}
+                  >
+                    <span className="preset-ft">{p.label}</span>
+                    <span className="preset-sub">{p.sub}</span>
+                  </button>
+                ))}
+              </div>
+              <button
+                id="proportion-toggle"
+                className={`preset-btn${showPanel ? ' active' : ''}`}
+                onClick={() => setShowPanel(v => !v)}
+                title="ANSUR II Proportion Controls"
+              >
+                <span className="preset-ft">⚖</span>
+                <span className="preset-sub">Proportions</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="menu-item">
+          <button
+            type="button"
+            className={`menu-toggle${activeMenuItem === 'Camera Angles' ? ' active' : ''}`}
+            onClick={() => toggleMenuItem('Camera Angles')}
+          >
+            <span>Camera Angles</span>
+            <span>{activeMenuItem === 'Camera Angles' ? '▾' : '▸'}</span>
+          </button>
+          {activeMenuItem === 'Camera Angles' && (
+            <div className="menu-section-body">
+              <CameraControls onAngleSelect={setCameraPreset} />
+            </div>
+          )}
+        </div>
+
+        <div className="menu-item">
+          <button
+            type="button"
+            className={`menu-toggle${activeMenuItem === 'Body Systems' ? ' active' : ''}`}
+            onClick={() => toggleMenuItem('Body Systems')}
+          >
+            <span>Body Systems</span>
+            <span>{activeMenuItem === 'Body Systems' ? '▾' : '▸'}</span>
+          </button>
+          {activeMenuItem === 'Body Systems' && (
+            <div className="menu-section-body">
+              <div className="menu-subtitle">Toggle skeleton and muscle visibility, then explore muscle groups.</div>
+              <LayerControls
+                embedded
+                showSkeleton={showSkeleton}
+                setShowSkeleton={setShowSkeleton}
+                showMuscles={showMuscles}
+                setShowMuscles={setShowMuscles}
+                activeGroup={activeGroup}
+                setActiveGroup={setActiveGroup}
+                filterMode={filterMode}
+                setFilterMode={setFilterMode}
+              />
+            </div>
+          )}
+        </div>
+        </aside>
+      )}
 
       {/* ANSUR II Proportion Panel */}
       <ProportionPanel
@@ -231,35 +332,19 @@ export default function App() {
         hipScale={hipScale}
       />
 
-      <LayerControls
-        showSkeleton={showSkeleton}  setShowSkeleton={setShowSkeleton}
-        showMuscles={showMuscles}    setShowMuscles={setShowMuscles}
-        activeGroup={activeGroup}    setActiveGroup={setActiveGroup}
-        filterMode={filterMode}      setFilterMode={setFilterMode}
-      />
-
       <BoneControls
         showSkeleton={showSkeleton}
+        showMuscles={showMuscles}
         activeBoneGroup={activeBoneGroup}
         setActiveBoneGroup={setActiveBoneGroup}
         boneFadeMode={boneFadeMode}
         setBoneFadeMode={setBoneFadeMode}
+        activeGroup={activeGroup}
+        setActiveGroup={setActiveGroup}
+        filterMode={filterMode}
+        setFilterMode={setFilterMode}
       />
 
-      <CameraControls onAngleSelect={setCameraPreset} />
-
-      <QuizPanel
-        quiz={quiz}
-        questions={levelQuestions}
-        started={quizStarted}
-        quizLevel={quizLevel}
-        onLevelChange={setQuizLevel}
-        onStart={handleStartQuiz}
-        onEnd={handleEndQuiz}
-        onNext={handleNextQuestion}
-        onAnswer={handleMultipleChoiceAnswer}
-        onTypeAnswer={handleTypeAnswer}
-      />
       <InfoPanel selectedBone={selectedBone} />
 
       <div id="controls-hint">
