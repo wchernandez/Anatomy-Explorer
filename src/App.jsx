@@ -47,6 +47,11 @@ export default function App() {
   const [quiz, setQuiz] = useState(initialQuiz)
   const [showMenu, setShowMenu] = useState(true)
 
+  const levelQuestions = questions.filter(q => q.level === quizLevel)
+
+  // Level 1 and 4 highlights a bone for the user to identify
+  const highlightBone = quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && levelQuestions[quiz.currentQ] ? levelQuestions[quiz.currentQ].target : null
+
   // Layer visibility state
   const [showSkeleton, setShowSkeleton] = useState(true)
   const [showMuscles, setShowMuscles] = useState(false)
@@ -77,8 +82,10 @@ export default function App() {
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
-    if (!quizStarted || quiz.answered || !mesh) return
-    const q = questions[quiz.currentQ]
+    // Level 2 and Level 3 use model clicks during a quiz
+    if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
+
+    const q = levelQuestions[quiz.currentQ]
     const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
     if (!q) return
 
@@ -93,20 +100,49 @@ export default function App() {
     }))
   }
 
+  // Level 1: user clicks one of the multiple choice buttons
+  function handleMultipleChoiceAnswer(option) {
+    if (quiz.answered) return
+    const q = levelQuestions[quiz.currentQ]
+    if (!q) return
+
+    const correct = option.toLowerCase() === q.answer.toLowerCase()
+
+    setQuiz(prev => ({
+      ...prev,
+      answered: true,
+      result: correct ? 'correct' : 'wrong',
+      feedback: correct
+        ? 'Correct! Well done.'
+        : `Not quite — the answer was ${q.answer}.`,
+    }))
+  }
+
+  // Level 4: user types the name of the bone
+  function handleTypeAnswer(input) {
+    if (quiz.answered || !input.trim()) return
+
+    const q = levelQuestions[quiz.currentQ]
+    if (!q) return
+
+    const typed = input.trim().toLowerCase()
+    const target = q.target.toLowerCase()
+    const synonyms = q.synonyms || []
+
+    const correct = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
+
+    setQuiz(prev => ({
+      ...prev,
+      answered: true,
+      result: correct ? 'correct' : 'wrong',
+      feedback: correct
+        ? 'Correct! Well done.'
+        : `Not quite — the answer was "${q.target}".`,
+    }))
+  }
+
   function handleStartQuiz()  { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(true) }
   function handleEndQuiz()    { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(false) }
-  function handleNextQuestion() {
-    setSelectedBone(null)
-    setQuiz(initialQuiz)
-    setQuizStarted(true)
-  }
-
-  function handleEndQuiz() {
-    setSelectedBone(null)
-    setQuiz(initialQuiz)
-    setQuizStarted(false)
-  }
-
   function handleNextQuestion() {
     setSelectedBone(null)
     setQuiz(prev => ({
@@ -147,6 +183,7 @@ export default function App() {
         cameraPreset={cameraPreset}
         activeBoneGroup={activeBoneGroup}
         boneFadeMode={boneFadeMode}
+        highlightBone={highlightBone}
       />
 
       <div id="topbar">
@@ -212,8 +249,16 @@ export default function App() {
       <CameraControls onAngleSelect={setCameraPreset} />
 
       <QuizPanel
-        quiz={quiz} questions={questions} started={quizStarted}
-        onStart={handleStartQuiz} onEnd={handleEndQuiz} onNext={handleNextQuestion}
+        quiz={quiz}
+        questions={levelQuestions}
+        started={quizStarted}
+        quizLevel={quizLevel}
+        onLevelChange={setQuizLevel}
+        onStart={handleStartQuiz}
+        onEnd={handleEndQuiz}
+        onNext={handleNextQuestion}
+        onAnswer={handleMultipleChoiceAnswer}
+        onTypeAnswer={handleTypeAnswer}
       />
       <InfoPanel selectedBone={selectedBone} />
 

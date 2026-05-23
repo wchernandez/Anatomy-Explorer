@@ -68,9 +68,11 @@ export default function SkeletonModel({
   hipScale = 1,
   activeBoneGroup = 'All Bones',
   boneFadeMode = 'fade',
+  highlightBone = null,
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered] = useState(null)
+  const [highlightedMesh, setHighlightedMesh] = useState(null)
   const groupRef  = useRef()
   const snapRef   = useRef(null)   // { skull: [{mesh,ox,oz}], lower: [{mesh,ox,oz}] }
 
@@ -83,6 +85,18 @@ export default function SkeletonModel({
     })
     return list
   }, [scene])
+
+  // Find the mesh matching highlightBone string
+  useEffect(() => {
+    if (!highlightBone) {
+      setHighlightedMesh(null)
+      return
+    }
+    const target = meshes.find(mesh => 
+      (mesh.name || mesh.parent?.name || '').toLowerCase().includes(highlightBone.toLowerCase())
+    )
+    setHighlightedMesh(target || null)
+  }, [highlightBone, meshes])
 
   useEffect(() => {
     if (!groupRef.current) return
@@ -140,6 +154,8 @@ export default function SkeletonModel({
   meshes.forEach(mesh => {
     if (mesh === selectedBone) {
       mesh.material = selectedMat
+    } else if (mesh === highlightedMesh) {
+      mesh.material = selectedMat
     } else if (mesh === hovered) {
       mesh.material = hoverMat
     } else {
@@ -162,11 +178,11 @@ export default function SkeletonModel({
         object={scene}
         onClick={(e) => {
           e.stopPropagation()
-          if (clickable) onSelect(e.object)
+          onSelect(e.object)
         }}
         onPointerOver={(e) => {
           e.stopPropagation()
-          if (clickable) setHovered(e.object)
+          setHovered(e.object)
         }}
         onPointerOut={() => setHovered(null)}
       />

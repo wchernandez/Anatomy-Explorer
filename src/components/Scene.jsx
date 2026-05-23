@@ -59,6 +59,7 @@ export default function Scene({
   cameraPreset = 'front',
   activeBoneGroup = 'All Bones',
   boneFadeMode = 'fade',
+  highlightBone = null,
 }) {
   return (
     <div id="canvas-container">
@@ -98,6 +99,7 @@ export default function Scene({
             hipScale={hipScale}
             activeBoneGroup={activeBoneGroup}
             boneFadeMode={boneFadeMode}
+            highlightBone={highlightBone}
           />
         )}
 
