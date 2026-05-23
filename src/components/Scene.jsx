@@ -1,10 +1,65 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
+import { useEffect, useRef } from 'react'
 import SkeletonModel from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
+import { CAMERA_PRESETS } from './CameraControls.jsx'
 
-export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscles, activeGroup, filterMode, heightPreset, statureScale = 1, shoulderScale = 1, hipScale = 1 }) {
+// Internal component to handle camera control
+function CameraManager({ cameraPresetKey }) {
+  const { camera } = useThree()
+  const controlsRef = useRef()
+
+  useEffect(() => {
+    if (!cameraPresetKey || !CAMERA_PRESETS[cameraPresetKey]) return
+
+    const preset = CAMERA_PRESETS[cameraPresetKey]
+    const startPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
+    const targetPos = preset.position
+    const duration = 600 // milliseconds
+
+    let startTime = null
+    const animate = (currentTime) => {
+      if (startTime === null) startTime = currentTime
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+
+      // Smooth easing function (ease-in-out cubic)
+      const easeProgress = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2
+
+      camera.position.x = startPos.x + (targetPos[0] - startPos.x) * easeProgress
+      camera.position.y = startPos.y + (targetPos[1] - startPos.y) * easeProgress
+      camera.position.z = startPos.z + (targetPos[2] - startPos.z) * easeProgress
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+
+    requestAnimationFrame(animate)
+  }, [cameraPresetKey, camera])
+
+  return null
+}
+
+export default function Scene({ 
+  selectedBone, 
+  onSelect, 
+  showSkeleton, 
+  showMuscles, 
+  activeGroup, 
+  filterMode, 
+  heightPreset, 
+  statureScale = 1, 
+  shoulderScale = 1, 
+  hipScale = 1,
+  cameraPreset = 'front',
+  activeBoneGroup = 'All Bones',
+  boneFadeMode = 'fade',
+}) {
   return (
     <div id="canvas-container">
       <Canvas
@@ -41,6 +96,8 @@ export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscle
             statureScale={statureScale}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            activeBoneGroup={activeBoneGroup}
+            boneFadeMode={boneFadeMode}
           />
         )}
 
@@ -62,6 +119,8 @@ export default function Scene({ selectedBone, onSelect, showSkeleton, showMuscle
           minDistance={0.5}
           maxDistance={12}
         />
+        
+        <CameraManager cameraPresetKey={cameraPreset} />
       </Canvas>
     </div>
   )

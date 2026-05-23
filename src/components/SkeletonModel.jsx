@@ -19,11 +19,56 @@ const LOWER_KEYS = [
 ]
 const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 
+// ── Bone Groups for skeletal filtering ──────────────────────────────────────
+export const BONE_GROUPS = {
+  'All Bones': null,
+  'Skull': [
+    'frontal bone','parietal bone','occipital bone','temporal bone','sphenoid bone',
+    'zygomatic','nasal bone','maxilla','mandible','vomer','palatine bone','lacrimal',
+    'inferior nasal','ethmoid','sinus of','malleus','incus','stapes','hyoid',
+  ],
+  'Spine': [
+    'cervical vertebra','thoracic vertebra','lumbar vertebra','sacrum','coccyx','vertebra',
+    'atlas','axis',
+  ],
+  'Thorax': [
+    'sternum','rib','clavicle','scapula',
+  ],
+  'Upper Limb': [
+    'humerus','radius','ulna','carpus','carpal','metacarpal','phalanx of hand',
+    'scaphoid','lunate','triquetrum','pisiform','trapezium','trapezoid',
+  ],
+  'Lower Limb': [
+    'femur','tibia','fibula','patella','calcaneus','talus','navicular',
+    'cuneiform','metatarsal','phalanx of foot','cuboid','tarsus','tarsal',
+  ],
+  'Pelvis': [
+    'hip bone','ilium','ischium','pubis','sacrum','coccyx',
+  ],
+}
+
+function meshMatchesBoneGroup(name, keywords) {
+  if (!keywords) return true
+  const lower = name.toLowerCase()
+  return keywords.some(k => lower.includes(k.toLowerCase()))
+}
+
 const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05 })
 const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness: 0.5,  metalness: 0.1, emissive: new THREE.Color(0x3a2a10), emissiveIntensity: 0.4 })
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
+const fadedMat     = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
+const hiddenMat    = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 
-export default function SkeletonModel({ selectedBone, onSelect, heightPreset = 'short', statureScale = 1, shoulderScale = 1, hipScale = 1 }) {
+export default function SkeletonModel({ 
+  selectedBone, 
+  onSelect, 
+  heightPreset = 'short', 
+  statureScale = 1, 
+  shoulderScale = 1, 
+  hipScale = 1,
+  activeBoneGroup = 'All Bones',
+  boneFadeMode = 'fade',
+}) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered] = useState(null)
   const groupRef  = useRef()
@@ -93,9 +138,22 @@ export default function SkeletonModel({ selectedBone, onSelect, heightPreset = '
   }, [scene, heightPreset, statureScale, shoulderScale, hipScale])
 
   meshes.forEach(mesh => {
-    if (mesh === selectedBone) mesh.material = selectedMat
-    else if (mesh === hovered) mesh.material = hoverMat
-    else                       mesh.material = defaultMat
+    if (mesh === selectedBone) {
+      mesh.material = selectedMat
+    } else if (mesh === hovered) {
+      mesh.material = hoverMat
+    } else {
+      // Check if this mesh belongs to the active bone group
+      const keywords = BONE_GROUPS[activeBoneGroup]
+      const inGroup = meshMatchesBoneGroup(mesh.name, keywords)
+      
+      if (inGroup) {
+        mesh.material = defaultMat
+      } else {
+        // Bone is not in active group
+        mesh.material = boneFadeMode === 'fade' ? fadedMat : hiddenMat
+      }
+    }
   })
 
   return (

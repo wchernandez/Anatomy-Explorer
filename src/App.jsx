@@ -3,6 +3,8 @@ import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
+import BoneControls from './components/BoneControls.jsx'
+import CameraControls from './components/CameraControls.jsx'
 import ProportionPanel from './components/ProportionPanel.jsx'
 import questions from './data/questions.json'
 
@@ -43,6 +45,34 @@ export default function App() {
   const [quizStarted, setQuizStarted] = useState(false)
   const [quiz, setQuiz] = useState(initialQuiz)
   const [showMenu, setShowMenu] = useState(true)
+
+  // Layer visibility state
+  const [showSkeleton, setShowSkeleton] = useState(true)
+  const [showMuscles, setShowMuscles] = useState(false)
+  const [activeGroup, setActiveGroup] = useState('All')
+  const [filterMode, setFilterMode] = useState('fade')
+
+  // Camera preset state
+  const [cameraPreset, setCameraPreset] = useState('front')
+
+  // Bone group and fade state
+  const [activeBoneGroup, setActiveBoneGroup] = useState('All Bones')
+  const [boneFadeMode, setBoneFadeMode] = useState('fade')
+
+  function handlePresetChange(key) {
+    setHeightPreset(key)
+    const newScale = presetStatureScale(key)
+    const preset = HEIGHT_PRESETS[key]
+    setStatureScale(newScale)
+    setShoulderScale(preset.sxz)
+    setHipScale(preset.sxz)
+  }
+
+  function handleScaleChange(type, value) {
+    if (type === 'stature') setStatureScale(value)
+    else if (type === 'shoulder') setShoulderScale(value)
+    else if (type === 'hip') setHipScale(value)
+  }
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
@@ -111,6 +141,9 @@ export default function App() {
         statureScale={statureScale}
         shoulderScale={shoulderScale}
         hipScale={hipScale}
+        cameraPreset={cameraPreset}
+        activeBoneGroup={activeBoneGroup}
+        boneFadeMode={boneFadeMode}
       />
 
       <div id="topbar">
@@ -164,6 +197,16 @@ export default function App() {
         activeGroup={activeGroup}    setActiveGroup={setActiveGroup}
         filterMode={filterMode}      setFilterMode={setFilterMode}
       />
+
+      <BoneControls
+        showSkeleton={showSkeleton}
+        activeBoneGroup={activeBoneGroup}
+        setActiveBoneGroup={setActiveBoneGroup}
+        boneFadeMode={boneFadeMode}
+        setBoneFadeMode={setBoneFadeMode}
+      />
+
+      <CameraControls onAngleSelect={setCameraPreset} />
 
       <QuizPanel
         quiz={quiz} questions={questions} started={quizStarted}
