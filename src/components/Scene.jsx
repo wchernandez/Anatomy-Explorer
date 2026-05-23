@@ -3,7 +3,7 @@ import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import SkeletonModel from './SkeletonModel.jsx'
 
-export default function Scene({ selectedBone, onSelect }) {
+export default function Scene({ selectedBone, onSelect, highlightBone, clickable = true }) {
   return (
     <div id="canvas-container">
       <Canvas
@@ -32,7 +32,12 @@ export default function Scene({ selectedBone, onSelect }) {
         <directionalLight color="#c8a96e" intensity={0.8} position={[0, -3, -5]} />
         <pointLight color="#c8a96e" intensity={0.5} distance={10} position={[2, 3, 2]} />
 
-        <SkeletonModel selectedBone={selectedBone} onSelect={onSelect} />
+        <SkeletonModel
+          selectedBone={selectedBone}
+          onSelect={onSelect}
+          highlightBone={highlightBone}
+          clickable={clickable}
+        />
 
         <OrbitControls
           enableDamping
