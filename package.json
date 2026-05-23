@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.17.10",
+    "lil-gui": "^0.21.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.160.1"
