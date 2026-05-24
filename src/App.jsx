@@ -29,6 +29,7 @@ export default function App() {
   const [quizStarted, setQuizStarted] = useState(false)
   const [quizLevel, setQuizLevel] = useState(1)
   const [quiz, setQuiz] = useState(initialQuiz)
+  const [correctBone, setCorrectBone] = useState(null)
 
   const levelQuestions = useMemo(() => {
     return questions
@@ -67,6 +68,9 @@ export default function App() {
         ? (q.target === null ? `Good job! That's the ${boneName}.` : 'Correct! Well done.')
         : `Not quite — that's the ${boneName}.`,
     }))
+    setCorrectBone(q.target)
+
+
   }
 
   // Level 1: user clicks one of the multiple choice buttons
@@ -127,10 +131,12 @@ export default function App() {
     setSelectedBone(null)
     setQuiz(initialQuiz)
     setQuizStarted(false)
+    setCorrectBone(null)
   }
 
   function handleNextQuestion() {
     setSelectedBone(null)
+    setCorrectBone(null)
     setQuiz(prev => ({
       ...initialQuiz,
       currentQ: (prev.currentQ + 1) % levelQuestions.length,
@@ -143,6 +149,7 @@ export default function App() {
         selectedBone={selectedBone}
         onSelect={handleBoneSelect}
         highlightBone={highlightBone}
+        correctBone={correctBone}
         clickable={modelClickable}
       />
 

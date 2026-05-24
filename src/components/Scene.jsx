@@ -3,7 +3,7 @@ import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import SkeletonModel from './SkeletonModel.jsx'
 
-export default function Scene({ selectedBone, onSelect, highlightBone, clickable = true }) {
+export default function Scene({ selectedBone, onSelect, highlightBone,correctBone, clickable = true }) {
   return (
     <div id="canvas-container">
       <Canvas
@@ -36,6 +36,7 @@ export default function Scene({ selectedBone, onSelect, highlightBone, clickable
           selectedBone={selectedBone}
           onSelect={onSelect}
           highlightBone={highlightBone}
+          correctBone={correctBone}
           clickable={clickable}
         />
 
