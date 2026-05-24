@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
@@ -17,7 +17,11 @@ export default function App() {
   const [quizLevel, setQuizLevel] = useState(1)
   const [quiz, setQuiz] = useState(initialQuiz)
 
-  const levelQuestions = questions.filter(q => q.level === quizLevel)
+  const levelQuestions = useMemo(() => {
+    return questions
+      .filter(q => q.level === quizLevel)
+      .sort(() => Math.random() - 0.5)
+  }, [quizLevel, quizStarted])
   const q = levelQuestions[quiz.currentQ]
 
 
