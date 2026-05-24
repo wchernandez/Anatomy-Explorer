@@ -409,6 +409,28 @@ body::before {
   line-height: 1.6;
   color: var(--text-dim);
   white-space: pre-line;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 0.4rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 170, 0, 0.35) transparent;
+}
+
+.bone-detail::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bone-detail::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bone-detail::-webkit-scrollbar-thumb {
+  background: rgba(255, 170, 0, 0.35);
+  border-radius: 2px;
+}
+
+.bone-detail::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 170, 0, 0.6);
 }
 
 /* Button styling */

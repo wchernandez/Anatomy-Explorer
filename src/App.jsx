@@ -3,7 +3,6 @@ import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
-import BoneControls from './components/BoneControls.jsx'
 import CameraControls from './components/CameraControls.jsx'
 import ProportionPanel from './components/ProportionPanel.jsx'
 import questions from './data/questions.json'
@@ -11,15 +10,12 @@ import questions from './data/questions.json'
 // ANSUR II Male mean stature (mm) — used to compute proportional scale ratios
 const ANSUR_STATURE_MEAN_MM = 1756.21
 
-// Height presets: target height in mm → proportional statureScale relative to ANSUR mean
-// sxz is the lateral-scale coupling at that stature (empirically tuned for anatomy)
 export const HEIGHT_PRESETS = {
   child: { label: '4 ft', sub: 'Child',  targetMm: 1219.2, sxz: 0.755 },
   short: { label: '5 ft', sub: 'Adult',  targetMm: 1524.0, sxz: 0.978 },
   tall:  { label: '6 ft', sub: 'Tall',   targetMm: 1828.8, sxz: 1.006 },
 }
 
-/** Compute the statureScale (sy) for a preset from its target height */
 function presetStatureScale(key) {
   const p = HEIGHT_PRESETS[key]
   return p ? p.targetMm / ANSUR_STATURE_MEAN_MM : 1.0
@@ -27,7 +23,11 @@ function presetStatureScale(key) {
 
 function formatName(raw) {
   if (!raw) return 'Unknown Structure'
-  return raw.replace(/\.g$/, '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).trim()
+  let name = raw.replace(/\.g$/, '').replace(/_/g, ' ')
+  name = name.replace(/\s+\d+$/, '')
+  if (/ [lL]$/.test(name)) name = name.slice(0, -2).trim() + ' (L)'
+  else if (/ [rR]$/.test(name)) name = name.slice(0, -2).trim() + ' (R)'
+  return name.replace(/\b\w/g, c => c.toUpperCase()).trim()
 }
 
 const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Waiting for selection…' }
@@ -36,132 +36,129 @@ export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
   const [heightPreset, setHeightPreset] = useState('short')
 
-  // Scaling state — preset provides base statureScale; ProportionPanel can override
   const [statureScale,  setStatureScale]  = useState(() => presetStatureScale('short'))
   const [shoulderScale, setShoulderScale] = useState(HEIGHT_PRESETS.short.sxz)
   const [hipScale,      setHipScale]      = useState(HEIGHT_PRESETS.short.sxz)
   const [showPanel,     setShowPanel]     = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
-  const [quizLevel, setQuizLevel] = useState(1)
-  const [quiz, setQuiz] = useState(initialQuiz)
-  const [showMenu, setShowMenu] = useState(true)
+  const [quizLevel,   setQuizLevel]   = useState(1)
+  const [quiz,        setQuiz]        = useState(initialQuiz)
+  const [showMenu,    setShowMenu]    = useState(true)
 
   const levelQuestions = questions.filter(q => q.level === quizLevel)
 
-  // Level 1 and 4 highlights a bone for the user to identify
-  const highlightBone = quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && levelQuestions[quiz.currentQ] ? levelQuestions[quiz.currentQ].target : null
+  const highlightBone =
+    quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && levelQuestions[quiz.currentQ]
+      ? levelQuestions[quiz.currentQ].target
+      : null
 
-  // Layer visibility state
+  // Layer visibility
   const [showSkeleton, setShowSkeleton] = useState(true)
-  const [showMuscles, setShowMuscles] = useState(false)
-  const [activeGroup, setActiveGroup] = useState('All')
-  const [filterMode, setFilterMode] = useState('fade')
+  const [showMuscles,  setShowMuscles]  = useState(false)
+  const [showJoints,   setShowJoints]   = useState(false)
+  const [showVascular, setShowVascular] = useState(false)
 
-  // Camera preset state
-  const [cameraPreset, setCameraPreset] = useState('front')
+  // Muscle group filter
+  const [activeGroup, setActiveGroup] = useState('All Muscles')
+  const [filterMode,  setFilterMode]  = useState('fade')
 
-  // Bone group and fade state
+  // Joint group filter
+  const [activeJointGroup, setActiveJointGroup] = useState('All Joints')
+  const [jointFilterMode,  setJointFilterMode]  = useState('fade')
+
+  // Vascular group filter
+  const [activeVascularGroup, setActiveVascularGroup] = useState('All Vessels')
+  const [vascularFilterMode,  setVascularFilterMode]  = useState('fade')
+
+  // Bone group filter (previously in BoneControls)
   const [activeBoneGroup, setActiveBoneGroup] = useState('All Bones')
-  const [boneFadeMode, setBoneFadeMode] = useState('fade')
+  const [boneFadeMode,    setBoneFadeMode]    = useState('fade')
+
+  // Skeleton bone names (keyed by group, populated once model loads)
+  const [skeletonBoneNames, setSkeletonBoneNames] = useState({})
+
+  // Camera preset
+  const [cameraPreset, setCameraPreset] = useState('front')
 
   function handlePresetChange(key) {
     setHeightPreset(key)
     const newScale = presetStatureScale(key)
-    const preset = HEIGHT_PRESETS[key]
+    const preset   = HEIGHT_PRESETS[key]
     setStatureScale(newScale)
     setShoulderScale(preset.sxz)
     setHipScale(preset.sxz)
   }
 
   function handleScaleChange(type, value) {
-    if (type === 'stature') setStatureScale(value)
+    if      (type === 'stature')  setStatureScale(value)
     else if (type === 'shoulder') setShoulderScale(value)
-    else if (type === 'hip') setHipScale(value)
+    else if (type === 'hip')      setHipScale(value)
   }
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
-    // Level 2 and Level 3 use model clicks during a quiz
     if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
 
-    const q = levelQuestions[quiz.currentQ]
+    const q           = levelQuestions[quiz.currentQ]
     const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
     if (!q) return
 
-    const correct = q.target === null || clickedName.includes(q.target)
+    const correct  = q.target === null || clickedName.includes(q.target)
     const boneName = formatName(mesh.name || mesh.parent?.name)
     setQuiz(prev => ({
-      ...prev, answered: true,
-      result: correct ? 'correct' : 'wrong',
+      ...prev,
+      answered: true,
+      result:   correct ? 'correct' : 'wrong',
       feedback: correct
         ? (q.target === null ? `Good job! That's the ${boneName}.` : 'Correct! Well done.')
         : `Not quite — that's the ${boneName}.`,
     }))
   }
 
-  // Level 1: user clicks one of the multiple choice buttons
   function handleMultipleChoiceAnswer(option) {
     if (quiz.answered) return
     const q = levelQuestions[quiz.currentQ]
     if (!q) return
-
     const correct = option.toLowerCase() === q.answer.toLowerCase()
-
     setQuiz(prev => ({
       ...prev,
       answered: true,
-      result: correct ? 'correct' : 'wrong',
-      feedback: correct
-        ? 'Correct! Well done.'
-        : `Not quite — the answer was ${q.answer}.`,
+      result:   correct ? 'correct' : 'wrong',
+      feedback: correct ? 'Correct! Well done.' : `Not quite — the answer was ${q.answer}.`,
     }))
   }
 
-  // Level 4: user types the name of the bone
   function handleTypeAnswer(input) {
     if (quiz.answered || !input.trim()) return
-
-    const q = levelQuestions[quiz.currentQ]
+    const q        = levelQuestions[quiz.currentQ]
     if (!q) return
-
-    const typed = input.trim().toLowerCase()
-    const target = q.target.toLowerCase()
+    const typed    = input.trim().toLowerCase()
+    const target   = q.target.toLowerCase()
     const synonyms = q.synonyms || []
-
-    const correct = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
-
+    const correct  = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
     setQuiz(prev => ({
       ...prev,
       answered: true,
-      result: correct ? 'correct' : 'wrong',
-      feedback: correct
-        ? 'Correct! Well done.'
-        : `Not quite — the answer was "${q.target}".`,
+      result:   correct ? 'correct' : 'wrong',
+      feedback: correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.target}".`,
     }))
   }
 
-  function handleStartQuiz()  { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(true) }
-  function handleEndQuiz()    { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(false) }
+  function handleStartQuiz()    { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(true) }
+  function handleEndQuiz()      { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(false) }
   function handleNextQuestion() {
     setSelectedBone(null)
-    setQuiz(prev => ({
-      ...initialQuiz,
-      currentQ: (prev.currentQ + 1) % levelQuestions.length,
-    }))
-  }
-
-  function handleStart() {
-    setShowMenu(false)
+    setQuiz(prev => ({ ...initialQuiz, currentQ: (prev.currentQ + 1) % levelQuestions.length }))
   }
 
   if (showMenu) {
     return (
       <div className="main-menu">
         <div className="menu-card panel">
-          <div className="menu-title">Smokes and Mirrors</div>
-          <div className="menu-subtitle">Step into the interactive skeletal atlas and test your anatomy knowledge.</div>
-          <button onClick={handleStart}>Start now</button>
+          <div className="menu-title">Smoke and Mirrors</div>
+          <div className="menu-subtitle">Step into the interactive model and test your anatomy knowledge.</div>
+          <button onClick={() => setShowMenu(false)}>Begin Learning</button>
         </div>
       </div>
     )
@@ -174,8 +171,11 @@ export default function App() {
         onSelect={handleBoneSelect}
         showSkeleton={showSkeleton}
         showMuscles={showMuscles}
+        showJoints={showJoints}
         activeGroup={activeGroup}
         filterMode={filterMode}
+        activeJointGroup={activeJointGroup}
+        jointFilterMode={jointFilterMode}
         heightPreset={heightPreset}
         statureScale={statureScale}
         shoulderScale={shoulderScale}
@@ -184,6 +184,10 @@ export default function App() {
         activeBoneGroup={activeBoneGroup}
         boneFadeMode={boneFadeMode}
         highlightBone={highlightBone}
+        showVascular={showVascular}
+        activeVascularGroup={activeVascularGroup}
+        vascularFilterMode={vascularFilterMode}
+        onBoneNamesReady={setSkeletonBoneNames}
       />
 
       <div id="topbar">
@@ -193,7 +197,6 @@ export default function App() {
         </div>
 
         <div id="topbar-controls">
-          {/* Body proportion presets */}
           <div id="height-presets">
             {Object.entries(HEIGHT_PRESETS).map(([key, p]) => (
               <button
@@ -208,7 +211,6 @@ export default function App() {
             ))}
           </div>
 
-          {/* Proportions panel toggle */}
           <button
             id="proportion-toggle"
             className={`preset-btn${showPanel ? ' active' : ''}`}
@@ -221,7 +223,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* ANSUR II Proportion Panel */}
       <ProportionPanel
         visible={showPanel}
         onClose={() => setShowPanel(false)}
@@ -231,19 +232,21 @@ export default function App() {
         hipScale={hipScale}
       />
 
+      {/* LayerControls now absorbs BoneControls — all group props passed here */}
       <LayerControls
-        showSkeleton={showSkeleton}  setShowSkeleton={setShowSkeleton}
-        showMuscles={showMuscles}    setShowMuscles={setShowMuscles}
-        activeGroup={activeGroup}    setActiveGroup={setActiveGroup}
-        filterMode={filterMode}      setFilterMode={setFilterMode}
-      />
-
-      <BoneControls
-        showSkeleton={showSkeleton}
-        activeBoneGroup={activeBoneGroup}
-        setActiveBoneGroup={setActiveBoneGroup}
-        boneFadeMode={boneFadeMode}
-        setBoneFadeMode={setBoneFadeMode}
+        skeletonBoneNames={skeletonBoneNames}
+        showSkeleton={showSkeleton}           setShowSkeleton={setShowSkeleton}
+        showMuscles={showMuscles}             setShowMuscles={setShowMuscles}
+        showJoints={showJoints}               setShowJoints={setShowJoints}
+        showVascular={showVascular}           setShowVascular={setShowVascular}
+        activeGroup={activeGroup}             setActiveGroup={setActiveGroup}
+        filterMode={filterMode}               setFilterMode={setFilterMode}
+        activeJointGroup={activeJointGroup}   setActiveJointGroup={setActiveJointGroup}
+        jointFilterMode={jointFilterMode}     setJointFilterMode={setJointFilterMode}
+        activeVascularGroup={activeVascularGroup} setActiveVascularGroup={setActiveVascularGroup}
+        vascularFilterMode={vascularFilterMode}   setVascularFilterMode={setVascularFilterMode}
+        activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={setActiveBoneGroup}
+        boneFadeMode={boneFadeMode}           setBoneFadeMode={setBoneFadeMode}
       />
 
       <CameraControls onAngleSelect={setCameraPreset} />
@@ -257,17 +260,14 @@ export default function App() {
         onStart={handleStartQuiz}
         onEnd={handleEndQuiz}
         onNext={handleNextQuestion}
-        onAnswer={handleMultipleChoiceAnswer}
+        onMultipleChoiceAnswer={handleMultipleChoiceAnswer}
         onTypeAnswer={handleTypeAnswer}
       />
-      <InfoPanel selectedBone={selectedBone} />
 
-      <div id="controls-hint">
-        <div className="hint"><span>DRAG</span>Rotate</div>
-        <div className="hint"><span>SCROLL</span>Zoom</div>
-        <div className="hint"><span>CLICK</span>Inspect</div>
-        <div className="hint"><span>RIGHT DRAG</span>Pan</div>
-      </div>
+      <InfoPanel
+        selectedBone={selectedBone}
+        formatName={formatName}
+      />
     </>
   )
 }
