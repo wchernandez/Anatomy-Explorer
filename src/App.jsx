@@ -11,6 +11,19 @@ function formatName(raw) {
 
 const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Waiting for selection…' }
 
+function levenshtein(a, b) {
+  const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i])
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      matrix[i][j] = b[i-1] === a[j-1]
+        ? matrix[i-1][j-1]
+        : Math.min(matrix[i-1][j-1] + 1, matrix[i][j-1] + 1, matrix[i-1][j] + 1)
+    }
+  }
+  return matrix[b.length][a.length]
+}
+
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
   const [quizStarted, setQuizStarted] = useState(false)
@@ -78,19 +91,30 @@ export default function App() {
     if (quiz.answered || !input.trim()) return
 
     const typed = input.trim().toLowerCase()
-    const target = q.target.toLowerCase()
+    const target = q.answer.toLowerCase()
     const synonyms = q.synonyms || []
 
-    const correct = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
+    const exactMatch = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
+    const distance = levenshtein(typed, target)
+    const threshold = target.length > 6 ? 3 : 2
+    const fuzzyMatch = distance <= threshold
 
-    setQuiz(prev => ({
-      ...prev,
-      answered: true,
-      result: correct ? 'correct' : 'wrong',
-      feedback: correct
-        ? 'Correct! Well done.'
-        : `Not quite — the answer was "${q.target}".`,
-    }))
+    if (exactMatch) {
+      setQuiz(prev => ({
+        ...prev, answered: true, result: 'correct',
+        feedback: 'Correct! Well done.',
+      }))
+    } else if (fuzzyMatch) {
+      setQuiz(prev => ({
+        ...prev, answered: true, result: 'correct',
+        feedback: `Correct! Just watch the spelling — it's "${q.answer}".`,
+      }))
+    } else {
+      setQuiz(prev => ({
+        ...prev, answered: true, result: 'wrong',
+        feedback: `Not quite — the answer was "${q.answer}".`,
+      }))
+    }
   }
 
   function handleStartQuiz() {

@@ -91,30 +91,35 @@
     "prompt": "Type the name of the highlighted bone.",
     "target": "frontal_bone",
     "level": 4,
-    "synonyms": ["frontal bone", "forehead bone"]
+    "synonyms": ["frontal bone", "forehead bone"],
+    "answer": "Frontal Bone"
   },
   {
     "prompt": "Type the name of the highlighted bone.",
     "target": "femur",
     "level": 4,
-    "synonyms": ["thigh bone", "thighbone"]
+    "synonyms": ["thigh bone", "thighbone"],
+    "answer":"Femur"
   },
   {
     "prompt": "Type the name of the highlighted bone.",
     "target": "humerus",
     "level": 4,
-    "synonyms": ["upper arm bone"]
+    "synonyms": ["upper arm bone"],
+    "answer":"Humerus"
   },
   {
     "prompt": "Type the name of the highlighted bone.",
     "target": "tibia",
     "level": 4,
-    "synonyms": ["shin bone", "shinbone"]
+    "synonyms": ["shin bone", "shinbone"],
+    "answer":"Tibia"
   },
   {
     "prompt": "Type the name of the highlighted bone.",
     "target": "coccyx",
     "level": 4,
-    "synonyms": ["tailbone"]
+    "synonyms": ["tailbone"],
+    "answer":"Coccyx"
   }
 ]
