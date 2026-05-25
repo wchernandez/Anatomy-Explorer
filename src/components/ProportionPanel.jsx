@@ -106,8 +106,8 @@ export default function ProportionPanel({ visible, onClose, onScaleChange, statu
   }
 
   function handleReset() {
-    setStaturePct(50); setShoulderRatio(1); setHipRatio(1); setLegRatio(1); setArmRatio(1)
-    onScaleChange?.({ statureScale: 1, shoulderScale: 1 })
+    setStaturePct(50); setShoulderRatio(1); setHipRatio(1)
+    onScaleChange?.({ statureScale: 1, shoulderScale: 1, hipScale: 1 })
   }
 
   const sCm = (ANSUR.stature.mean * statureScale / 10).toFixed(1)

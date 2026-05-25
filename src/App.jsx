@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
 import CameraControls from './components/CameraControls.jsx'
 import ProportionPanel from './components/ProportionPanel.jsx'
+import DemographicPanel from './components/DemographicPanel.jsx'
 import questions from './data/questions.json'
 
 // ANSUR II Male mean stature (mm) — used to compute proportional scale ratios
@@ -40,6 +41,7 @@ export default function App() {
   const [shoulderScale, setShoulderScale] = useState(HEIGHT_PRESETS.short.sxz)
   const [hipScale,      setHipScale]      = useState(HEIGHT_PRESETS.short.sxz)
   const [showPanel,     setShowPanel]     = useState(false)
+  const [showDemoPanel, setShowDemoPanel] = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
   const [quizLevel,   setQuizLevel]   = useState(1)
@@ -90,11 +92,22 @@ export default function App() {
     setHipScale(preset.sxz)
   }
 
-  function handleScaleChange(type, value) {
-    if      (type === 'stature')  setStatureScale(value)
-    else if (type === 'shoulder') setShoulderScale(value)
-    else if (type === 'hip')      setHipScale(value)
-  }
+  // Accepts EITHER the legacy (type, value) string form OR the object form
+  // { statureScale, shoulderScale, hipScale } emitted by both panels.
+  const handleScaleChange = useCallback(function handleScaleChange(typeOrObj, value) {
+    if (typeOrObj && typeof typeOrObj === 'object') {
+      // Object form — emitted by ProportionPanel.emit() and DemographicPanel
+      const { statureScale: sY, shoulderScale: sXZ, hipScale: hXZ } = typeOrObj
+      if (sY  !== undefined) setStatureScale(sY)
+      if (sXZ !== undefined) setShoulderScale(sXZ)
+      if (hXZ !== undefined) setHipScale(hXZ)
+    } else {
+      // Legacy string form (kept for backward compatibility)
+      if      (typeOrObj === 'stature')  setStatureScale(value)
+      else if (typeOrObj === 'shoulder') setShoulderScale(value)
+      else if (typeOrObj === 'hip')      setHipScale(value)
+    }
+  }, [])
 
   function handleBoneSelect(mesh) {
     setSelectedBone(mesh)
@@ -220,6 +233,16 @@ export default function App() {
             <span className="preset-ft">⚖</span>
             <span className="preset-sub">Proportions</span>
           </button>
+
+          <button
+            id="demographic-toggle"
+            className={`preset-btn${showDemoPanel ? ' active' : ''}`}
+            onClick={() => setShowDemoPanel(v => !v)}
+            title="Demographic Regression Scaling"
+          >
+            <span className="preset-ft">🧬</span>
+            <span className="preset-sub">Demographics</span>
+          </button>
         </div>
       </div>
 
@@ -230,6 +253,13 @@ export default function App() {
         statureScale={statureScale}
         shoulderScale={shoulderScale}
         hipScale={hipScale}
+      />
+
+      {/* Demographic Regression Panel — separate floating panel */}
+      <DemographicPanel
+        visible={showDemoPanel}
+        onClose={() => setShowDemoPanel(false)}
+        onScaleChange={handleScaleChange}
       />
 
       {/* LayerControls now absorbs BoneControls — all group props passed here */}
