@@ -4,23 +4,8 @@ import QuizPanel from './components/QuizPanel.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
 import CameraControls from './components/CameraControls.jsx'
-import ProportionPanel from './components/ProportionPanel.jsx'
 import DemographicPanel from './components/DemographicPanel.jsx'
 import questions from './data/questions.json'
-
-// ANSUR II Male mean stature (mm) — used to compute proportional scale ratios
-const ANSUR_STATURE_MEAN_MM = 1756.21
-
-export const HEIGHT_PRESETS = {
-  child: { label: '4 ft', sub: 'Child',  targetMm: 1219.2, sxz: 0.755 },
-  short: { label: '5 ft', sub: 'Adult',  targetMm: 1524.0, sxz: 0.978 },
-  tall:  { label: '6 ft', sub: 'Tall',   targetMm: 1828.8, sxz: 1.006 },
-}
-
-function presetStatureScale(key) {
-  const p = HEIGHT_PRESETS[key]
-  return p ? p.targetMm / ANSUR_STATURE_MEAN_MM : 1.0
-}
 
 function formatName(raw) {
   if (!raw) return 'Unknown Structure'
@@ -35,12 +20,9 @@ const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Wai
 
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
-  const [heightPreset, setHeightPreset] = useState('short')
-
-  const [statureScale,  setStatureScale]  = useState(() => presetStatureScale('short'))
-  const [shoulderScale, setShoulderScale] = useState(HEIGHT_PRESETS.short.sxz)
-  const [hipScale,      setHipScale]      = useState(HEIGHT_PRESETS.short.sxz)
-  const [showPanel,     setShowPanel]     = useState(false)
+  const [statureScale,  setStatureScale]  = useState(1)
+  const [shoulderScale, setShoulderScale] = useState(1)
+  const [hipScale,      setHipScale]      = useState(1)
   const [showDemoPanel, setShowDemoPanel] = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
@@ -83,14 +65,6 @@ export default function App() {
   // Camera preset
   const [cameraPreset, setCameraPreset] = useState('front')
 
-  function handlePresetChange(key) {
-    setHeightPreset(key)
-    const newScale = presetStatureScale(key)
-    const preset   = HEIGHT_PRESETS[key]
-    setStatureScale(newScale)
-    setShoulderScale(preset.sxz)
-    setHipScale(preset.sxz)
-  }
 
   // Accepts EITHER the legacy (type, value) string form OR the object form
   // { statureScale, shoulderScale, hipScale } emitted by both panels.
@@ -189,7 +163,6 @@ export default function App() {
         filterMode={filterMode}
         activeJointGroup={activeJointGroup}
         jointFilterMode={jointFilterMode}
-        heightPreset={heightPreset}
         statureScale={statureScale}
         shoulderScale={shoulderScale}
         hipScale={hipScale}
@@ -210,30 +183,6 @@ export default function App() {
         </div>
 
         <div id="topbar-controls">
-          <div id="height-presets">
-            {Object.entries(HEIGHT_PRESETS).map(([key, p]) => (
-              <button
-                key={key}
-                id={`preset-${key}`}
-                className={`preset-btn${heightPreset === key ? ' active' : ''}`}
-                onClick={() => handlePresetChange(key)}
-              >
-                <span className="preset-ft">{p.label}</span>
-                <span className="preset-sub">{p.sub}</span>
-              </button>
-            ))}
-          </div>
-
-          <button
-            id="proportion-toggle"
-            className={`preset-btn${showPanel ? ' active' : ''}`}
-            onClick={() => setShowPanel(v => !v)}
-            title="ANSUR II Proportion Controls"
-          >
-            <span className="preset-ft">⚖</span>
-            <span className="preset-sub">Proportions</span>
-          </button>
-
           <button
             id="demographic-toggle"
             className={`preset-btn${showDemoPanel ? ' active' : ''}`}
@@ -246,14 +195,6 @@ export default function App() {
         </div>
       </div>
 
-      <ProportionPanel
-        visible={showPanel}
-        onClose={() => setShowPanel(false)}
-        onScaleChange={handleScaleChange}
-        statureScale={statureScale}
-        shoulderScale={shoulderScale}
-        hipScale={hipScale}
-      />
 
       {/* Demographic Regression Panel — separate floating panel */}
       <DemographicPanel

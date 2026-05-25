@@ -42,7 +42,14 @@ function SectionLabel({ children }) {
   return <div className="dp-section-label">{children}</div>
 }
 
-function DualSlider({ id, label, value, min, max, step = 1, unit, onChange }) {
+function formatFeetInches(totalInches) {
+  const feet = Math.floor(totalInches / 12)
+  const inches = (totalInches % 12).toFixed(1)
+  if (parseFloat(inches) === 12) return `${feet + 1}' 0.0"`
+  return `${feet}' ${inches}"`
+}
+
+function DualSlider({ id, label, value, min, max, step = 1, displayVal, unit, onChange }) {
   return (
     <div className="dp-dual-row">
       <label className="dp-dual-label" htmlFor={id}>{label}</label>
@@ -56,7 +63,7 @@ function DualSlider({ id, label, value, min, max, step = 1, unit, onChange }) {
           className="dp-slider"
         />
         <div className="dp-num-display">
-          <span className="dp-num-val">{typeof value === 'number' ? value.toFixed(step < 1 ? 1 : 0) : value}</span>
+          <span className="dp-num-val">{displayVal !== undefined ? displayVal : (typeof value === 'number' ? value.toFixed(step < 1 ? 1 : 0) : value)}</span>
           <span className="dp-num-unit">{unit}</span>
         </div>
       </div>
@@ -64,10 +71,11 @@ function DualSlider({ id, label, value, min, max, step = 1, unit, onChange }) {
   )
 }
 
-function MeasRow({ label, cm, baseline }) {
+function MeasRow({ label, cm, baseline, isMetric }) {
   // Deviation from ANSUR baseline as a small bar indicator
   const pct = Math.max(0, Math.min(200, (cm / (baseline / 10)) * 100))
   const deviation = pct - 100
+  const displayVal = isMetric ? `${cm.toFixed(1)} cm` : `${(cm / 2.54).toFixed(1)} in`
   return (
     <div className="dp-meas-row">
       <span className="dp-meas-label">{label}</span>
@@ -77,7 +85,7 @@ function MeasRow({ label, cm, baseline }) {
           style={{ width: `${Math.min(100, Math.abs(deviation) * 1.5)}%` }}
         />
       </div>
-      <span className="dp-meas-val">{cm} cm</span>
+      <span className="dp-meas-val">{displayVal}</span>
     </div>
   )
 }
@@ -85,10 +93,25 @@ function MeasRow({ label, cm, baseline }) {
 // ── Main panel ────────────────────────────────────────────────────────────────
 
 export default function DemographicPanel({ visible, onClose, onScaleChange }) {
+  const [isMetric,  setIsMetric]  = useState(true)
   const [ethnicity, setEthnicity] = useState(DEFAULT_ETH)
   const [age,       setAge]       = useState(DEFAULT_AGE)
   const [heightCm,  setHeightCm]  = useState(DEFAULT_HEIGHT)
   const [weightKg,  setWeightKg]  = useState(DEFAULT_WEIGHT)
+
+  function handleUnitToggle(toMetric) {
+    if (toMetric === isMetric) return
+    setIsMetric(toMetric)
+    if (toMetric) {
+      setHeightCm(Math.round(heightCm * 2) / 2)
+      setWeightKg(Math.round(weightKg * 2) / 2)
+    } else {
+      const inches = Math.round((heightCm / 2.54) * 2) / 2
+      const lbs = Math.round(weightKg / 0.45359237)
+      setHeightCm(inches * 2.54)
+      setWeightKg(lbs * 0.45359237)
+    }
+  }
 
   // ── Run regression engine ──────────────────────────────────────────────────
   const { statureScale, shoulderScale, hipScale, measurements } =
@@ -108,13 +131,11 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
     setWeightKg(DEFAULT_WEIGHT)
   }
 
-  if (!visible) return null
-
   // Small-sample ethnicity keys — show caution indicator
   const smallSample = ['NativeAmerican', 'PacificIslander'].includes(ethnicity)
 
   return (
-    <div id="demographic-panel" role="dialog" aria-label="Demographic Scaling Controls">
+    <div id="demographic-panel" role="dialog" aria-label="Demographic Scaling Controls" style={{ display: visible ? 'block' : 'none' }}>
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="dp-header">
@@ -126,6 +147,13 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
       </div>
 
       <div className="dp-body">
+        {/* ── Unit Toggle ─────────────────────────────────────────────────── */}
+        <div className="dp-unit-toggle">
+          <button className={`dp-unit-btn ${isMetric ? 'active' : ''}`} onClick={() => handleUnitToggle(true)}>Metric (cm/kg)</button>
+          <button className={`dp-unit-btn ${!isMetric ? 'active' : ''}`} onClick={() => handleUnitToggle(false)}>Imperial (ft/lbs)</button>
+        </div>
+
+        <div className="dp-divider" />
 
         {/* ── Ethnicity selector ─────────────────────────────────────────── */}
         <SectionLabel>Ethnicity</SectionLabel>
@@ -176,23 +204,25 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
         <DualSlider
           id="demo-height"
           label="Height"
-          value={heightCm}
-          min={HEIGHT_MIN}
-          max={HEIGHT_MAX}
+          value={isMetric ? heightCm : heightCm / 2.54}
+          min={isMetric ? HEIGHT_MIN : 55}
+          max={isMetric ? HEIGHT_MAX : 85}
           step={0.5}
-          unit="cm"
-          onChange={setHeightCm}
+          unit={isMetric ? "cm" : ""}
+          displayVal={isMetric ? heightCm.toFixed(1) : formatFeetInches(heightCm / 2.54)}
+          onChange={val => setHeightCm(isMetric ? val : val * 2.54)}
         />
 
         <DualSlider
           id="demo-weight"
           label="Weight"
-          value={weightKg}
-          min={WEIGHT_MIN}
-          max={WEIGHT_MAX}
-          step={0.5}
-          unit="kg"
-          onChange={setWeightKg}
+          value={isMetric ? weightKg : weightKg / 0.45359237}
+          min={isMetric ? WEIGHT_MIN : 88}
+          max={isMetric ? WEIGHT_MAX : 352}
+          step={isMetric ? 0.5 : 1}
+          unit={isMetric ? "kg" : "lbs"}
+          displayVal={isMetric ? weightKg.toFixed(1) : Math.round(weightKg / 0.45359237).toString()}
+          onChange={val => setWeightKg(isMetric ? val : val * 0.45359237)}
         />
 
         <div className="dp-divider" />
@@ -229,6 +259,7 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
               label={label}
               cm={cm}
               baseline={ANSUR_BASELINE[key]}
+              isMetric={isMetric}
             />
           ))}
         </div>
