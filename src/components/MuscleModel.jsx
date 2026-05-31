@@ -21,24 +21,25 @@ const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 // ── Overhauled Naming Correction Function ────────────────────────────────────
 function cleanMuscleName(name) {
   if (!name) return ''
-  
-  // 1. Convert underscores to spaces
-  let cleaned = name.replace(/_/g, ' ')
-  
-  // 2. GLOBAL TRAILING 'l' AND 'r' FIX:
-  // Catches things like 'musclel', 'longusl', 'brevisr' at the end of the string
-  if (cleaned.endsWith('l') || cleaned.endsWith('L')) {
-    cleaned = cleaned.slice(0, -1).trim() + ' (L)'
-  } else if (cleaned.endsWith('r') || cleaned.endsWith('R')) {
-    cleaned = cleaned.slice(0, -1).trim() + ' (R)'
-  }
-  
-  // 3. Fix minor truncated typos if they exist
-  if (cleaned.toLowerCase().endsWith('muscl')) {
-    cleaned = cleaned.slice(0, -5) + 'Muscle'
+  let cleaned = name
+    .replace(/\.g$/, '')      // strip Blender .g suffix
+    .replace(/_/g, ' ')
+    .replace(/\s+\d+$/, '')  // strip trailing numbers
+    .trim()
+
+  // Strip trailing _l / _r laterality suffix (space-separated) without
+  // adding any label — display name is the same for both sides.
+  if (/ [lL]$/.test(cleaned)) cleaned = cleaned.slice(0, -2).trim()
+  else if (/ [rR]$/.test(cleaned)) cleaned = cleaned.slice(0, -2).trim()
+  // Fallback: glued laterality (no space), e.g. "muscler"→"muscle", "toer"→"toe".
+  // Skip if preceded by 'a' (plantar, fibular, dorsal…) or 'o' (extensor, flexor…).
+  else if (cleaned.length > 2) {
+    const last = cleaned[cleaned.length - 1]
+    const prev = cleaned[cleaned.length - 2].toLowerCase()
+    if ((last === 'l' || last === 'L') && prev !== 'a') cleaned = cleaned.slice(0, -1).trim()
+    else if ((last === 'r' || last === 'R') && prev !== 'a' && prev !== 'o') cleaned = cleaned.slice(0, -1).trim()
   }
 
-  // 4. Cleanly capitalize every single word
   return cleaned.replace(/\b\w/g, c => c.toUpperCase())
 }
 
@@ -75,160 +76,226 @@ const MAT_OVERRIDES = {
 // ── Muscle Group Keyword Map ──────────────────────────────────────────────────
 const MUSCLE_GROUPS = {
   'All Muscles': null,
-  'Upper Limb': [
-    'deltoid','infraspinatus','subscapularis','supraspinatus','teres',
-    'biceps brachii','brachialis','coracobrachialis',
-    'triceps','anconeus','brachioradialis',
-    'extensor carpi','extensor digiti','extensor indicis',
-    'extensor pollicis','abductor pollicis longus','supinator',
-    
-    // Forearm Extensor Target
-    'extensor digitorum muscle',
-    'extensor digitorum of hand',
-    'extensor digitorum superficialis',
-    
-    'flexor carpi',
-    
-    // Forearm Flexor Targets
-    'flexor digitorum superficialis',
-    'flexor digitorum profundus',
-    'flexor digitorum of hand', 
-    'flexor digitorum muscle',
-    
-    'flexor pollicis','palmaris','pronator',
-    
-    // Hand Muscles
-    'interossei muscles of hand',
-    'interosseous muscles of hand',
-    'lumbrical muscles of hand',
-    
-    // Opponens
-    'opponens pollicis',
-    'opponens digiti minimi of hand',
-    'opponens digiti minimi muscle of hand',
-    
-    'abductor digiti minimi of hand',
-    'abductor pollicis brevis','flexor digiti minimi of hand','flexor pollicis brevis',
-    
-    // Adductor Pollicis variations
-    'adductor pollicis',
-    'transverse head of adductor pollicis',
-    'oblique head of adductor pollicis',
-    'oblique head of adductor pollicis 1',
-    'transverse head of adductor pollicis 1',
-    
-    // ── HAND & FINGER JOINT FIXES ───────────────────────────────────────────
-    // Captures the hand, knuckle, and finger articular capsules perfectly
-    'interphalangeal joint', 
-    'metacarpophalangeal',
-    'metacarpal',
-    // ─────────────────────────────────────────────────────────────────────────
-    
-    'palmar aponeurosis','brachial fascia','deltoid fascia',
-    'dorsal fascia of hand','flexor retinaculum of wrist','extensor retinaculum of wrist',
-    'antebrachial fascia','clavipectoral fascia','pectoral fascia',
-    'lateral intermuscular septum of arm','medial intermuscular septum of arm',
-    'superficial transverse metacarpal','tendon sheath of extensor digitorum muscle',
-    'common flexor tendon',
-  ],
-  'Lower Limb': [
-    'gluteus','tensor fasciae','iliotibial','piriformis',
-    'obturator','gemellus','quadratus femoris',
-    'rectus femoris','vastus','sartorius',
-    
-    // Leg Adductors explicitly targeted
-    'adductor longus',
-    'adductor magnus',
-    'adductor brevis',
-    'adductor minimus',
-    'adductor muscle', 
-    
-    'gracilis','pectineus',
-    'biceps femoris','semimembranosus','semitendinosus',
-    'tibialis',
-    
-    // Explicit Lower Limb Leg Segments
-    'extensor digitorum longus',
-    'extensor hallucis longus',
-    'fibularis',
-    'gastrocnemius','soleus','plantaris','popliteus',
-    'flexor digitorum longus',
-    
-    'flexor hallucis longus','calcaneal',
-    'abductor digiti minimi of foot','abductor hallucis',
-    'adductor hallucis',
-    
-    // Explicit Foot & Toe Targets
-    'dorsal interossei muscles of foot',
-    'plantar interossei',
-    'extensor digitorum brevis','extensor hallucis brevis',
-    'flexor digiti minimi of foot','flexor digitorum brevis',
-    'flexor hallucis brevis','lumbrical muscles of foot',
-    'quadratus plantae','opponens digiti minimi muscle of foot',
-    
-    // Toe and Foot Capsule Fixes
-    'toe',
-    'metatarsophalangeal',
-    'phalanx of foot',
-    
-    'fascia lata','crural fascia','popliteal fascia','flexor retinaculum of ankle',
-    'inferior extensor retinaculum','inferior fibular retinaculum',
-    'superior extensor retinaculum','superior fibular retinaculum',
-    'lateral femoral intermuscular','medial femoral intermuscular',
-    'anterior intermuscular septum of leg','posterior intermuscular septum of leg',
-    'transverse intermuscular septum','plantar aponeurosis','iliopectineal arch',
-    'superficial transverse metatarsal','piriformis fascia',
-    'tendon of extensor digitorum longus',
-    'tendon sheath of tibialis',
-    'tendon sheath of flexor',
-  ],
-  'Thoracic': [
-    'diaphragm','intercostal','levatores','pectoralis','serratus anterior',
-    'subclavius','transversus thoracis','serratus posterior',
-    'iliocostalis thoracis','longissimus thoracis','spinalis thoracis',
-    'multifidus thoracis','semispinalis thoracis','interspinales thoracis','rotatores',
-  ],
-  'Abdominal': [
-    'external abdominal oblique',
-    'rectus abdominis','transversus abdominis',
-    'pyramidalis','quadratus lumborum','linea alba','inguinal',
-    'iliocostalis lumborum','multifidus lumborum','interspinales lumborum',
-    'intertransversarii lumborum','iliacus','psoas',
-    'diaphragmatic fascia','iliopsoas fascia','transversalis fascia','investing abdominal fascia',
-  ],
-  'Dorsal': [
-    'latissimus dorsi','levator scapulae','rhomboid','trapezius',
-    'thoracolumbar fascia',
-  ],
-  'Cervical': [
-    'omohyoid','sternohyoid','sternothyroid','thyrohyoid','platysma',
-    'sternocleidomastoid','scalenus','longus capitis','longus colli',
-    'rectus anterior capitis','rectus lateralis capitis',
-    'digastric','geniohyoid','mylohyoid','stylohyoid',
-    'pharyngeal constrictor','stylopharyngeus','palatopharyngeus',
-    'genioglossus','hyoglossus',
-    'arytenoid','crico','thyro-epiglottic','cricothyroid',
-    'obliquus inferior capitis','obliquus superior capitis',
-    'rectus posterior','splenius',
-    'interspinales colli','semispinalis colli','multifidus colli',
-    'longissimus capitis','longissimus colli','spinalis capitis','spinalis colli',
-    'superficial investing cervical fascia',
-  ],
+
   'Cranial': [
-    'frontalis','occipitalis','temporoparietalis','epicranial',
+    'frontalis','occipitalis','temporoparietalis','epicranial aponeurosis',
     'bucinator','corrugator','depressor anguli','depressor labii','depressor septi',
     'levator anguli oris','levator labii','levator nasolabialis',
     'mentalis','nasalis','orbicularis oris','procerus','risorius',
     'orbicularis oculi','zygomaticus',
-    'temporalis','masseter','pterygoid',
-    'inferior oblique','superior oblique', 
-    'inferior rectus muscle','lateral rectus',
-    'levator palpebrae','medial rectus','superior rectus muscle',
-    'trochlea','superior tarsus','inferior tarsus','common tendinous ring',
-    'masseteric fascia','superficial layer of temporal fascia',
+    'temporalis muscle','masseter','pterygoid',
+    'inferior oblique muscle','superior oblique',
+    'inferior rectus muscle','lateral rectus muscle','medial rectus','superior rectus muscle',
+    'levator palpebrae','inferior tarsus','superior tarsus','common tendinous ring','trochlea',
+    'temporomandibular',
   ],
+
+  'Cervical': [
+    'sternocleidomastoid','platysma',
+    'scalenus','longus capitis','longus colli',
+    'rectus anterior capitis','rectus lateralis capitis',
+    'obliquus inferior capitis','obliquus superior capitis',
+    'rectus posterior','splenius',
+    'semispinalis colli','multifidus colli','interspinales colli',
+    'longissimus capitis','longissimus colli','spinalis capitis','spinalis colli',
+    'iliocostalis colli',
+    'omohyoid','sternohyoid','sternothyroid','thyrohyoid muscle',
+    'anterior belly of digastric','posterior belly of digastric','intermediate tendon of digastric',
+    'geniohyoid','mylohyoid','stylohyoid muscle',
+    'genioglossus','hyoglossus',
+    'pharyngeal constrictor','stylopharyngeus','palatopharyngeus',
+    'crico-arytenoid','arytenoid muscle','cricothyroid','thyro-epiglottic','thyro-arytenoid',
+    'quadrangular membrane','cricopharyngeal','thyrohyoid ligament',
+    'sphenomandibular','stylomandibular','pterygospinous','stylohyoid ligament',
+    'lateral temporomandibular',
+  ],
+
+  'Spine': [
+    'intervertebral disc','nucleus pulposus',
+    'anterior longitudinal','posterior longitudinal',
+    'ligamenta flava','interspinous ligament','supraspinous','nuchal ligament',
+    'intra-articular ligament of head of rib','radiate ligament of head of rib',
+    'costotransverse','intercornual','sacrococcygeal',
+    'interspinales thoracis','interspinales lumborum',
+    'intertransversarii','rotatores',
+  ],
+
+  'Thoracic': [
+    'clavicular head of pectoralis major','sternocostal head of pectoralis major',
+    '(abdominal part of pectoralis major','pectoralis minor',
+    'serratus anterior','subclavius','transversus thoracis',
+    'external intercostal','internal intercostal','innermost intercostal',
+    'levatores breves costarum','levatores longi costarum','serratus posterior',
+    'iliocostalis thoracis','longissimus thoracis','spinalis thoracis',
+    'multifidus thoracis','semispinalis thoracis',
+    'diaphragm',
+    'sternoclavicular','costoclavicular','interclavicular',
+    'anterior sternoclavicular','posterior sternoclavicular',
+    'articular disc of sternoclavicular','articular capsule of sternoclavicular',
+  ],
+
+  'Abdominal': [
+    'external abdominal oblique','internal abdominal oblique',
+    'transversus abdominis','rectus abdominis','pyramidalis',
+    'quadratus lumborum','linea alba','inguinal ligament',
+    'iliocostalis lumborum','multifidus lumborum','interspinales lumborum',
+    'intertransversarii lumborum','iliacus','psoas major',
+    'interpubic disc','superior pubic ligament','inferior pubic ligament',
+    'pubic symphysis',
+  ],
+
+  'Dorsal': [
+    'ascending part of trapezius','transverse part of trapezius','descending part of trapezius',
+    'latissimus dorsi','rhomboid','levator scapulae',
+  ],
+
   'Pelvic': [
-    'coccygeus','iliococcygeus','pubo-analis','pubococcygeus','levator ani','anal sphincter',
+    'coccygeus','iliococcygeus','pubococcygeus','pubo-analis',
+    'external anal sphincter',
+    'obturator membrane','sacrospinous','sacrotuberous',
+    'anterior sacro-iliac','posterior sacro-iliac','interosseous sacro-iliac',
+    'iliolumbar ligament','triradiate',
+    'acetabular labrum','transverse acetabular',
+  ],
+
+  'Upper Limb': [
+    'acromial part of deltoid','clavicular part of deltoid','scapular spinal part of deltoid',
+    'infraspinatus','subscapularis','supraspinatus','teres major','teres minor',
+    'long head of biceps brachii','short head of biceps brachii',
+    'brachialis muscle','coracobrachialis',
+    'lateral head of triceps','long head of triceps','medial head of triceps',
+    'anconeus muscle','brachioradialis',
+    'extensor carpi radialis brevis','extensor carpi radialis longus',
+    'extensor digiti minimi','extensor digitorum','extensor indicis',
+    'extensor pollicis brevis','extensor pollicis longus',
+    'abductor pollicis longus','supinator',
+    'humeral head of extensor carpi ulnaris','ulnar head of extensor carpi ulnaris',
+    'humeral head of flexor carpi ulnaris','ulnar head of flexor carpi ulnaris',
+    'humero-ulnar head of flexor digitorum','radial head of flexor digitorum',
+    'flexor carpi radialis','flexor digitorum profundus',
+    'flexor pollicis longus','palmaris longus',
+    'pronator quadratus','deep head of pronator teres','superficial head of pronator teres',
+    'deep head of flexor pollicis brevis','superficial head of flexor pollicis brevis',
+    'abductor digiti minimi of hand','abductor pollicis brevis',
+    'opponens digiti minimi muscle of hand','opponens pollicis',
+    'flexor digiti minimi of hand',
+    'oblique head of adductor pollicis','transverse head of adductor pollicis',
+    'dorsal interossei muscles of hand','palmar interossei',
+    'lumbrical muscles of hand',
+    'articular capsule of glenohumeral','articular capsule of elbow',
+    'articular capsule of radiocarpal','articular capsule of acromioclavicular',
+    'articular disc of acromioclavicular','articular disc of distal radio',
+    'articular capsules of metacarpophalangeal',
+    'articular capsules of distal interphalangeal joints',
+    'articular capsules of proximal interphalangeal joints',
+    'collateral interphalangeal ligaments of hand','collateral metacarpophalangeal ligaments',
+    'glenohumeral ligament','coracohumeral','transverse humeral','coraco-acromial',
+    'transverse scapular ligament','conoid ligament','trapezoid ligament','glenoid labrum',
+    'annular ligament of radius','radial collateral ligament',
+    'ulnar collateral ligament','quadrate ligament','oblique cord',
+    'interosseous membrane of forearm',
+    'radiocarpal ligament','ulnocarpal','carpometacarpal ligament',
+    'palmar radio-ulnar','dorsal radio-ulnar',
+    'palmar interphalangeal','palmar metacarpal ligaments','dorsal metacarpal ligaments',
+    'dorsal carpometacarpal','dorsal intercarpal','palmar carpometacarpal',
+    'deep transverse metacarpal','interosseous metacarpal',
+    'pisohamate','pisometacarpal','pisotriquetral',
+    'lunotriquetral interosseous','scapholunate','scaphocapitate','scaphotrapezio',
+    'trapeziotrapezoidal','trapezoideocapitate interosseous','capitohamate',
+    'triquetrocapitate','triquetrohamate',
+    'radiate carpal','radioscaphocapitate','radiocapitate',
+    'ulnocapitate','ulnolunate','ulnopisiform','ulnotriquetral',
+    'dorsal scaphotriquetral','palmar lunotriquetral','palmar scaphotriquetral',
+    'palmar trapezoideocapitate','palmar capitohamate',
+    'dorsal radiocarpal','dorsal ulnocarpal',
+    'radial collateral ligament of wrist','ulnar collateral ligament of wrist',
+    'common flexor tendon sheath','synovial sheaths of digits of hand',
+    'cruciform part of fibrous sheath',
+    'tendon sheath - abd','tendon sheath of extensor digitorum and',
+    'tendon sheath of extensors carpi',
+    'subacromial bursa','subcutaneous acromial bursa','subdeltoid bursa',
+    'coracobrachial bursa','bicipitoradial bursa',
+    'subtendinous bursa of infraspinatus','subtendinous bursa of teres',
+    'subtendinous bursa of trapezius','subtendinous bursa of triceps',
+    'acromioclavicular ligament',
+  ],
+
+  'Lower Limb': [
+    'gluteus maximus','gluteus medius','gluteus minimus',
+    'tensor fasciae latae','iliotibial tract',
+    'piriformis muscle','obturator externus','obturator internus',
+    'superior gemellus','inferior gemellus','quadratus femoris muscle',
+    'rectus femoris','vastus intermedius','vastus lateralis','vastus medialis',
+    'sartorius','gracilis muscle','pectineus',
+    'adductor brevis','adductor longus','adductor magnus','(adductor minimus)',
+    'long head of biceps femoris','short head of biceps femoris',
+    'semimembranosus muscle','semitendinosus',
+    'tibialis anterior','tibialis posterior',
+    'fibularis brevis','fibularis longus','fibularis tertius',
+    'common tendon sheath of fibularis',
+    'lateral head of gastrocnemius','medial head of gastrocnemius',
+    'soleus muscle','plantaris muscle','popliteus muscle',
+    'flexor digitorum brevis','flexor digitorum longus',
+    'flexor digiti minimi of foot',
+    'lateral head of flexor hallucis brevis','medial head of flexor hallucis brevis',
+    'flexor hallucis longus',
+    'extensor digitorum brevis','extensor digitorum longus',
+    'extensor hallucis brevis','extensor hallucis longus',
+    'abductor digiti minimi of foot','abductor hallucis',
+    'quadratus plantae','lumbrical muscles of foot',
+    'dorsal interossei muscles of foot','plantar interossei muscles',
+    '(opponens digiti minimi muscle of foot)',
+    'oblique head of adductor hallucis','transverse head of adductor hallucis',
+    'calcaneal tendon','plantar tendon sheath of fibularis',
+    'tendon sheath of tibialis','tendon of extensor digitorum longus',
+    'tendon sheath of extensor digitorum longus',
+    'tendon sheath of flexor digitorum longus',
+    'tendon sheath of flexor hallucis longus',
+    'articular capsule of hip','articular capsule of knee',
+    'articular capsule of superior tibiofibular',
+    'articular capsule of interphalangeal joint of great toe',
+    'articular capsules of distal interphalangeal joints of foot',
+    'articular capsules of proximal interphalangeal joints of foot',
+    'articular capsules of metatarsophalangeal',
+    'collateral interphalangeal ligaments of foot','collateral metatarsophalangeal ligaments',
+    'frenula capsulae','ischiofemoral','ligament of head of femur','pubofemoral',
+    'descending part of iliofemoral','transverse part of iliofemoral',
+    'anterior cruciate','posterior cruciate','meniscotibial',
+    'arcuate popliteal','oblique popliteal','popliteofibular',
+    'tibial collateral','fibular collateral','transverse ligament of knee',
+    'anterior ligament of fibular head','posterior ligament of fibular head',
+    'lateral meniscus','medial meniscus','meniscopatellar',
+    'lateral patellar retinaculum','medial patellar retinaculum',
+    'infrapatellar fat pad','deep infrapatellar bursa',
+    'subcutaneous infrapatellar bursa','subcutaneous prepatellar bursa',
+    'subfacial prepatellar bursa','subtendinous prepatellar bursa','suprapatellar bursa',
+    'tibiofibular ligament','tibiocalcaneal ligament','tibionavicular ligament',
+    'posterior tibiotalar','talofibular','calcaneofibular',
+    'talocalcaneal ligament','talonavicular ligament',
+    'calcaneocuboid ligament','calcaneonavicular ligament',
+    'interosseous membrane of leg',
+    'cuneocuboid interosseous','cuneometatarsal interosseous','intercuneiform interosseous',
+    'deep transverse metatarsal ligament','metatarsal interosseous ligaments',
+    'plantar calcaneocuboid','plantar calcaneonavicular','plantar cuboideonavicular',
+    'plantar cuneocuboid','plantar cuneonavicular','plantar intercuneiform',
+    'plantar interphalangeal','plantar metatarsal ligaments','plantar metatarsophalangeal',
+    'plantar tarsometatarsal',
+    'dorsal calcaneocuboid','dorsal cuboideonavicular','dorsal cuneocuboid',
+    'dorsal cuneonavicular','dorsal intercuneiform','dorsal metatarsal ligaments',
+    'dorsal tarsometatarsal',
+    'intersesamoid','long plantar','tarsometatarsal ligaments',
+    'subtendinous calcaneal bursa','subcutaneous calcaneal bursa',
+    'subcutaneous bursa of lateral malleolus','subcutaneous bursa of medial malleolus',
+    'subcutaneous bursa of tuberosity of tibia','subcutaneous trochanteric bursa',
+    'anserine bursa','semimembranosus bursa',
+    'sciatic bursa of gluteus','sciatic bursa of obturator',
+    'trochanteric bursa','intermuscular gluteal bursae',
+    'lateral subtendinous bursa of gastrocnemius','medial subtendinous bursa of gastrocnemius',
+    'lateral talocalcaneal','medial talocalcaneal',
+    'subtendinous bursa of iliacus','subtendinous bursa of sartorius',
+    'inferior subtendinous bursa of biceps femoris','superior bursa of biceps femoris',
+    'subtendinous bursa of tibialis anterior',
+    '(iliopectineal bursa)',
   ],
 }
 
@@ -243,9 +310,19 @@ function getBaseMat(mesh) {
   return MAT_OVERRIDES[mesh.userData.originalMatName] ?? baseForceMat
 }
 
-export default function MuscleModel({ 
-  visible, selectedBone, onSelect, activeGroup, filterMode, 
-  heightPreset = 'short', statureScale = 1, shoulderScale = 1, hipScale = 1 
+export default function MuscleModel({
+  visible,
+  selectedBone,
+  onSelect,
+  activeGroup,
+  filterMode,
+  heightPreset  = 'short',
+  statureScale  = 1,
+  shoulderScale = 1,
+  hipScale      = 1,
+  sharedBase    = null,
+  sharedOffsetX = null,
+  sharedOffsetZ = null,
 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
@@ -280,21 +357,31 @@ export default function MuscleModel({
       const skull = [], lower = []
       scene.traverse(child => {
         if (!child.isMesh) return
-        const entry = { mesh: child, ox: child.scale.x, oz: child.scale.z }
+        const entry = {
+          mesh: child,
+          ox: child.scale.x,    oz: child.scale.z,
+          px: child.position.x, pz: child.position.z,
+        }
         if      (isSkull(child.name)) skull.push(entry)
         else if (isLower(child.name)) lower.push(entry)
       })
       snapRef.current = { skull, lower }
     }
 
-    for (const { mesh, ox, oz } of snapRef.current.skull)  { mesh.scale.x = ox; mesh.scale.z = oz }
-    for (const { mesh, ox, oz } of snapRef.current.lower)  { mesh.scale.x = ox; mesh.scale.z = oz }
+    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
+      mesh.scale.x = ox; mesh.scale.z = oz
+      mesh.position.x = px; mesh.position.z = pz
+    }
+    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
+      mesh.scale.x = ox; mesh.scale.z = oz
+      mesh.position.x = px; mesh.position.z = pz
+    }
 
     groupRef.current.scale.set(1, 1, 1)
     groupRef.current.position.set(0, 0, 0)
     const box  = new THREE.Box3().setFromObject(groupRef.current)
     const size = box.getSize(new THREE.Vector3())
-    const base = 3 / Math.max(size.x, size.y, size.z)
+    const base = sharedBase ?? (3 / Math.max(size.x, size.y, size.z))
 
     groupRef.current.scale.set(
       base * shoulderScale,
@@ -304,17 +391,23 @@ export default function MuscleModel({
     const scaled = new THREE.Box3().setFromObject(groupRef.current)
     const cx = (scaled.min.x + scaled.max.x) / 2
     const cz = (scaled.min.z + scaled.max.z) / 2
-    groupRef.current.position.set(-cx, -1.5 - scaled.min.y, -cz)
+    const posX = sharedOffsetX !== null ? sharedOffsetX : -cx
+    const posZ = sharedOffsetZ !== null ? sharedOffsetZ : -cz
+    groupRef.current.position.set(posX, -1.5 - scaled.min.y, posZ)
 
-    for (const { mesh, ox, oz } of snapRef.current.skull) {
-      mesh.scale.x = ox / shoulderScale
-      mesh.scale.z = oz / shoulderScale
+    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
+      mesh.scale.x    = ox / shoulderScale
+      mesh.scale.z    = oz / shoulderScale
+      mesh.position.x = px / shoulderScale
+      mesh.position.z = pz / shoulderScale
     }
-    for (const { mesh, ox, oz } of snapRef.current.lower) {
-      mesh.scale.x = ox * hipScale / shoulderScale
-      mesh.scale.z = oz * hipScale / shoulderScale
+    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
+      mesh.scale.x    = ox * hipScale / shoulderScale
+      mesh.scale.z    = oz * hipScale / shoulderScale
+      mesh.position.x = px * hipScale / shoulderScale
+      mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale])
+  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, sharedBase, sharedOffsetX, sharedOffsetZ])
 
   const fadedMats = useMemo(() => new Map(), [])
   const keywords = MUSCLE_GROUPS[activeGroup] ?? null

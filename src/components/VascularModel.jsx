@@ -7,8 +7,17 @@ import * as THREE from 'three'
 function cleanName(name) {
   if (!name) return ''
   let s = name.replace(/\.g$/, '').replace(/_/g, ' ').replace(/\s+\d+$/, '').trim()
-  if (/ [lL]$/.test(s)) s = s.slice(0, -2).trim() + ' (L)'
-  else if (/ [rR]$/.test(s)) s = s.slice(0, -2).trim() + ' (R)'
+  if (/ [lL]$/.test(s)) s = s.slice(0, -2).trim()
+  else if (/ [rR]$/.test(s)) s = s.slice(0, -2).trim()
+  // Fallback: glued laterality (no space), e.g. "muscler"→"muscle", "toer"→"toe".
+  // Skip if preceded by 'a' (plantar, fibular, dorsal…) or 'o' (extensor, flexor…)
+  // — those are real anatomical word endings, not laterality suffixes.
+  else if (s.length > 2) {
+    const last = s[s.length - 1]
+    const prev = s[s.length - 2].toLowerCase()
+    if ((last === 'l' || last === 'L') && prev !== 'a') s = s.slice(0, -1).trim()
+    else if ((last === 'r' || last === 'R') && prev !== 'a' && prev !== 'o') s = s.slice(0, -1).trim()
+  }
   return s.replace(/\b\w/g, c => c.toUpperCase())
 }
 
@@ -132,6 +141,9 @@ export default function VascularModel({
   statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
+  sharedBase    = null,   // normalisation factor shared from SkeletonModel
+  sharedOffsetX = null,
+  sharedOffsetZ = null,
 }) {
   const { scene } = useGLTF('/Vascular.glb')
   const [hovered, setHovered] = useState(null)
@@ -196,7 +208,9 @@ export default function VascularModel({
     groupRef.current.position.set(0, 0, 0)
     const box  = new THREE.Box3().setFromObject(groupRef.current)
     const size = box.getSize(new THREE.Vector3())
-    const base = 3 / Math.max(size.x, size.y, size.z)
+
+    // Use sharedBase from Skeleton so all layers normalise identically
+    const base = sharedBase ?? (3 / Math.max(size.x, size.y, size.z))
 
     groupRef.current.scale.set(
       base * shoulderScale,
@@ -207,7 +221,9 @@ export default function VascularModel({
     const scaled = new THREE.Box3().setFromObject(groupRef.current)
     const cx = (scaled.min.x + scaled.max.x) / 2
     const cz = (scaled.min.z + scaled.max.z) / 2
-    groupRef.current.position.set(-cx, -1.5 - scaled.min.y, -cz)
+    const posX = sharedOffsetX !== null ? sharedOffsetX : -cx
+    const posZ = sharedOffsetZ !== null ? sharedOffsetZ : -cz
+    groupRef.current.position.set(posX, -1.5 - scaled.min.y, posZ)
 
     // Skull: neutralise shoulder scale on shape & position
     for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
@@ -224,7 +240,7 @@ export default function VascularModel({
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale])
+  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, sharedBase, sharedOffsetX, sharedOffsetZ])
 
   // ── Per-frame material assignment ────────────────────────────────────────
   const fadedMats = useMemo(() => new Map(), [])

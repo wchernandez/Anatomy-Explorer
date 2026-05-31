@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGLTF, useCursor } from '@react-three/drei'
 import * as THREE from 'three'
 
-// ── Region detection ──────────────────────────────────────────────────────────
-
 // Skull — protected from X/Z scaling (skull size doesn't change with body width)
 const SKULL_KEYS = [
   'frontal bone','parietal bone','occipital bone','temporal bone','sphenoid bone',
@@ -13,7 +11,7 @@ const SKULL_KEYS = [
 ]
 const isSkull = n => SKULL_KEYS.some(k => n.toLowerCase().includes(k))
 
-// Lower body — use hipScale instead of shoulderScale for X/Z
+// Lower body — use hipScale instead of group shoulderScale for X/Z
 const LOWER_KEYS = [
   'femur','thigh','femoral','shaft of femur',
   'tibia','fibula','patella','knee',
@@ -24,35 +22,24 @@ const LOWER_KEYS = [
 ]
 const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 
-// ── Name cleaning ─────────────────────────────────────────────────────────────
-// Shared pattern used by all layer models:
-//   • strip .g extension
-//   • underscores → spaces
-//   • strip trailing numbers
-//   • trailing space + l/r → (L)/(R)   (handles _l / _r suffixes from Blender)
-//   • Title-case every word
+
+// ── Name cleaning — mirrors MuscleModel's cleanMuscleName ───────────────────
 function cleanBoneName(name) {
   if (!name) return ''
-  let s = name
-    .replace(/\.g$/, '')
-    .replace(/_/g, ' ')
-    .replace(/\s+\d+$/, '')
-    .trim()
-  if (/ [lL]$/.test(s)) s = s.slice(0, -2).trim()
-  else if (/ [rR]$/.test(s)) s = s.slice(0, -2).trim()
-  // Fallback: glued laterality (no space), e.g. "muscler"→"muscle", "toer"→"toe".
-  // Skip if preceded by 'a' (plantar, fibular, dorsal…) or 'o' (extensor, flexor…)
-  // — those are real anatomical word endings, not laterality suffixes.
-  else if (s.length > 2) {
-    const last = s[s.length - 1]
-    const prev = s[s.length - 2].toLowerCase()
-    if ((last === 'l' || last === 'L') && prev !== 'a') s = s.slice(0, -1).trim()
-    else if ((last === 'r' || last === 'R') && prev !== 'a' && prev !== 'o') s = s.slice(0, -1).trim()
+  let cleaned = name.replace(/\.g$/, '')        // remove .g extension
+  cleaned = cleaned.replace(/_/g, ' ')            // underscores → spaces
+  cleaned = cleaned.replace(/\s+\d+$/, '')       // strip trailing number e.g. " 1"
+  // Only treat trailing l/r as laterality when preceded by a space (i.e. was _l / _r in the GLB).
+  // This prevents "femur" → "Femu (R)", "vomer" → "Vome (R)", etc.
+  if (/ [lL]$/.test(cleaned)) {
+    cleaned = cleaned.slice(0, -2).trim() + ' (L)'
+  } else if (/ [rR]$/.test(cleaned)) {
+    cleaned = cleaned.slice(0, -2).trim() + ' (R)'
   }
-  return s.replace(/\b\w/g, c => c.toUpperCase())
+  return cleaned.replace(/\b\w/g, c => c.toUpperCase())
 }
 
-// ── Bone Groups for skeletal filtering ───────────────────────────────────────
+// ── Bone Groups for skeletal filtering ──────────────────────────────────────
 export const BONE_GROUPS = {
   'All Bones': null,
   'Skull': [
@@ -92,8 +79,8 @@ function meshMatchesBoneGroup(name, keywords) {
 const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05 })
 const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness: 0.5,  metalness: 0.1, emissive: new THREE.Color(0x3a2a10), emissiveIntensity: 0.4 })
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
-const fadedMat    = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
-const hiddenMat   = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
+const fadedMat     = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
+const hiddenMat    = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 
 export default function SkeletonModel({
   visible       = true,
@@ -106,21 +93,20 @@ export default function SkeletonModel({
   activeBoneGroup = 'All Bones',
   boneFadeMode  = 'fade',
   highlightBone = null,
-  onBaseReady   = null,   // (base: number) => void — called once with the skeleton's normalisation factor
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
-  const [hovered, setHovered]                 = useState(null)
+  const [hovered, setHovered] = useState(null)
   const [highlightedMesh, setHighlightedMesh] = useState(null)
-  const groupRef = useRef()
-  const snapRef  = useRef(null)   // { skull: [{mesh,ox,oz,px,pz}], lower: [{mesh,ox,oz,px,pz}] }
+  const groupRef  = useRef()
+  const snapRef   = useRef(null)   // { skull: [{mesh,ox,oz}], lower: [{mesh,ox,oz}] }
 
-  useCursor(!!hovered && visible)
+  useCursor(!!hovered)
 
   const meshes = useMemo(() => {
     const list = []
     scene.traverse(child => {
       if (child.isMesh) {
-        child.castShadow    = true
+        child.castShadow = true
         child.receiveShadow = true
         child.name = cleanBoneName(child.name)
         list.push(child)
@@ -131,93 +117,77 @@ export default function SkeletonModel({
 
   // Find the mesh matching highlightBone string
   useEffect(() => {
-    if (!highlightBone) { setHighlightedMesh(null); return }
-    const target = meshes.find(m =>
-      (m.name || m.parent?.name || '').toLowerCase().includes(highlightBone.toLowerCase())
+    if (!highlightBone) {
+      setHighlightedMesh(null)
+      return
+    }
+    const target = meshes.find(mesh => 
+      (mesh.name || mesh.parent?.name || '').toLowerCase().includes(highlightBone.toLowerCase())
     )
     setHighlightedMesh(target || null)
   }, [highlightBone, meshes])
 
-  // ── Proportional scaling ──────────────────────────────────────────────────
+
   useEffect(() => {
     if (!groupRef.current) return
 
-    // 1. Build snapshot once — capture BOTH scale AND position so offsets can
-    //    be correctly neutralised per-region when scales change.
+    // ── 1. Lazy-init mesh snapshot (runs once per scene, BEFORE any scale reset) ──
     if (!snapRef.current) {
       const skull = [], lower = []
       scene.traverse(child => {
         if (!child.isMesh) return
-        const entry = {
-          mesh: child,
-          ox: child.scale.x,    oz: child.scale.z,
-          px: child.position.x, pz: child.position.z,
-        }
-        if      (isSkull(child.name)) skull.push(entry)
-        else if (isLower(child.name)) lower.push(entry)
+        const entry = { mesh: child, ox: child.scale.x, oz: child.scale.z }
+        if      (isSkull(child.name))  skull.push(entry)
+        else if (isLower(child.name))  lower.push(entry)
       })
       snapRef.current = { skull, lower }
     }
 
-    // 2. Restore special meshes to original scale + position before measuring bbox
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
+    // ── 2. Reset special meshes to originals before bbox measurement ──
+    for (const { mesh, ox, oz } of snapRef.current.skull)  { mesh.scale.x = ox; mesh.scale.z = oz }
+    for (const { mesh, ox, oz } of snapRef.current.lower)  { mesh.scale.x = ox; mesh.scale.z = oz }
 
-    // 3. Reset group, measure raw bounding box
+    // ── 3. Reset group, measure raw bbox ──
     groupRef.current.scale.set(1, 1, 1)
     groupRef.current.position.set(0, 0, 0)
     const box  = new THREE.Box3().setFromObject(groupRef.current)
     const size = box.getSize(new THREE.Vector3())
     const base = 3 / Math.max(size.x, size.y, size.z)
 
-    // 4. Apply group scale: Y = stature, X/Z = shoulder width
+    // ── 4. Apply group scale (statureScale for Y, shoulderScale for X/Z) ──
     groupRef.current.scale.set(
       base * shoulderScale,
       base * statureScale,
       base * shoulderScale
     )
 
-    // 5. Pin feet to floor, centre on skeleton's own bbox centroid
+    // ── 5. Pin feet ──
     const scaled = new THREE.Box3().setFromObject(groupRef.current)
     const cx = (scaled.min.x + scaled.max.x) / 2
     const cz = (scaled.min.z + scaled.max.z) / 2
     groupRef.current.position.set(-cx, -1.5 - scaled.min.y, -cz)
 
-    // 6. Report base + X/Z offset on every scale change so all other layers
-    //    stay aligned when height presets switch.  base is constant so Scene
-    //    only stores it once; offsets update every call.
-    onBaseReady?.(base, -cx, -cz)
-
-    // 7. Skull: neutralise shoulder scale on shape AND position so skull
-    //    stays centred and doesn't widen with shoulderScale
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x    = ox / shoulderScale
-      mesh.scale.z    = oz / shoulderScale
-      mesh.position.x = px / shoulderScale
-      mesh.position.z = pz / shoulderScale
+    // ── 6. Counterscale skull (neutralise X/Z group scale → skull stays same size) ──
+    for (const { mesh, ox, oz } of snapRef.current.skull) {
+      mesh.scale.x = ox / shoulderScale
+      mesh.scale.z = oz / shoulderScale
     }
 
-    // 8. Lower body: swap shoulderScale for hipScale on shape AND position
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x    = ox * hipScale / shoulderScale
-      mesh.scale.z    = oz * hipScale / shoulderScale
-      mesh.position.x = px * hipScale / shoulderScale
-      mesh.position.z = pz * hipScale / shoulderScale
+    // ── 7. Override lower body X/Z with hipScale (independent of upper body) ──
+    // group already applied shoulderScale; to get hipScale instead: multiply by hipScale/shoulderScale
+    for (const { mesh, ox, oz } of snapRef.current.lower) {
+      mesh.scale.x = ox * hipScale / shoulderScale
+      mesh.scale.z = oz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, onBaseReady])
+  }, [scene, heightPreset, statureScale, shoulderScale, hipScale])
 
-  // ── Per-render material + visibility ─────────────────────────────────────
   meshes.forEach(mesh => {
+    // Layer toggled off — fade or hide the whole skeleton
     if (!visible) {
-      mesh.raycast  = () => {}
-      mesh.material = hiddenMat
-      mesh.visible  = false
+      mesh.raycast = () => {}
+      mesh.material = boneFadeMode === 'fade' ? fadedMat : hiddenMat
+      if (boneFadeMode === 'hide') mesh.visible = false
+      else mesh.visible = true
       return
     }
 
@@ -240,13 +210,11 @@ export default function SkeletonModel({
     <group ref={groupRef}>
       <primitive
         object={scene}
-        onClick={e => {
-          if (!visible) return
+        onClick={(e) => {
           e.stopPropagation()
           onSelect(e.object)
         }}
-        onPointerOver={e => {
-          if (!visible) return
+        onPointerOver={(e) => {
           e.stopPropagation()
           setHovered(e.object)
         }}

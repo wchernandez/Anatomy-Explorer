@@ -75,6 +75,17 @@ export default function App() {
   const [activeBoneGroup, setActiveBoneGroup] = useState('All Bones')
   const [boneFadeMode,    setBoneFadeMode]    = useState('fade')
 
+  // Wrappers that clear the selection whenever a layer or filter changes
+  const clearingSet = fn => v => { setSelectedBone(null); fn(v) }
+  const setShowSkeletonC       = clearingSet(setShowSkeleton)
+  const setShowMusclesC        = clearingSet(setShowMuscles)
+  const setShowJointsC         = clearingSet(setShowJoints)
+  const setShowVascularC       = clearingSet(setShowVascular)
+  const setActiveGroupC        = clearingSet(setActiveGroup)
+  const setActiveJointGroupC   = clearingSet(setActiveJointGroup)
+  const setActiveVascularGroupC= clearingSet(setActiveVascularGroup)
+  const setActiveBoneGroupC    = clearingSet(setActiveBoneGroup)
+
   // Skeleton bone names (keyed by group, populated once model loads)
   const [skeletonBoneNames, setSkeletonBoneNames] = useState({})
 
@@ -235,17 +246,17 @@ export default function App() {
       {/* LayerControls now absorbs BoneControls — all group props passed here */}
       <LayerControls
         skeletonBoneNames={skeletonBoneNames}
-        showSkeleton={showSkeleton}           setShowSkeleton={setShowSkeleton}
-        showMuscles={showMuscles}             setShowMuscles={setShowMuscles}
-        showJoints={showJoints}               setShowJoints={setShowJoints}
-        showVascular={showVascular}           setShowVascular={setShowVascular}
-        activeGroup={activeGroup}             setActiveGroup={setActiveGroup}
+        showSkeleton={showSkeleton}           setShowSkeleton={setShowSkeletonC}
+        showMuscles={showMuscles}             setShowMuscles={setShowMusclesC}
+        showJoints={showJoints}               setShowJoints={setShowJointsC}
+        showVascular={showVascular}           setShowVascular={setShowVascularC}
+        activeGroup={activeGroup}             setActiveGroup={setActiveGroupC}
         filterMode={filterMode}               setFilterMode={setFilterMode}
-        activeJointGroup={activeJointGroup}   setActiveJointGroup={setActiveJointGroup}
+        activeJointGroup={activeJointGroup}   setActiveJointGroup={setActiveJointGroupC}
         jointFilterMode={jointFilterMode}     setJointFilterMode={setJointFilterMode}
-        activeVascularGroup={activeVascularGroup} setActiveVascularGroup={setActiveVascularGroup}
+        activeVascularGroup={activeVascularGroup} setActiveVascularGroup={setActiveVascularGroupC}
         vascularFilterMode={vascularFilterMode}   setVascularFilterMode={setVascularFilterMode}
-        activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={setActiveBoneGroup}
+        activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={setActiveBoneGroupC}
         boneFadeMode={boneFadeMode}           setBoneFadeMode={setBoneFadeMode}
       />
 
