@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SkeletonModel from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
 import JointModel from './JointModel.jsx'
@@ -25,7 +25,6 @@ function CameraManager({ cameraPresetKey }) {
       if (startTime === null) startTime = currentTime
       const elapsed  = currentTime - startTime
       const t        = Math.min(elapsed / duration, 1)
-      // Cubic ease-in-out
       const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 
       camera.position.x = startPos.x + (targetPos[0] - startPos.x) * ease
@@ -63,6 +62,19 @@ export default function Scene({
   activeVascularGroup = 'All Vessels',
   vascularFilterMode  = 'fade',
 }) {
+  // Skeleton reports (base, offsetX, offsetY, offsetZ) on every scale change.
+  // base is locked in once; offsets update so all layers stay aligned across
+  // height presets including 4ft child.
+  const [sharedBase,    setSharedBase]    = useState(null)
+  const [sharedOffsetX, setSharedOffsetX] = useState(null)
+  const [sharedOffsetZ, setSharedOffsetZ] = useState(null)
+
+  const handleBaseReady = useRef((base, ox, oz) => {
+    setSharedBase(prev => prev ?? base)
+    setSharedOffsetX(ox)
+    setSharedOffsetZ(oz)
+  })
+
   return (
     <div id="canvas-container">
       <Canvas
@@ -91,19 +103,21 @@ export default function Scene({
         <directionalLight color="#ffe0c0" intensity={0.4} position={[0, -3, -5]} />
         <pointLight color="#ffddbb" intensity={0.6} distance={12} position={[2, 3, 2]} />
 
-        {showSkeleton && (
-          <SkeletonModel
-            selectedBone={selectedBone}
-            onSelect={onSelect}
-            heightPreset={heightPreset}
-            statureScale={statureScale}
-            shoulderScale={shoulderScale}
-            hipScale={hipScale}
-            activeBoneGroup={activeBoneGroup}
-            boneFadeMode={boneFadeMode}
-            highlightBone={highlightBone}
-          />
-        )}
+        {/* SkeletonModel is ALWAYS mounted so it can report the shared transform
+            even when the skeleton layer is toggled off. */}
+        <SkeletonModel
+          visible={showSkeleton}
+          selectedBone={selectedBone}
+          onSelect={onSelect}
+          heightPreset={heightPreset}
+          statureScale={statureScale}
+          shoulderScale={shoulderScale}
+          hipScale={hipScale}
+          activeBoneGroup={activeBoneGroup}
+          boneFadeMode={boneFadeMode}
+          highlightBone={highlightBone}
+          onBaseReady={handleBaseReady.current}
+        />
 
         <MuscleModel
           visible={showMuscles}
@@ -115,6 +129,9 @@ export default function Scene({
           statureScale={statureScale}
           shoulderScale={shoulderScale}
           hipScale={hipScale}
+          sharedBase={sharedBase}
+          sharedOffsetX={sharedOffsetX}
+          sharedOffsetZ={sharedOffsetZ}
         />
 
         <JointModel
@@ -127,6 +144,9 @@ export default function Scene({
           statureScale={statureScale}
           shoulderScale={shoulderScale}
           hipScale={hipScale}
+          sharedBase={sharedBase}
+          sharedOffsetX={sharedOffsetX}
+          sharedOffsetZ={sharedOffsetZ}
         />
 
         <VascularModel
@@ -139,6 +159,9 @@ export default function Scene({
           statureScale={statureScale}
           shoulderScale={shoulderScale}
           hipScale={hipScale}
+          sharedBase={sharedBase}
+          sharedOffsetX={sharedOffsetX}
+          sharedOffsetZ={sharedOffsetZ}
         />
 
         <OrbitControls
