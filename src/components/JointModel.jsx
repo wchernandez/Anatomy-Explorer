@@ -249,17 +249,11 @@ export default function JointModel({
   onSelect,
   activeGroup   = 'All Joints',
   filterMode    = 'fade',       // 'fade' | 'hide'
-  heightPreset  = 'short',
-  statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
-  sharedBase    = null,   // normalisation factor shared from SkeletonModel
-  sharedOffsetX = null,
-  sharedOffsetZ = null,
 }) {
   const { scene }  = useGLTF('/Joints.glb')
   const [hovered, setHovered] = useState(null)
-  const groupRef = useRef()
   const snapRef  = useRef(null)   // snapshot of per-mesh scale + position taken once
 
   useCursor(!!hovered && visible)
@@ -287,13 +281,12 @@ export default function JointModel({
     })
   }, [visible, meshes])
 
-  // ── Proportional scaling ───────────────────────────────────────────────────
-  // GLB node positions are baked world offsets; when group.scale changes, Three.js
-  // multiplies every child's LOCAL position by the group scale. We snapshot
-  // original position.x/z (pre-scale) alongside scale.x/z and restore them
-  // after applying the group transform, then re-apply region-specific overrides.
+  // ── Region-specific X/Z corrections ────────────────────────────────────────
+  // The shared body group (in Scene) owns the overall scale + position. This
+  // layer only neutralises the shared shoulderScale over the skull and swaps it
+  // for hipScale over the lower body, per mesh.
   useEffect(() => {
-    if (!groupRef.current) return
+    if (!scene) return
 
     // 1. Build snapshot once (before any scaling has touched positions)
     if (!snapRef.current) {
@@ -312,41 +305,7 @@ export default function JointModel({
       snapRef.current = { skull, lower }
     }
 
-    // 2. Restore special meshes to originals before measuring bbox
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x = ox;    mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x = ox;    mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-
-    // 3. Reset group, measure normalised bounding box
-    groupRef.current.scale.set(1, 1, 1)
-    groupRef.current.position.set(0, 0, 0)
-    const box  = new THREE.Box3().setFromObject(groupRef.current)
-    const size = box.getSize(new THREE.Vector3())
-
-    // Use sharedBase from Skeleton so all layers normalise identically
-    const base = sharedBase ?? (3 / Math.max(size.x, size.y, size.z))
-
-    // 4. Apply group scale: Y = stature, X/Z = shoulder width
-    groupRef.current.scale.set(
-      base * shoulderScale,
-      base * statureScale,
-      base * shoulderScale,
-    )
-
-    // 5. Pin feet to floor
-    const scaled = new THREE.Box3().setFromObject(groupRef.current)
-    const cx = (scaled.min.x + scaled.max.x) / 2
-    const cz = (scaled.min.z + scaled.max.z) / 2
-    const posX = sharedOffsetX !== null ? sharedOffsetX : -cx
-    const posZ = sharedOffsetZ !== null ? sharedOffsetZ : -cz
-    groupRef.current.position.set(posX, -1.5 - scaled.min.y, posZ)
-
-    // 6. Skull joints: neutralise shoulder scale on both shape and baked position
+    // 2. Skull joints: neutralise shoulder scale on both shape and baked position
     for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
       mesh.scale.x    = ox / shoulderScale
       mesh.scale.z    = oz / shoulderScale
@@ -354,14 +313,14 @@ export default function JointModel({
       mesh.position.z = pz / shoulderScale
     }
 
-    // 7. Lower joints: swap shoulderScale for hipScale on shape and position
+    // 3. Lower joints: swap shoulderScale for hipScale on shape and position
     for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
       mesh.scale.x    = ox * hipScale / shoulderScale
       mesh.scale.z    = oz * hipScale / shoulderScale
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, sharedBase, sharedOffsetX, sharedOffsetZ])
+  }, [scene, shoulderScale, hipScale])
 
   // ── Per-render material + visibility assignment ────────────────────────────
   const fadedMats = useMemo(() => new Map(), [])
@@ -399,7 +358,7 @@ export default function JointModel({
   })
 
   return (
-    <group ref={groupRef} visible={visible}>
+    <group visible={visible}>
       <primitive
         object={scene}
         onClick={e => {

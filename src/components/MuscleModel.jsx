@@ -15,6 +15,19 @@ const LOWER_KEYS = [
   'psoas','calcaneus','talus','navicular','cuneiform','metatarsal',
   'phalanx of foot','sesamoid','cuboid','gastrocnemius','soleus','tibialis',
   'peroneus','fibularis','popliteus','adductor','quadriceps','hamstring',
+  // Thigh muscles overlaying the femur (which scales with hip width) — these
+  // mesh names were previously uncaught, so the muscle scaled with shoulder
+  // width and the femur poked through at higher weights.
+  'vastus','rectus femoris','sartorius','gracilis','pectineus',
+  'biceps femoris','semimembranosus','semitendinosus',
+  'tensor fasciae','iliotibial','piriformis','obturator','gemellus','quadratus femoris',
+  // Lower-leg and foot muscles (use foot-specific names so hand/forearm
+  // muscles with similar roots are not misclassified).
+  'plantaris','flexor digitorum longus','flexor digitorum brevis',
+  'flexor hallucis','extensor digitorum longus','extensor digitorum brevis',
+  'extensor hallucis','abductor hallucis','adductor hallucis','quadratus plantae',
+  'abductor digiti minimi of foot','flexor digiti minimi of foot',
+  'lumbrical muscles of foot','interossei muscles of foot','plantar interossei',
 ]
 const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 
@@ -316,17 +329,11 @@ export default function MuscleModel({
   onSelect,
   activeGroup,
   filterMode,
-  heightPreset  = 'short',
-  statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
-  sharedBase    = null,
-  sharedOffsetX = null,
-  sharedOffsetZ = null,
 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
-  const groupRef = useRef()
 
   useCursor(!!hovered && visible)
 
@@ -350,8 +357,11 @@ export default function MuscleModel({
 
   const snapRef = useRef(null)
 
+  // The shared body group (in Scene) owns the overall scale + position. This
+  // layer only applies region-specific X/Z corrections per mesh: cancel the
+  // shared shoulderScale over the skull, swap it for hipScale over the lower body.
   useEffect(() => {
-    if (!groupRef.current) return
+    if (!scene) return
 
     if (!snapRef.current) {
       const skull = [], lower = []
@@ -369,33 +379,6 @@ export default function MuscleModel({
     }
 
     for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-
-    groupRef.current.scale.set(1, 1, 1)
-    groupRef.current.position.set(0, 0, 0)
-    const box  = new THREE.Box3().setFromObject(groupRef.current)
-    const size = box.getSize(new THREE.Vector3())
-    const base = sharedBase ?? (3 / Math.max(size.x, size.y, size.z))
-
-    groupRef.current.scale.set(
-      base * shoulderScale,
-      base * statureScale,
-      base * shoulderScale
-    )
-    const scaled = new THREE.Box3().setFromObject(groupRef.current)
-    const cx = (scaled.min.x + scaled.max.x) / 2
-    const cz = (scaled.min.z + scaled.max.z) / 2
-    const posX = sharedOffsetX !== null ? sharedOffsetX : -cx
-    const posZ = sharedOffsetZ !== null ? sharedOffsetZ : -cz
-    groupRef.current.position.set(posX, -1.5 - scaled.min.y, posZ)
-
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
       mesh.scale.x    = ox / shoulderScale
       mesh.scale.z    = oz / shoulderScale
       mesh.position.x = px / shoulderScale
@@ -407,7 +390,7 @@ export default function MuscleModel({
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, sharedBase, sharedOffsetX, sharedOffsetZ])
+  }, [scene, shoulderScale, hipScale])
 
   const fadedMats = useMemo(() => new Map(), [])
   const keywords = MUSCLE_GROUPS[activeGroup] ?? null
@@ -450,7 +433,7 @@ export default function MuscleModel({
   })
 
   return (
-    <group ref={groupRef} visible={visible}>
+    <group visible={visible}>
       <primitive
         object={scene}
         onClick={(e) => {

@@ -89,7 +89,32 @@ function meshMatchesBoneGroup(name, keywords) {
   return keywords.some(k => lower.includes(k.toLowerCase()))
 }
 
-const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05 })
+// Measure a node's bounding box in its OWN local frame, independent of any
+// parent transform. This lets the skeleton compute its normalisation factor
+// even though it lives inside the shared body group that is already scaled.
+function measureLocalBox(root) {
+  const box = new THREE.Box3()
+  const tmp = new THREE.Box3()
+  const mat = new THREE.Matrix4()
+  root.updateWorldMatrix(true, true)
+  const inv = new THREE.Matrix4().copy(root.matrixWorld).invert()
+  root.traverse(c => {
+    if (!c.isMesh) return
+    if (!c.geometry.boundingBox) c.geometry.computeBoundingBox()
+    tmp.copy(c.geometry.boundingBox)
+    mat.multiplyMatrices(inv, c.matrixWorld)
+    tmp.applyMatrix4(mat)
+    box.union(tmp)
+  })
+  return box
+}
+
+// polygonOffset pushes bone fragments slightly deeper in the depth buffer so
+// that an overlying muscle/joint surface reliably wins where the two are
+// near-coincident (subcutaneous bone, z-fighting), preventing bone from
+// speckling through the muscle layer. No visual effect when the skeleton is
+// shown on its own.
+const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
 const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness: 0.5,  metalness: 0.1, emissive: new THREE.Color(0x3a2a10), emissiveIntensity: 0.4 })
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
 const fadedMat    = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
@@ -106,7 +131,7 @@ export default function SkeletonModel({
   activeBoneGroup = 'All Bones',
   boneFadeMode  = 'fade',
   highlightBone = null,
-  onBaseReady   = null,   // (base: number) => void — called once with the skeleton's normalisation factor
+  onTransformReady = null, // ({scale:[x,y,z], position:[x,y,z]}) => void — drives the shared body group
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered]                 = useState(null)
@@ -139,8 +164,13 @@ export default function SkeletonModel({
   }, [highlightBone, meshes])
 
   // ── Proportional scaling ──────────────────────────────────────────────────
+  // The skeleton is the reference layer. It does NOT transform its own group;
+  // instead it computes the shared body-group transform (scale + position) and
+  // reports it upward so every layer is driven by ONE identical transform.
+  // Region-specific X/Z corrections (skull, lower body) are still applied per
+  // mesh here, cancelling the shared shoulderScale exactly as before.
   useEffect(() => {
-    if (!groupRef.current) return
+    if (!scene) return
 
     // 1. Build snapshot once — capture BOTH scale AND position so offsets can
     //    be correctly neutralised per-region when scales change.
@@ -169,30 +199,25 @@ export default function SkeletonModel({
       mesh.position.x = px; mesh.position.z = pz
     }
 
-    // 3. Reset group, measure raw bounding box
-    groupRef.current.scale.set(1, 1, 1)
-    groupRef.current.position.set(0, 0, 0)
-    const box  = new THREE.Box3().setFromObject(groupRef.current)
+    // 3. Measure the raw skeleton bbox in scene-local space (cancels the parent
+    //    body group's current scale, so this is stable across slider changes).
+    const box  = measureLocalBox(scene)
     const size = box.getSize(new THREE.Vector3())
     const base = 3 / Math.max(size.x, size.y, size.z)
 
-    // 4. Apply group scale: Y = stature, X/Z = shoulder width
-    groupRef.current.scale.set(
-      base * shoulderScale,
-      base * statureScale,
-      base * shoulderScale
-    )
+    // 4. Compute shared group scale: Y = stature, X/Z = shoulder width
+    const sx = base * shoulderScale
+    const sy = base * statureScale
+    const sz = base * shoulderScale
 
-    // 5. Pin feet to floor, centre on skeleton's own bbox centroid
-    const scaled = new THREE.Box3().setFromObject(groupRef.current)
-    const cx = (scaled.min.x + scaled.max.x) / 2
-    const cz = (scaled.min.z + scaled.max.z) / 2
-    groupRef.current.position.set(-cx, -1.5 - scaled.min.y, -cz)
+    // 5. Compute shared group position from the scaled bbox: centre on X/Z,
+    //    pin feet to the floor at y = -1.5.
+    const cx = (box.min.x + box.max.x) / 2 * sx
+    const cz = (box.min.z + box.max.z) / 2 * sz
+    const minY = box.min.y * sy
 
-    // 6. Report base + X/Z offset on every scale change so all other layers
-    //    stay aligned when height presets switch.  base is constant so Scene
-    //    only stores it once; offsets update every call.
-    onBaseReady?.(base, -cx, -cz)
+    // 6. Report the transform that drives the shared body group for ALL layers.
+    onTransformReady?.({ scale: [sx, sy, sz], position: [-cx, -1.5 - minY, -cz] })
 
     // 7. Skull: neutralise shoulder scale on shape AND position so skull
     //    stays centred and doesn't widen with shoulderScale
@@ -210,7 +235,7 @@ export default function SkeletonModel({
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, onBaseReady])
+  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, onTransformReady])
 
   // ── Per-render material + visibility ─────────────────────────────────────
   meshes.forEach(mesh => {
