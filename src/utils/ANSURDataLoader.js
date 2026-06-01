@@ -68,6 +68,23 @@ function valueToPercentile(value, sorted) {
 }
 
 /**
+ * Normalise ethnicity labels from the raw CSV to more respectful terminology
+ */
+const ETHNICITY_MAP = {
+  'Black': 'Black or African American',
+  'White': 'White or European American',
+  'Hispanic': 'Hispanic or Latino',
+  'Asian': 'Asian or Pacific Islander',
+  'Native American': 'American Indian or Alaska Native',
+  'Other': 'Other / Not Listed',
+}
+
+function normaliseEthnicity(value) {
+  if (!value || typeof value !== 'string') return value
+  return ETHNICITY_MAP[value.trim()] ?? value
+}
+
+/**
  * Key anthropometric measurements we care about
  */
 const KEY_MEASUREMENTS = [
@@ -98,7 +115,10 @@ export class ANSURDataLoader {
     try {
       const response = await fetch(csvUrl)
       const text = await response.text()
-      this.subjects = parseCSV(text)
+      this.subjects = parseCSV(text).map(s => ({
+        ...s,
+        Ethnicity: normaliseEthnicity(s.Ethnicity),
+      }))
       
       // Compute statistics for each key measurement
       for (const { key } of KEY_MEASUREMENTS) {

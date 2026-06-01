@@ -115,6 +115,59 @@ body::before {
   pointer-events: none;
 }
 
+/* Navigation hints — centred pill matching the layer bar */
+#nav-hints {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 14, 39, 0.85);
+  border: 2px solid rgba(0, 102, 255, 0.35);
+  backdrop-filter: blur(20px);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.nav-hint-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 136, 0.12);
+  border: 1.5px solid rgba(0, 255, 136, 0.4);
+  border-radius: 20px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #00ff88;
+  letter-spacing: 0.04em;
+}
+
+.nav-hint-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  #nav-hints { display: none; }
+}
+
 /* Topbar right-side controls container */
 #topbar-controls {
   display: flex;

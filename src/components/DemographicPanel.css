@@ -94,24 +94,28 @@
 /* ── Unit Toggle ──────────────────────────────────────────────────────────── */
 .dp-unit-toggle {
   display: flex;
-  background: rgba(255, 170, 0, 0.08);
-  border: 1px solid rgba(255, 170, 0, 0.2);
-  border-radius: 8px;
+  border: 1.5px solid rgba(255, 170, 0, 0.3);
+  border-radius: 50px;
   overflow: hidden;
   margin-bottom: 0.2rem;
+  background: rgba(255, 170, 0, 0.06);
 }
 
 .dp-unit-btn {
-  flex: 1;
   all: unset;
+  display: block;
+  width: 50%;
+  box-sizing: border-box;
   cursor: pointer;
   text-align: center;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  color: rgba(255, 200, 100, 0.5);
-  padding: 0.4rem 0;
+  color: rgba(255, 200, 100, 0.45);
+  padding: 0.5rem 1rem;
   transition: all 0.25s ease;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .dp-unit-btn:hover {
@@ -122,7 +126,7 @@
 .dp-unit-btn.active {
   color: #1a1a1f;
   background: linear-gradient(90deg, #ffaa00, #ffcc44);
-  box-shadow: 0 0 10px rgba(255, 170, 0, 0.4);
+  box-shadow: 0 0 12px rgba(255, 170, 0, 0.35);
 }
 
 /* ── Section label ────────────────────────────────────────────────────────── */
@@ -177,8 +181,8 @@
 .dp-eth-btn.active .dp-eth-label { color: #ffcc44; }
 
 .dp-eth-n {
-  font-size: 0.5rem;
-  color: rgba(160, 140, 100, 0.6);
+  font-size: 0.58rem;
+  color: rgba(200, 175, 120, 0.8);
   font-variant-numeric: tabular-nums;
 }
 
@@ -195,8 +199,8 @@
 
 /* ── Range hint ───────────────────────────────────────────────────────────── */
 .dp-range-hint {
-  font-size: 0.52rem;
-  color: rgba(160, 160, 192, 0.4);
+  font-size: 0.6rem;
+  color: rgba(180, 180, 210, 0.65);
   letter-spacing: 0.05em;
   margin-top: -0.2rem;
 }
@@ -209,8 +213,8 @@
 }
 
 .dp-dual-label {
-  font-size: 0.6rem;
-  color: rgba(160, 160, 192, 0.7);
+  font-size: 0.65rem;
+  color: rgba(190, 190, 220, 0.85);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 600;
@@ -265,8 +269,8 @@
 }
 
 .dp-num-unit {
-  font-size: 0.58rem;
-  color: rgba(160, 140, 100, 0.7);
+  font-size: 0.65rem;
+  color: rgba(200, 175, 120, 0.85);
   font-weight: 600;
   letter-spacing: 0.05em;
 }
@@ -299,9 +303,9 @@
 }
 
 .dp-scale-chip-lbl {
-  font-size: 0.48rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  color: rgba(160, 140, 100, 0.7);
+  color: rgba(200, 175, 120, 0.85);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   text-align: center;
@@ -323,8 +327,8 @@
 }
 
 .dp-meas-label {
-  font-size: 0.6rem;
-  color: rgba(160, 150, 120, 0.7);
+  font-size: 0.65rem;
+  color: rgba(200, 185, 145, 0.85);
   flex: 0 0 8rem;
   white-space: nowrap;
   overflow: hidden;
@@ -391,8 +395,8 @@
 
 /* ── Source footnote ──────────────────────────────────────────────────────── */
 .dp-source {
-  font-size: 0.52rem;
-  color: rgba(160, 140, 100, 0.3);
+  font-size: 0.58rem;
+  color: rgba(180, 160, 120, 0.55);
   letter-spacing: 0.06em;
   text-align: center;
   padding-top: 0.1rem;

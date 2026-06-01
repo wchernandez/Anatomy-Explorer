@@ -23,7 +23,8 @@ export default function App() {
   const [statureScale,  setStatureScale]  = useState(1)
   const [shoulderScale, setShoulderScale] = useState(1)
   const [hipScale,      setHipScale]      = useState(1)
-  const [showDemoPanel, setShowDemoPanel] = useState(false)
+  const [showDemoPanel,    setShowDemoPanel]    = useState(false)
+  const [showCameraPanel, setShowCameraPanel] = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
   const [quizLevel,   setQuizLevel]   = useState(1)
@@ -58,6 +59,12 @@ export default function App() {
   // Bone group filter (previously in BoneControls)
   const [activeBoneGroup, setActiveBoneGroup] = useState('All Bones')
   const [boneFadeMode,    setBoneFadeMode]    = useState('fade')
+
+  // Whole-layer faded state (semi-transparent overlay for each layer)
+  const [skeletonFaded, setSkeletonFaded] = useState(false)
+  const [musclesFaded,  setMusclesFaded]  = useState(false)
+  const [jointsFaded,   setJointsFaded]   = useState(false)
+  const [vascularFaded, setVascularFaded] = useState(false)
 
   // Wrappers that clear the selection whenever a layer or filter changes
   const clearingSet = fn => v => { setSelectedBone(null); fn(v) }
@@ -185,6 +192,10 @@ export default function App() {
         activeVascularGroup={activeVascularGroup}
         vascularFilterMode={vascularFilterMode}
         onBoneNamesReady={setSkeletonBoneNames}
+        skeletonFaded={skeletonFaded}
+        musclesFaded={musclesFaded}
+        jointsFaded={jointsFaded}
+        vascularFaded={vascularFaded}
       />
 
       <div id="topbar">
@@ -193,7 +204,33 @@ export default function App() {
           <div className="title-sub">Human Anatomy · Interactive Model</div>
         </div>
 
+        <div id="nav-hints">
+          <div className="nav-hint">
+            <span className="nav-hint-key">Left drag</span> Rotate
+          </div>
+          <div className="nav-hint-sep" />
+          <div className="nav-hint">
+            <span className="nav-hint-key">Right drag</span> Pan
+          </div>
+          <div className="nav-hint-sep" />
+          <div className="nav-hint">
+            <span className="nav-hint-key">Scroll</span> Zoom
+          </div>
+          <div className="nav-hint-sep" />
+          <div className="nav-hint">
+            <span className="nav-hint-key">Click</span> Select
+          </div>
+        </div>
+
         <div id="topbar-controls">
+          <button
+            className={`preset-btn${showCameraPanel ? ' active' : ''}`}
+            onClick={() => setShowCameraPanel(v => !v)}
+            title="Camera Angles"
+          >
+            <span className="preset-ft">🎥</span>
+            <span className="preset-sub">Camera</span>
+          </button>
           <button
             id="demographic-toggle"
             className={`preset-btn${showDemoPanel ? ' active' : ''}`}
@@ -229,9 +266,13 @@ export default function App() {
         vascularFilterMode={vascularFilterMode}   setVascularFilterMode={setVascularFilterMode}
         activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={setActiveBoneGroupC}
         boneFadeMode={boneFadeMode}           setBoneFadeMode={setBoneFadeMode}
+        skeletonFaded={skeletonFaded}         setSkeletonFaded={setSkeletonFaded}
+        musclesFaded={musclesFaded}           setMusclesFaded={setMusclesFaded}
+        jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}
+        vascularFaded={vascularFaded}         setVascularFaded={setVascularFaded}
       />
 
-      <CameraControls onAngleSelect={setCameraPreset} />
+      <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
 
       <QuizPanel
         quiz={quiz}

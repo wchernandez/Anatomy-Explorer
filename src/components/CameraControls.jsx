@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 // Preset camera angles with positions and target focuses
 const CAMERA_PRESETS = {
   front: {
@@ -46,41 +44,28 @@ const CAMERA_PRESETS = {
   },
 }
 
-export default function CameraControls({ onAngleSelect }) {
-  const [panelOpen, setPanelOpen] = useState(true)
-
-  const handleAngleClick = (angleKey) => {
-    onAngleSelect(angleKey)
-  }
+export default function CameraControls({ onAngleSelect, visible, onClose }) {
+  if (!visible) return null
 
   return (
     <div id="camera-panel" className="panel">
       <div className="panel-label">
-        <button
-          className="panel-collapse-btn"
-          onClick={() => setPanelOpen(v => !v)}
-          title={panelOpen ? 'Collapse' : 'Expand'}
-        >
-          {panelOpen ? '▾' : '▸'}
-        </button>
         Camera Angles
+        <button className="panel-collapse-btn" onClick={onClose} title="Close" style={{ marginLeft: 'auto' }}>✕</button>
       </div>
-
-      {panelOpen && (
-        <div className="camera-grid">
-          {Object.entries(CAMERA_PRESETS).map(([key, preset]) => (
-            <button
-              key={key}
-              className="camera-btn"
-              onClick={() => handleAngleClick(key)}
-              title={preset.label}
-            >
-              <span className="camera-icon">{preset.icon}</span>
-              <span className="camera-label">{preset.label}</span>
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="camera-grid">
+        {Object.entries(CAMERA_PRESETS).map(([key, preset]) => (
+          <button
+            key={key}
+            className="camera-btn"
+            onClick={() => onAngleSelect(key)}
+            title={preset.label}
+          >
+            <span className="camera-icon">{preset.icon}</span>
+            <span className="camera-label">{preset.label}</span>
+          </button>
+        ))}
+      </div>
     </div>
   )
 }

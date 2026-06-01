@@ -29,8 +29,6 @@ export default function AcademicMeasurementPanel({ skeletonScene, muscleScene, v
   const [showFilters, setShowFilters] = useState(false)
   const scalerRef = useRef(null)
 
-  if (!visible) return null
-
   // Initialize data loader
   useEffect(() => {
     const initializeData = async () => {
@@ -102,6 +100,8 @@ export default function AcademicMeasurementPanel({ skeletonScene, muscleScene, v
     setFilterMin('')
     setFilterMax('')
   }
+
+  if (!visible) return null
 
   if (loading) {
     return (
@@ -259,29 +259,16 @@ export default function AcademicMeasurementPanel({ skeletonScene, muscleScene, v
                       key={displayIdx}
                       className={`ap-subject-card ${isSelected ? 'selected' : ''}`}
                       onClick={() => handleSelectSubject(displayIdx)}
+                      title={`${subject.Ethnicity || 'Unknown'} • Age ${subject.Age || '?'}`}
                     >
-                      <div className="ap-subject-id">ID: {subject.subjectid}</div>
+                      <div className="ap-subject-id">#{subject.subjectid}</div>
                       <div className="ap-subject-height">
                         {subjectStature ? `${subjectStature}mm` : 'N/A'}
                       </div>
-                      <div className="ap-subject-age">
-                        Age: {subject.Age ?? '?'}
+                      <div className="ap-subject-eth">
+                        {subject.Ethnicity || 'Unknown'}
                       </div>
                     </div>
-                      <div
-                        key={displayIdx}
-                        className={`ap-subject-card ${isSelected ? 'selected' : ''}`}
-                        onClick={() => handleSelectSubject(displayIdx)}
-                        title={`${subject.Ethnicity || 'Unknown'} • Age ${subject.Age || '?'}`}
-                      >
-                        <div className="ap-subject-id">#{subject.subjectid}</div>
-                        <div className="ap-subject-height">
-                          {subjectStature ? `${subjectStature}mm` : 'N/A'}
-                        </div>
-                        <div className="ap-subject-eth">
-                          {subject.Ethnicity || 'Unknown'}
-                        </div>
-                      </div>
                   )
                 })}
               </div>

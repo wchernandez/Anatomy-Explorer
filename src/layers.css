@@ -123,8 +123,8 @@
 #layer-dock {
   position: fixed;
   left: 0;
-  top: 42%; 
-  transform: translateY(-50%);
+  top: 12rem;
+  transform: none;
   z-index: 11;
   display: flex;
   flex-direction: column;

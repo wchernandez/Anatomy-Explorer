@@ -8,33 +8,62 @@ import JointModel from './JointModel.jsx'
 import VascularModel from './VascularModel.jsx'
 import { CAMERA_PRESETS } from './CameraControls.jsx'
 
-// Animates the camera to a preset position
+// Animates the camera to a preset position via spherical interpolation
+// so it always arcs around the model rather than cutting through it.
 function CameraManager({ cameraPresetKey }) {
   const { camera } = useThree()
+  const rafRef = useRef(null)
 
   useEffect(() => {
     if (!cameraPresetKey || !CAMERA_PRESETS[cameraPresetKey]) return
 
-    const preset    = CAMERA_PRESETS[cameraPresetKey]
-    const startPos  = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
-    const targetPos = preset.position
-    const duration  = 600
-    let startTime   = null
+    // Cancel any in-progress animation
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+
+    const preset = CAMERA_PRESETS[cameraPresetKey]
+    const target = new THREE.Vector3(...preset.target)
+
+    // Represent start and end as spherical coords relative to the target
+    const startVec = camera.position.clone().sub(target)
+    const endVec   = new THREE.Vector3(...preset.position).sub(target)
+
+    const startSph = new THREE.Spherical().setFromVector3(startVec)
+    const endSph   = new THREE.Spherical().setFromVector3(endVec)
+
+    // Always take the short way around in azimuth
+    let dTheta = endSph.theta - startSph.theta
+    if (dTheta >  Math.PI) dTheta -= 2 * Math.PI
+    if (dTheta < -Math.PI) dTheta += 2 * Math.PI
+
+    const duration = 900
+    let startTime  = null
 
     const animate = currentTime => {
       if (startTime === null) startTime = currentTime
-      const elapsed  = currentTime - startTime
-      const t        = Math.min(elapsed / duration, 1)
-      const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+      const elapsed = currentTime - startTime
+      const t       = Math.min(elapsed / duration, 1)
+      // Smooth ease-in-out (sine)
+      const ease    = -(Math.cos(Math.PI * t) - 1) / 2
 
-      camera.position.x = startPos.x + (targetPos[0] - startPos.x) * ease
-      camera.position.y = startPos.y + (targetPos[1] - startPos.y) * ease
-      camera.position.z = startPos.z + (targetPos[2] - startPos.z) * ease
+      const sph = new THREE.Spherical(
+        startSph.radius + (endSph.radius - startSph.radius) * ease,
+        startSph.phi    + (endSph.phi    - startSph.phi)    * ease,
+        startSph.theta  + dTheta                            * ease,
+      )
 
-      if (t < 1) requestAnimationFrame(animate)
+      camera.position.setFromSpherical(sph).add(target)
+      camera.lookAt(target)
+
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(animate)
+      }
     }
 
-    requestAnimationFrame(animate)
+    rafRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
   }, [cameraPresetKey, camera])
 
   return null
@@ -61,6 +90,10 @@ export default function Scene({
   showVascular    = false,
   activeVascularGroup = 'All Vessels',
   vascularFilterMode  = 'fade',
+  skeletonFaded   = false,
+  musclesFaded    = false,
+  jointsFaded     = false,
+  vascularFaded   = false,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
@@ -119,6 +152,7 @@ export default function Scene({
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
             onTransformReady={handleTransformReady}
+            layerFaded={skeletonFaded}
           />
 
           <MuscleModel
@@ -129,6 +163,7 @@ export default function Scene({
             filterMode={filterMode}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            layerFaded={musclesFaded}
           />
 
           <JointModel
@@ -139,6 +174,7 @@ export default function Scene({
             filterMode={jointFilterMode}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            layerFaded={jointsFaded}
           />
 
           <VascularModel
@@ -149,6 +185,7 @@ export default function Scene({
             filterMode={vascularFilterMode}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            layerFaded={vascularFaded}
           />
         </group>
 

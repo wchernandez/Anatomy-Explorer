@@ -275,6 +275,7 @@ export default function MuscleModel({
   filterMode,
   shoulderScale = 1,
   hipScale      = 1,
+  layerFaded    = false,
 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
@@ -361,6 +362,21 @@ export default function MuscleModel({
     const inGroup = meshMatchesGroup(mesh.name, keywords)
     const base = getBaseMat(mesh)
     const isInteractive = visible && inGroup
+
+    // Whole-layer fade overrides everything
+    if (layerFaded) {
+      mesh.visible = true
+      mesh.raycast = () => null
+      if (!fadedMats.has('__layer__' + mesh.uuid)) {
+        const faded = base.clone()
+        faded.transparent = true
+        faded.opacity = 0.15
+        faded.depthWrite = false
+        fadedMats.set('__layer__' + mesh.uuid, faded)
+      }
+      mesh.material = fadedMats.get('__layer__' + mesh.uuid)
+      return
+    }
 
     if (mesh === selectedBone) {
       mesh.material = selectedMat

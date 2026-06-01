@@ -73,6 +73,7 @@ function PanelContent({ layerKey, state }) {
     activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
     activeVascularGroup,setActiveVascularGroup, vascularFilterMode,setVascularFilterMode,
     activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
+    faded,              toggleFade,
   } = state
 
   if (layerKey === 'skeleton') {
@@ -84,6 +85,8 @@ function PanelContent({ layerKey, state }) {
         fadeMode={boneFadeMode}
         setFadeMode={setBoneFadeMode}
         accentClass="bone"
+        layerFaded={faded.skeleton}
+        onToggleLayerFade={toggleFade.skeleton}
       />
     )
   }
@@ -96,6 +99,8 @@ function PanelContent({ layerKey, state }) {
         fadeMode={filterMode}
         setFadeMode={setFilterMode}
         accentClass="muscle"
+        layerFaded={faded.muscles}
+        onToggleLayerFade={toggleFade.muscles}
       />
     )
   }
@@ -108,6 +113,8 @@ function PanelContent({ layerKey, state }) {
         fadeMode={jointFilterMode}
         setFadeMode={setJointFilterMode}
         accentClass="joint"
+        layerFaded={faded.joints}
+        onToggleLayerFade={toggleFade.joints}
       />
     )
   }
@@ -120,15 +127,25 @@ function PanelContent({ layerKey, state }) {
         fadeMode={vascularFilterMode}
         setFadeMode={setVascularFilterMode}
         accentClass="vascular"
+        layerFaded={faded.vascular}
+        onToggleLayerFade={toggleFade.vascular}
       />
     )
   }
   return null
 }
 
-function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass }) {
+function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass, layerFaded, onToggleLayerFade }) {
   return (
     <>
+      <div className="filter-mode-row">
+        <span className="filter-label">Whole layer:</span>
+        <button
+          className={`filter-toggle ${accentClass}-toggle ${layerFaded ? 'selected' : ''}`}
+          onClick={onToggleLayerFade}
+        >Fade</button>
+      </div>
+      <div className="divider" />
       <div className="filter-mode-row">
         <span className="filter-label">Inactive:</span>
         <button
@@ -174,6 +191,11 @@ export default function LayerControls({
   // bone (from BoneControls, now merged here)
   activeBoneGroup,  setActiveBoneGroup,
   boneFadeMode,     setBoneFadeMode,
+  // whole-layer fade
+  skeletonFaded,    setSkeletonFaded,
+  musclesFaded,     setMusclesFaded,
+  jointsFaded,      setJointsFaded,
+  vascularFaded,    setVascularFaded,
 }) {
   // Which panel is open; null = all closed
   const [openPanel, setOpenPanel] = useState(null)
@@ -183,6 +205,20 @@ export default function LayerControls({
     muscles:  showMuscles,
     joints:   showJoints,
     vascular: showVascular,
+  }
+
+  const faded = {
+    skeleton: skeletonFaded,
+    muscles:  musclesFaded,
+    joints:   jointsFaded,
+    vascular: vascularFaded,
+  }
+
+  const toggleFade = {
+    skeleton: () => setSkeletonFaded(v => !v),
+    muscles:  () => setMusclesFaded(v => !v),
+    joints:   () => setJointsFaded(v => !v),
+    vascular: () => setVascularFaded(v => !v),
   }
 
   const toggleLayer = {
@@ -197,6 +233,7 @@ export default function LayerControls({
     activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
     activeVascularGroup,setActiveVascularGroup,vascularFilterMode,setVascularFilterMode,
     activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
+    faded,              toggleFade,
   }
 
   // Active layers in order — determines which circles appear
