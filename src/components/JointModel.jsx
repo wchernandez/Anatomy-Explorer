@@ -251,8 +251,11 @@ export default function JointModel({
   onSelect,
   activeGroup   = 'All Joints',
   filterMode    = 'fade',       // 'fade' | 'hide'
+  statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
+  headAnchorY   = null,   // shared head/neck anchor from SkeletonModel
+  headBand      = null,   // max |py - anchor| eligible for Y de-stretch
 }) {
   const { scene }  = useGLTF('/Joints.glb')
   const [hovered, setHovered] = useState(null)
@@ -298,8 +301,8 @@ export default function JointModel({
         if (!child.isMesh) return
         const entry = {
           mesh: child,
-          ox: child.scale.x,    oz: child.scale.z,
-          px: child.position.x, pz: child.position.z,
+          ox: child.scale.x,    oy: child.scale.y,    oz: child.scale.z,
+          px: child.position.x, py: child.position.y, pz: child.position.z,
         }
         if      (isSkull(child.name)) skull.push(entry)
         else if (isLower(child.name)) lower.push(entry)
@@ -307,12 +310,17 @@ export default function JointModel({
       snapRef.current = { skull, lower }
     }
 
-    // 2. Skull joints: neutralise shoulder scale on both shape and baked position
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
+    // 2. Skull joints: cancel shoulder width, and (when the shared head anchor
+    //    is available) cancel the stature stretch in Y to match the head bones.
+    for (const { mesh, ox, oy, oz, px, py, pz } of snapRef.current.skull) {
       mesh.scale.x    = ox / shoulderScale
       mesh.scale.z    = oz / shoulderScale
       mesh.position.x = px / shoulderScale
       mesh.position.z = pz / shoulderScale
+      if (headAnchorY !== null && (headBand === null || Math.abs(py - headAnchorY) <= headBand)) {
+        mesh.scale.y    = oy / statureScale
+        mesh.position.y = headAnchorY + (py - headAnchorY) / statureScale
+      }
     }
 
     // 3. Lower joints: swap shoulderScale for hipScale on shape and position
@@ -322,7 +330,7 @@ export default function JointModel({
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, shoulderScale, hipScale])
+  }, [scene, statureScale, shoulderScale, hipScale, headAnchorY, headBand])
 
   // ── Per-render material + visibility assignment ────────────────────────────
   const fadedMats = useMemo(() => new Map(), [])

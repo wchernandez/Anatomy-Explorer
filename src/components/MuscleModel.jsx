@@ -273,8 +273,11 @@ export default function MuscleModel({
   onSelect,
   activeGroup,
   filterMode,
+  statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
+  headAnchorY   = null,   // shared head/neck anchor from SkeletonModel
+  headBand      = null,   // max |py - anchor| eligible for Y de-stretch
 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
@@ -322,8 +325,8 @@ export default function MuscleModel({
         if (!child.isMesh) return
         const entry = {
           mesh: child,
-          ox: child.scale.x,    oz: child.scale.z,
-          px: child.position.x, pz: child.position.z,
+          ox: child.scale.x,    oy: child.scale.y,    oz: child.scale.z,
+          px: child.position.x, py: child.position.y, pz: child.position.z,
         }
         if      (isSkull(child.name)) skull.push(entry)
         else if (isLower(child.name)) lower.push(entry)
@@ -331,11 +334,17 @@ export default function MuscleModel({
       snapRef.current = { skull, lower }
     }
 
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
+    // Skull/face: cancel shoulder width, and (if the shared head anchor is
+    // available) cancel the stature stretch in Y so the head matches the bones.
+    for (const { mesh, ox, oy, oz, px, py, pz } of snapRef.current.skull) {
       mesh.scale.x    = ox / shoulderScale
       mesh.scale.z    = oz / shoulderScale
       mesh.position.x = px / shoulderScale
       mesh.position.z = pz / shoulderScale
+      if (headAnchorY !== null && (headBand === null || Math.abs(py - headAnchorY) <= headBand)) {
+        mesh.scale.y    = oy / statureScale
+        mesh.position.y = headAnchorY + (py - headAnchorY) / statureScale
+      }
     }
     for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
       mesh.scale.x    = ox * hipScale / shoulderScale
@@ -343,7 +352,7 @@ export default function MuscleModel({
       mesh.position.x = px * hipScale / shoulderScale
       mesh.position.z = pz * hipScale / shoulderScale
     }
-  }, [scene, shoulderScale, hipScale])
+  }, [scene, statureScale, shoulderScale, hipScale, headAnchorY, headBand])
 
   const fadedMats = useMemo(() => new Map(), [])
   const keywords = MUSCLE_GROUPS[activeGroup] ?? null

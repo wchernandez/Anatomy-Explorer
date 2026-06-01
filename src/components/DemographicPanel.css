@@ -138,6 +138,81 @@
   margin-top: 0.15rem;
 }
 
+/* ── Section head (label + help button) ───────────────────────────────────── */
+.dp-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dp-help-btn {
+  all: unset;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: rgba(255, 200, 100, 0.7);
+  border: 1px solid rgba(255, 170, 0, 0.35);
+  background: rgba(255, 170, 0, 0.08);
+  transition: all 0.18s ease;
+  flex: 0 0 auto;
+}
+.dp-help-btn:hover {
+  color: #1a1a1f;
+  background: linear-gradient(90deg, #ffaa00, #ffcc44);
+  box-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+}
+.dp-help-btn.active {
+  color: #1a1a1f;
+  background: linear-gradient(90deg, #ffaa00, #ffcc44);
+}
+
+/* ── Ethnicity info popover ───────────────────────────────────────────────── */
+.dp-eth-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 170, 0, 0.06);
+  border: 1px solid rgba(255, 170, 0, 0.25);
+  animation: dpSlideIn 0.2s ease;
+}
+
+.dp-eth-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.dp-eth-info-cat {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #ffcc44;
+  letter-spacing: 0.03em;
+}
+
+.dp-eth-info-sub {
+  font-size: 0.56rem;
+  line-height: 1.35;
+  color: rgba(200, 190, 160, 0.75);
+}
+
+.dp-eth-info-note {
+  font-size: 0.52rem;
+  line-height: 1.35;
+  color: rgba(160, 140, 100, 0.6);
+  border-top: 1px solid rgba(255, 170, 0, 0.15);
+  padding-top: 0.35rem;
+  margin-top: 0.1rem;
+}
+
 /* ── Ethnicity grid ───────────────────────────────────────────────────────── */
 .dp-eth-grid {
   display: grid;
@@ -223,21 +298,31 @@
 }
 
 /* ── Slider ───────────────────────────────────────────────────────────────── */
+/* The input is given a tall, transparent hit area (so the thumb is easy to grab
+   and drag) while the visible track stays a thin 3px line via the track
+   pseudo-elements. */
 .dp-slider {
   -webkit-appearance: none;
   appearance: none;
   flex: 1;
+  height: 18px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* WebKit / Blink */
+.dp-slider::-webkit-slider-runnable-track {
   height: 3px;
   border-radius: 2px;
   background: linear-gradient(to right, rgba(255, 170, 0, 0.5), rgba(255, 0, 85, 0.4));
-  outline: none;
-  cursor: pointer;
 }
-
 .dp-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 13px;
   height: 13px;
+  margin-top: -5px; /* centre the 13px thumb on the 3px track */
   border-radius: 50%;
   background: #ffaa00;
   box-shadow: 0 0 7px rgba(255, 170, 0, 0.8);
@@ -245,6 +330,22 @@
   transition: transform 0.1s;
 }
 .dp-slider::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+/* Firefox */
+.dp-slider::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to right, rgba(255, 170, 0, 0.5), rgba(255, 0, 85, 0.4));
+}
+.dp-slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 50%;
+  background: #ffaa00;
+  box-shadow: 0 0 7px rgba(255, 170, 0, 0.8);
+  cursor: pointer;
+}
 
 /* ── Number display ───────────────────────────────────────────────────────── */
 .dp-num-display {

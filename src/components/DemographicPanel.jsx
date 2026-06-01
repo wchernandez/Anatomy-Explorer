@@ -98,6 +98,15 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   const [age,       setAge]       = useState(DEFAULT_AGE)
   const [heightCm,  setHeightCm]  = useState(DEFAULT_HEIGHT)
   const [weightKg,  setWeightKg]  = useState(DEFAULT_WEIGHT)
+  const [showEthInfo, setShowEthInfo] = useState(false)
+
+  // Selecting an ethnicity snaps height & weight to that group's ANSUR II mean.
+  function handleEthnicitySelect(key) {
+    setEthnicity(key)
+    const meta = ETHNICITY_META.find(e => e.key === key)
+    if (meta?.meanHeightCm != null) setHeightCm(meta.meanHeightCm)
+    if (meta?.meanWeightKg != null) setWeightKg(meta.meanWeightKg)
+  }
 
   function handleUnitToggle(toMetric) {
     if (toMetric === isMetric) return
@@ -156,14 +165,41 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
         <div className="dp-divider" />
 
         {/* ── Ethnicity selector ─────────────────────────────────────────── */}
-        <SectionLabel>Ethnicity</SectionLabel>
+        <div className="dp-section-head">
+          <SectionLabel>Ethnicity</SectionLabel>
+          <button
+            className={`dp-help-btn${showEthInfo ? ' active' : ''}`}
+            onClick={() => setShowEthInfo(v => !v)}
+            aria-expanded={showEthInfo}
+            aria-label="What's included in each ethnicity group?"
+            title="What's included in each group?"
+          >
+            ?
+          </button>
+        </div>
+
+        {showEthInfo && (
+          <div className="dp-eth-info" role="region" aria-label="Ethnicity group details">
+            {ETHNICITY_META.map(({ key, label, subgroups }) => (
+              <div className="dp-eth-info-row" key={key}>
+                <span className="dp-eth-info-cat">{label}</span>
+                <span className="dp-eth-info-sub">{subgroups}</span>
+              </div>
+            ))}
+            <div className="dp-eth-info-note">
+              Groups follow the ANSUR II / U.S. DoD race classifications. Selecting one
+              sets the slider to that group's mean height &amp; weight.
+            </div>
+          </div>
+        )}
+
         <div className="dp-eth-grid">
           {ETHNICITY_META.map(({ key, label, n }) => (
             <button
               key={key}
               id={`eth-btn-${key}`}
               className={`dp-eth-btn${ethnicity === key ? ' active' : ''}`}
-              onClick={() => setEthnicity(key)}
+              onClick={() => handleEthnicitySelect(key)}
               title={`n = ${n.toLocaleString()} subjects`}
             >
               <span className="dp-eth-label">{label}</span>

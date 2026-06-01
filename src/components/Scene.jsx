@@ -127,8 +127,11 @@ export default function Scene({
             onSelect={onSelect}
             activeGroup={activeGroup}
             filterMode={filterMode}
+            statureScale={statureScale}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            headAnchorY={bodyTransform?.headAnchorY}
+            headBand={bodyTransform?.headBand}
           />
 
           <JointModel
@@ -137,8 +140,11 @@ export default function Scene({
             onSelect={onSelect}
             activeGroup={activeJointGroup}
             filterMode={jointFilterMode}
+            statureScale={statureScale}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            headAnchorY={bodyTransform?.headAnchorY}
+            headBand={bodyTransform?.headBand}
           />
 
           <VascularModel

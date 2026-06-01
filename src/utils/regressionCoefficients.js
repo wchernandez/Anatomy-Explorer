@@ -46,13 +46,44 @@ export const ANSUR_AGE_MAX = 58
 export const ANSUR_AGE_MEAN = 30.2
 
 // ── Ethnicity display metadata ────────────────────────────────────────────────
+// `meanHeightCm` / `meanWeightKg` are the ANSUR II Male group means for each
+// DODRace category, used to snap the sliders when a group is selected.
+// `subgroups` lists the specific origins that the broad ANSUR/U.S. DoD category
+// encompasses (shown in the "?" info popover).
+//
+// `key` keeps the original ANSUR DODRace term so the regression lookup stays
+// valid; `label` is the user-facing display name only.
 export const ETHNICITY_META = [
-  { key: 'Caucasian',       label: 'Caucasian',        n: 2817 },
-  { key: 'Black',           label: 'Black',             n: 642  },
-  { key: 'Hispanic',        label: 'Hispanic',          n: 440  },
-  { key: 'Asian',           label: 'Asian',             n: 117  },
-  { key: 'NativeAmerican',  label: 'Native American',   n: 29   },
-  { key: 'PacificIslander', label: 'Pacific Islander',  n: 34   },
+  {
+    key: 'Caucasian', label: 'Caucasian', n: 2817,
+    meanHeightCm: 176.0, meanWeightKg: 86.0,
+    subgroups: 'White — of European, Middle Eastern, or North African origin',
+  },
+  {
+    key: 'Black', label: 'African', n: 642,
+    meanHeightCm: 176.5, meanWeightKg: 86.5,
+    subgroups: 'Black or African American — African, Afro-Caribbean & African American origin',
+  },
+  {
+    key: 'Hispanic', label: 'Hispanic', n: 440,
+    meanHeightCm: 171.5, meanWeightKg: 81.5,
+    subgroups: 'Hispanic / Latino — Mexican, Puerto Rican, Cuban, Central & South American, and other Spanish origin',
+  },
+  {
+    key: 'Asian', label: 'Asian', n: 117,
+    meanHeightCm: 170.0, meanWeightKg: 77.5,
+    subgroups: 'Chinese, Filipino, Japanese, Korean, Vietnamese, Asian Indian, and other Asian origin',
+  },
+  {
+    key: 'NativeAmerican', label: 'Native American', n: 29,
+    meanHeightCm: 173.5, meanWeightKg: 84.0,
+    subgroups: 'American Indian & Alaska Native',
+  },
+  {
+    key: 'PacificIslander', label: 'Pacific Islander', n: 34,
+    meanHeightCm: 175.0, meanWeightKg: 91.0,
+    subgroups: 'Native Hawaiian, Samoan, Chamorro / Guamanian, and other Pacific Islander origin',
+  },
 ]
 
 // ── Regression coefficient lookup ─────────────────────────────────────────────

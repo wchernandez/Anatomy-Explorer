@@ -24,6 +24,13 @@ const LOWER_KEYS = [
 ]
 const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 
+// Neck (cervical spine) — used only to locate the head/neck JOINT (top of the
+// atlas). The skull is vertically de-stretched around this point so it keeps a
+// constant, natural size and stays seated on top of the (normally-stretching)
+// neck instead of elongating with stature.
+const NECK_KEYS = ['cervical vertebra','atlas','axis']
+const isNeck = n => NECK_KEYS.some(k => n.toLowerCase().includes(k))
+
 // ── Name cleaning ─────────────────────────────────────────────────────────────
 // Shared pattern used by all layer models:
 //   • strip .g extension
@@ -112,6 +119,25 @@ function measureLocalBox(root) {
   return box
 }
 
+// Bounding box of a set of meshes expressed in `root`'s local frame. Used to
+// locate the skull/neck anchor robustly, independent of each mesh's individual
+// (and inconsistent) origin/pivot in the GLB.
+function localBoxOfMeshes(root, meshes) {
+  const box = new THREE.Box3()
+  const tmp = new THREE.Box3()
+  const mat = new THREE.Matrix4()
+  root.updateWorldMatrix(true, true)
+  const inv = new THREE.Matrix4().copy(root.matrixWorld).invert()
+  for (const m of meshes) {
+    if (!m.geometry.boundingBox) m.geometry.computeBoundingBox()
+    tmp.copy(m.geometry.boundingBox)
+    mat.multiplyMatrices(inv, m.matrixWorld)
+    tmp.applyMatrix4(mat)
+    box.union(tmp)
+  }
+  return box
+}
+
 // polygonOffset pushes bone fragments slightly deeper in the depth buffer so
 // that an overlying muscle/joint surface reliably wins where the two are
 // near-coincident (subcutaneous bone, z-fighting), preventing bone from
@@ -167,72 +193,99 @@ export default function SkeletonModel({
   }, [highlightBone, meshes])
 
   // ── Proportional scaling ──────────────────────────────────────────────────
-  // The skeleton is the reference layer. It does NOT transform its own group;
-  // instead it computes the shared body-group transform (scale + position) and
-  // reports it upward so every layer is driven by ONE identical transform.
-  // Region-specific X/Z corrections (skull, lower body) are still applied per
-  // mesh here, cancelling the shared shoulderScale exactly as before.
+  // The skeleton is the reference layer. It computes the shared body-group
+  // transform (scale + position) and reports it upward so every layer is driven
+  // by ONE identical transform.
+  //
+  // The skull is handled as a RIGID UNIT: all skull bones are reparented into a
+  // single head group, and that group is counter-scaled to cancel the body's
+  // stature (Y) and shoulder (X/Z) scaling, pivoted at the neck joint. This keeps
+  // the head a constant, natural size and perfectly intact — no per-bone math, so
+  // the GLB's inconsistent mesh origins can't make the skull come apart.
   useEffect(() => {
     if (!scene) return
 
-    // 1. Build snapshot once — capture BOTH scale AND position so offsets can
-    //    be correctly neutralised per-region when scales change.
+    // 1. First run: reparent the skull into a head group, snapshot the lower
+    //    body, and locate the anchor (top of the neck / atlas) + skull centre.
+    //    The setup is persisted on the (cached) scene so it runs exactly ONCE
+    //    per GLB — re-mounting the component (HMR, etc.) reuses it rather than
+    //    reparenting an already-reparented scene.
+    if (!snapRef.current && scene.userData.__skullSetup) {
+      snapRef.current = scene.userData.__skullSetup
+    }
     if (!snapRef.current) {
-      const skull = [], lower = []
+      scene.updateMatrixWorld(true)
+
+      const skullMeshes = []
+      const neckMeshes  = []
+      const lower = []
       scene.traverse(child => {
         if (!child.isMesh) return
-        const entry = {
-          mesh: child,
-          ox: child.scale.x,    oz: child.scale.z,
-          px: child.position.x, pz: child.position.z,
+        if (isSkull(child.name)) skullMeshes.push(child)
+        else if (isLower(child.name)) {
+          lower.push({ mesh: child, ox: child.scale.x, oz: child.scale.z, px: child.position.x, pz: child.position.z })
         }
-        if      (isSkull(child.name)) skull.push(entry)
-        else if (isLower(child.name)) lower.push(entry)
+        if (isNeck(child.name)) neckMeshes.push(child)
       })
-      snapRef.current = { skull, lower }
-    }
 
-    // 2. Restore special meshes to original scale + position before measuring bbox
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
+      // Anchor in scene-local space (robust to each mesh's own origin/pivot).
+      const skullBox = localBoxOfMeshes(scene, skullMeshes)
+      const neckBox  = neckMeshes.length ? localBoxOfMeshes(scene, neckMeshes) : null
+      const anchor = new THREE.Vector3(
+        (skullBox.min.x + skullBox.max.x) / 2,
+        neckBox ? neckBox.max.y : skullBox.min.y,
+        (skullBox.min.z + skullBox.max.z) / 2,
+      )
+
+      // Create the head group and reparent every skull bone into it. attach()
+      // preserves each bone's current world transform, so nothing moves.
+      const headGroup = new THREE.Group()
+      headGroup.name = 'HeadGroup'
+      scene.add(headGroup)
+      for (const m of skullMeshes) headGroup.attach(m)
+
+      scene.userData.__skullSetup = { headGroup, lower, anchor }
+      snapRef.current = scene.userData.__skullSetup
+    }
+    const { headGroup, lower, anchor } = snapRef.current
+
+    // 2. Reset head group + lower meshes to rest before measuring the body bbox.
+    headGroup.scale.set(1, 1, 1)
+    headGroup.position.set(0, 0, 0)
+    for (const { mesh, ox, oz, px, pz } of lower) {
       mesh.scale.x = ox; mesh.scale.z = oz
       mesh.position.x = px; mesh.position.z = pz
     }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
 
-    // 3. Measure the raw skeleton bbox in scene-local space (cancels the parent
-    //    body group's current scale, so this is stable across slider changes).
+    // 3. Measure the rest skeleton bbox in scene-local space → normalisation base.
     const box  = measureLocalBox(scene)
     const size = box.getSize(new THREE.Vector3())
     const base = 3 / Math.max(size.x, size.y, size.z)
 
-    // 4. Compute shared group scale: Y = stature, X/Z = shoulder width
+    // 4. Shared body-group transform: Y = stature, X/Z = shoulder width.
     const sx = base * shoulderScale
     const sy = base * statureScale
     const sz = base * shoulderScale
-
-    // 5. Compute shared group position from the scaled bbox: centre on X/Z,
-    //    pin feet to the floor at y = -1.5.
     const cx = (box.min.x + box.max.x) / 2 * sx
     const cz = (box.min.z + box.max.z) / 2 * sz
     const minY = box.min.y * sy
 
-    // 6. Report the transform that drives the shared body group for ALL layers.
-    onTransformReady?.({ scale: [sx, sy, sz], position: [-cx, -1.5 - minY, -cz] })
+    // 5. Report transform (+ head anchor/band for the other layers' skull fix).
+    onTransformReady?.({
+      scale: [sx, sy, sz], position: [-cx, -1.5 - minY, -cz],
+      headAnchorY: anchor.y, headBand: size.y * 0.3,
+    })
 
-    // 7. Skull: neutralise shoulder scale on shape AND position so skull
-    //    stays centred and doesn't widen with shoulderScale
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x    = ox / shoulderScale
-      mesh.scale.z    = oz / shoulderScale
-      mesh.position.x = px / shoulderScale
-      mesh.position.z = pz / shoulderScale
-    }
+    // 6. Head group: counter-scale to cancel the body's stature (Y) and shoulder
+    //    (X/Z) scaling, pivoted at the neck anchor. Net skull scale = base
+    //    (uniform, constant size) and the neck joint stays put → head stays
+    //    attached to the (normally-scaling) spine.
+    const isx = 1 / shoulderScale, isy = 1 / statureScale, isz = 1 / shoulderScale
+    headGroup.scale.set(isx, isy, isz)
+    headGroup.position.set(anchor.x * (1 - isx), anchor.y * (1 - isy), anchor.z * (1 - isz))
 
-    // 8. Lower body: swap shoulderScale for hipScale on shape AND position
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
+    // 7. Lower body: swap shoulderScale for hipScale on X/Z.
+    for (const { mesh, ox, oz, px, pz } of lower) {
       mesh.scale.x    = ox * hipScale / shoulderScale
       mesh.scale.z    = oz * hipScale / shoulderScale
       mesh.position.x = px * hipScale / shoulderScale
