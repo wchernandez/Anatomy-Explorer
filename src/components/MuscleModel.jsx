@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGLTF, useCursor } from '@react-three/drei'
 import * as THREE from 'three'
+import { JOINT_MESH_NAMES } from './jointNames.js'
+
+// Joint meshes that should remain visible in the muscles layer
+const MUSCLE_JOINT_EXCEPTIONS = new Set([
+  'Articular capsules of proximal interphalangeal joints',
+  'Articular capsules of metacarpophalangeal joints',
+  'Articular capsules of distal interphalangeal joints',
+  'Deep transverse metacarpal ligament',
+  'Articular capsule of radiocarpal joint',
+])
 
 const SKULL_KEYS = [
   'frontal bone','parietal bone','occipital bone','temporal bone','sphenoid bone',
@@ -87,7 +97,6 @@ const MUSCLE_GROUPS = {
     'inferior oblique muscle','superior oblique',
     'inferior rectus muscle','lateral rectus muscle','medial rectus','superior rectus muscle',
     'levator palpebrae','inferior tarsus','superior tarsus','common tendinous ring','trochlea',
-    'temporomandibular',
   ],
 
   'Cervical': [
@@ -105,17 +114,10 @@ const MUSCLE_GROUPS = {
     'genioglossus','hyoglossus',
     'pharyngeal constrictor','stylopharyngeus','palatopharyngeus',
     'crico-arytenoid','arytenoid muscle','cricothyroid','thyro-epiglottic','thyro-arytenoid',
-    'quadrangular membrane','cricopharyngeal','thyrohyoid ligament',
-    'sphenomandibular','stylomandibular','pterygospinous','stylohyoid ligament',
-    'lateral temporomandibular',
+    'quadrangular membrane','cricopharyngeal',
   ],
 
   'Spine': [
-    'intervertebral disc','nucleus pulposus',
-    'anterior longitudinal','posterior longitudinal',
-    'ligamenta flava','interspinous ligament','supraspinous','nuchal ligament',
-    'intra-articular ligament of head of rib','radiate ligament of head of rib',
-    'costotransverse','intercornual','sacrococcygeal',
     'interspinales thoracis','interspinales lumborum',
     'intertransversarii','rotatores',
   ],
@@ -129,9 +131,6 @@ const MUSCLE_GROUPS = {
     'iliocostalis thoracis','longissimus thoracis','spinalis thoracis',
     'multifidus thoracis','semispinalis thoracis',
     'diaphragm',
-    'sternoclavicular','costoclavicular','interclavicular',
-    'anterior sternoclavicular','posterior sternoclavicular',
-    'articular disc of sternoclavicular','articular capsule of sternoclavicular',
   ],
 
   'Abdominal': [
@@ -140,8 +139,6 @@ const MUSCLE_GROUPS = {
     'quadratus lumborum','linea alba','inguinal ligament',
     'iliocostalis lumborum','multifidus lumborum','interspinales lumborum',
     'intertransversarii lumborum','iliacus','psoas major',
-    'interpubic disc','superior pubic ligament','inferior pubic ligament',
-    'pubic symphysis',
   ],
 
   'Dorsal': [
@@ -152,10 +149,6 @@ const MUSCLE_GROUPS = {
   'Pelvic': [
     'coccygeus','iliococcygeus','pubococcygeus','pubo-analis',
     'external anal sphincter',
-    'obturator membrane','sacrospinous','sacrotuberous',
-    'anterior sacro-iliac','posterior sacro-iliac','interosseous sacro-iliac',
-    'iliolumbar ligament','triradiate',
-    'acetabular labrum','transverse acetabular',
   ],
 
   'Upper Limb': [
@@ -166,7 +159,7 @@ const MUSCLE_GROUPS = {
     'lateral head of triceps','long head of triceps','medial head of triceps',
     'anconeus muscle','brachioradialis',
     'extensor carpi radialis brevis','extensor carpi radialis longus',
-    'extensor digiti minimi','extensor digitorum','extensor indicis',
+    'extensor digiti minimi$','extensor digitorum$','extensor indicis',
     'extensor pollicis brevis','extensor pollicis longus',
     'abductor pollicis longus','supinator',
     'humeral head of extensor carpi ulnaris','ulnar head of extensor carpi ulnaris',
@@ -182,33 +175,11 @@ const MUSCLE_GROUPS = {
     'oblique head of adductor pollicis','transverse head of adductor pollicis',
     'dorsal interossei muscles of hand','palmar interossei',
     'lumbrical muscles of hand',
-    'articular capsule of glenohumeral','articular capsule of elbow',
-    'articular capsule of radiocarpal','articular capsule of acromioclavicular',
-    'articular disc of acromioclavicular','articular disc of distal radio',
-    'articular capsules of metacarpophalangeal',
-    'articular capsules of distal interphalangeal joints',
-    'articular capsules of proximal interphalangeal joints',
-    'collateral interphalangeal ligaments of hand','collateral metacarpophalangeal ligaments',
-    'glenohumeral ligament','coracohumeral','transverse humeral','coraco-acromial',
-    'transverse scapular ligament','conoid ligament','trapezoid ligament','glenoid labrum',
-    'annular ligament of radius','radial collateral ligament',
-    'ulnar collateral ligament','quadrate ligament','oblique cord',
-    'interosseous membrane of forearm',
-    'radiocarpal ligament','ulnocarpal','carpometacarpal ligament',
-    'palmar radio-ulnar','dorsal radio-ulnar',
-    'palmar interphalangeal','palmar metacarpal ligaments','dorsal metacarpal ligaments',
-    'dorsal carpometacarpal','dorsal intercarpal','palmar carpometacarpal',
-    'deep transverse metacarpal','interosseous metacarpal',
-    'pisohamate','pisometacarpal','pisotriquetral',
-    'lunotriquetral interosseous','scapholunate','scaphocapitate','scaphotrapezio',
-    'trapeziotrapezoidal','trapezoideocapitate interosseous','capitohamate',
-    'triquetrocapitate','triquetrohamate',
-    'radiate carpal','radioscaphocapitate','radiocapitate',
-    'ulnocapitate','ulnolunate','ulnopisiform','ulnotriquetral',
-    'dorsal scaphotriquetral','palmar lunotriquetral','palmar scaphotriquetral',
-    'palmar trapezoideocapitate','palmar capitohamate',
-    'dorsal radiocarpal','dorsal ulnocarpal',
-    'radial collateral ligament of wrist','ulnar collateral ligament of wrist',
+    'articular capsules of metacarpophalangeal joints$',
+    'articular capsules of proximal interphalangeal joints$',
+    'articular capsules of distal interphalangeal joints$',
+    'deep transverse metacarpal ligament',
+    'articular capsule of radiocarpal joint',
     'common flexor tendon sheath','synovial sheaths of digits of hand',
     'cruciform part of fibrous sheath',
     'tendon sheath - abd','tendon sheath of extensor digitorum and',
@@ -217,7 +188,6 @@ const MUSCLE_GROUPS = {
     'coracobrachial bursa','bicipitoradial bursa',
     'subtendinous bursa of infraspinatus','subtendinous bursa of teres',
     'subtendinous bursa of trapezius','subtendinous bursa of triceps',
-    'acromioclavicular ligament',
   ],
 
   'Lower Limb': [
@@ -251,39 +221,6 @@ const MUSCLE_GROUPS = {
     'tendon sheath of extensor digitorum longus',
     'tendon sheath of flexor digitorum longus',
     'tendon sheath of flexor hallucis longus',
-    'articular capsule of hip','articular capsule of knee',
-    'articular capsule of superior tibiofibular',
-    'articular capsule of interphalangeal joint of great toe',
-    'articular capsules of distal interphalangeal joints of foot',
-    'articular capsules of proximal interphalangeal joints of foot',
-    'articular capsules of metatarsophalangeal',
-    'collateral interphalangeal ligaments of foot','collateral metatarsophalangeal ligaments',
-    'frenula capsulae','ischiofemoral','ligament of head of femur','pubofemoral',
-    'descending part of iliofemoral','transverse part of iliofemoral',
-    'anterior cruciate','posterior cruciate','meniscotibial',
-    'arcuate popliteal','oblique popliteal','popliteofibular',
-    'tibial collateral','fibular collateral','transverse ligament of knee',
-    'anterior ligament of fibular head','posterior ligament of fibular head',
-    'lateral meniscus','medial meniscus','meniscopatellar',
-    'lateral patellar retinaculum','medial patellar retinaculum',
-    'infrapatellar fat pad','deep infrapatellar bursa',
-    'subcutaneous infrapatellar bursa','subcutaneous prepatellar bursa',
-    'subfacial prepatellar bursa','subtendinous prepatellar bursa','suprapatellar bursa',
-    'tibiofibular ligament','tibiocalcaneal ligament','tibionavicular ligament',
-    'posterior tibiotalar','talofibular','calcaneofibular',
-    'talocalcaneal ligament','talonavicular ligament',
-    'calcaneocuboid ligament','calcaneonavicular ligament',
-    'interosseous membrane of leg',
-    'cuneocuboid interosseous','cuneometatarsal interosseous','intercuneiform interosseous',
-    'deep transverse metatarsal ligament','metatarsal interosseous ligaments',
-    'plantar calcaneocuboid','plantar calcaneonavicular','plantar cuboideonavicular',
-    'plantar cuneocuboid','plantar cuneonavicular','plantar intercuneiform',
-    'plantar interphalangeal','plantar metatarsal ligaments','plantar metatarsophalangeal',
-    'plantar tarsometatarsal',
-    'dorsal calcaneocuboid','dorsal cuboideonavicular','dorsal cuneocuboid',
-    'dorsal cuneonavicular','dorsal intercuneiform','dorsal metatarsal ligaments',
-    'dorsal tarsometatarsal',
-    'intersesamoid','long plantar','tarsometatarsal ligaments',
     'subtendinous calcaneal bursa','subcutaneous calcaneal bursa',
     'subcutaneous bursa of lateral malleolus','subcutaneous bursa of medial malleolus',
     'subcutaneous bursa of tuberosity of tibia','subcutaneous trochanteric bursa',
@@ -291,7 +228,6 @@ const MUSCLE_GROUPS = {
     'sciatic bursa of gluteus','sciatic bursa of obturator',
     'trochanteric bursa','intermuscular gluteal bursae',
     'lateral subtendinous bursa of gastrocnemius','medial subtendinous bursa of gastrocnemius',
-    'lateral talocalcaneal','medial talocalcaneal',
     'subtendinous bursa of iliacus','subtendinous bursa of sartorius',
     'inferior subtendinous bursa of biceps femoris','superior bursa of biceps femoris',
     'subtendinous bursa of tibialis anterior',
@@ -300,10 +236,18 @@ const MUSCLE_GROUPS = {
 }
 
 // ── Simple Matching ──────────────────────────────────────────────────────────
+// Keyword ending with '$' requires the name to END with that keyword (exact suffix).
+// All other keywords use normal substring matching.
 function meshMatchesGroup(name, keywords) {
   if (!keywords) return true
   const lowerName = name.toLowerCase()
-  return keywords.some(keyword => lowerName.includes(keyword.toLowerCase()))
+  return keywords.some(keyword => {
+    if (keyword.endsWith('$')) {
+      const k = keyword.slice(0, -1).toLowerCase()
+      return lowerName.endsWith(k)
+    }
+    return lowerName.includes(keyword.toLowerCase())
+  })
 }
 
 function getBaseMat(mesh) {
@@ -334,9 +278,18 @@ export default function MuscleModel({
     const list = []
     scene.traverse(child => {
       if (child.isMesh) {
+        // Exclude meshes that belong to the joints layer (exact raw name match)
+        if ((JOINT_MESH_NAMES.has(child.name) || JOINT_MESH_NAMES.has(child.name.trim())) && !MUSCLE_JOINT_EXCEPTIONS.has(child.name.trim())) {
+          child.userData.isJointMesh = true
+          child.visible = false
+          child.raycast = () => {}
+          return
+        }
+
+        child.userData.isJointMesh = false
         child.castShadow = true
         child.receiveShadow = true
-        
+
         child.name = cleanMuscleName(child.name)
 
         const originalMat = Array.isArray(child.material) ? child.material[0] : child.material
@@ -411,6 +364,14 @@ export default function MuscleModel({
 
   const fadedMats = useMemo(() => new Map(), [])
   const keywords = MUSCLE_GROUPS[activeGroup] ?? null
+
+  // ── Keep joint meshes permanently hidden (belt-and-suspenders) ───────────────
+  scene.traverse(child => {
+    if (child.isMesh && child.userData.isJointMesh) {
+      child.visible = false
+      child.raycast = () => {}
+    }
+  })
 
   // ── Unified Material & Raycast Resolution Loop ─────────────────────────────
   meshes.forEach(mesh => {

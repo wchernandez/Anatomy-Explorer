@@ -76,7 +76,16 @@ function PanelContent({ layerKey, state }) {
   } = state
 
   if (layerKey === 'skeleton') {
-    return <FadePanel fadeMode={boneFadeMode} setFadeMode={setBoneFadeMode} accentClass="bone" />
+    return (
+      <GroupPanel
+        groups={BONE_GROUP_KEYS}
+        active={activeBoneGroup}
+        setActive={setActiveBoneGroup}
+        fadeMode={boneFadeMode}
+        setFadeMode={setBoneFadeMode}
+        accentClass="bone"
+      />
+    )
   }
   if (layerKey === 'muscles') {
     return (
@@ -91,10 +100,28 @@ function PanelContent({ layerKey, state }) {
     )
   }
   if (layerKey === 'joints') {
-    return <FadePanel fadeMode={jointFilterMode} setFadeMode={setJointFilterMode} accentClass="joint" />
+    return (
+      <GroupPanel
+        groups={JOINT_GROUP_KEYS}
+        active={activeJointGroup}
+        setActive={setActiveJointGroup}
+        fadeMode={jointFilterMode}
+        setFadeMode={setJointFilterMode}
+        accentClass="joint"
+      />
+    )
   }
   if (layerKey === 'vascular') {
-    return <FadePanel fadeMode={vascularFilterMode} setFadeMode={setVascularFilterMode} accentClass="vascular" />
+    return (
+      <GroupPanel
+        groups={VASCULAR_GROUP_KEYS}
+        active={activeVascularGroup}
+        setActive={setActiveVascularGroup}
+        fadeMode={vascularFilterMode}
+        setFadeMode={setVascularFilterMode}
+        accentClass="vascular"
+      />
+    )
   }
   return null
 }

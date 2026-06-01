@@ -163,18 +163,20 @@ const isLower = name => LOWER_KEYS.some(k => name.toLowerCase().includes(k))
 
 // ── Materials ─────────────────────────────────────────────────────────────────
 
+// Colors match MuscleModel's MAT_OVERRIDES so joint elements look consistent
+// when viewed alongside or instead of the muscle layer.
 const MAT_LIGAMENT = new THREE.MeshStandardMaterial({
-  color: 0xe8dcc8,
-  roughness: 0.42,
+  color: 0xE6DBCA,  // matches MuscleModel 'Ligament'
+  roughness: 0.5,
   metalness: 0.0,
   side: THREE.DoubleSide,
 })
 
 const MAT_CARTILAGE = (() => {
   const m = new THREE.MeshStandardMaterial({
-    color: 0xb8d4e0,
-    roughness: 0.18,
-    metalness: 0.05,
+    color: 0x3FC8C8,  // matches MuscleModel 'Cartilage'
+    roughness: 0.2,
+    metalness: 0.0,
     side: THREE.DoubleSide,
     transparent: true,
     opacity: 0.82,
@@ -185,8 +187,8 @@ const MAT_CARTILAGE = (() => {
 
 const MAT_CAPSULE = (() => {
   const m = new THREE.MeshStandardMaterial({
-    color: 0xd9c9a8,
-    roughness: 0.55,
+    color: 0xE0DAC7,  // matches MuscleModel 'Articular capsule'
+    roughness: 0.45,
     metalness: 0.0,
     side: THREE.DoubleSide,
     transparent: true,
@@ -197,8 +199,8 @@ const MAT_CAPSULE = (() => {
 })()
 
 const MAT_FAT = new THREE.MeshStandardMaterial({
-  color: 0xc8941a,
-  roughness: 0.72,
+  color: 0xAD6E1E,  // matches MuscleModel 'Fat'
+  roughness: 0.7,
   metalness: 0.0,
   side: THREE.DoubleSide,
 })

@@ -47,7 +47,7 @@ function cleanBoneName(name) {
     const last = s[s.length - 1]
     const prev = s[s.length - 2].toLowerCase()
     if ((last === 'l' || last === 'L') && prev !== 'a') s = s.slice(0, -1).trim()
-    else if ((last === 'r' || last === 'R') && prev !== 'a' && prev !== 'o') s = s.slice(0, -1).trim()
+    else if ((last === 'r' || last === 'R') && prev !== 'a' && prev !== 'o' && prev !== 'u') s = s.slice(0, -1).trim()
   }
   return s.replace(/\b\w/g, c => c.toUpperCase())
 }
@@ -58,28 +58,31 @@ export const BONE_GROUPS = {
   'Skull': [
     'frontal bone','parietal bone','occipital bone','temporal bone','sphenoid bone',
     'zygomatic','nasal bone','maxilla','mandible','vomer','palatine bone','lacrimal',
-    'inferior nasal','ethmoid','sinus of','malleus','incus','stapes','hyoid',
+    'inferior nasal concha','ethmoid','sinus of frontal','sinus of sphenoid',
+    'malleus','incus','stapes','hyoid',
+    'canine','incisor','molar','premolar',
   ],
   'Spine': [
-    'cervical vertebra','thoracic vertebra','lumbar vertebra','vertebra',
-    'atlas','axis',
+    'vertebra','atlas','axis','sacrum','coccyx',
   ],
   'Thorax': [
-    'sternum','rib','clavicle','scapula',
+    'sternum','manubrium','xiphoid','rib','costal','clavicle','scapula',
   ],
   'Upper Limb': [
-    'humerus','radius','ulna','carpus','carpal','metacarpal','phalanx of hand',
-    'scaphoid','lunate','triquetrum','pisiform','trapezium','trapezoid',
+    'humerus','radius','ulna',
+    'scaphoid','lunate','triquetrum','pisiform','trapezium','trapezoid bone',
+    'capitate','hamate',
+    'metacarpal bone',
+    'finger of hand',
   ],
   'Lower Limb': [
-    'femur','thigh','femoral','shaft of femur',
-    'tibia','fibula','patella','knee',
-    'calcaneus','talus','navicular',
-    'cuneiform','metatarsal','phalanx of foot','cuboid','tarsus','tarsal',
-    'leg bone','lower leg','shin',
+    'femur','tibia','fibula','patella',
+    'calcaneus','talus','navicular bone','cuboid bone','cuneiform bone',
+    'metatarsal bone',
+    'finger of foot','sesamoid bones of foot',
   ],
   'Pelvis': [
-    'hip bone','ilium','ischium','pubis','sacrum','coccyx',
+    'hip bone',
   ],
 }
 
@@ -243,11 +246,15 @@ export default function SkeletonModel({
         onClick={e => {
           if (!visible) return
           e.stopPropagation()
+          const keywords = BONE_GROUPS[activeBoneGroup]
+          if (!meshMatchesBoneGroup(e.object.name, keywords)) return
           onSelect(e.object)
         }}
         onPointerOver={e => {
           if (!visible) return
           e.stopPropagation()
+          const keywords = BONE_GROUPS[activeBoneGroup]
+          if (!meshMatchesBoneGroup(e.object.name, keywords)) return
           setHovered(e.object)
         }}
         onPointerOut={() => setHovered(null)}
