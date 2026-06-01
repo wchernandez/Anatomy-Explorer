@@ -62,18 +62,12 @@ export default function Scene({
   activeVascularGroup = 'All Vessels',
   vascularFilterMode  = 'fade',
 }) {
-  // Skeleton reports (base, offsetX, offsetY, offsetZ) on every scale change.
-  // base is locked in once; offsets update so all layers stay aligned across
-  // height presets including 4ft child.
-  const [sharedBase,    setSharedBase]    = useState(null)
-  const [sharedOffsetX, setSharedOffsetX] = useState(null)
-  const [sharedOffsetZ, setSharedOffsetZ] = useState(null)
+  // The skeleton is the reference layer: it reports ONE transform (scale +
+  // position) that drives a single shared body group wrapping every layer, so
+  // all layers are guaranteed to stay perfectly aligned at any scale.
+  const [bodyTransform, setBodyTransform] = useState(null)
 
-  const handleBaseReady = useRef((base, ox, oz) => {
-    setSharedBase(prev => prev ?? base)
-    setSharedOffsetX(ox)
-    setSharedOffsetZ(oz)
-  })
+  const handleTransformReady = useRef(t => setBodyTransform(t)).current
 
   return (
     <div id="canvas-container">
@@ -103,66 +97,60 @@ export default function Scene({
         <directionalLight color="#ffe0c0" intensity={0.4} position={[0, -3, -5]} />
         <pointLight color="#ffddbb" intensity={0.6} distance={12} position={[2, 3, 2]} />
 
-        {/* SkeletonModel is ALWAYS mounted so it can report the shared transform
-            even when the skeleton layer is toggled off. */}
-        <SkeletonModel
-          visible={showSkeleton}
-          selectedBone={selectedBone}
-          onSelect={onSelect}
-          heightPreset={heightPreset}
-          statureScale={statureScale}
-          shoulderScale={shoulderScale}
-          hipScale={hipScale}
-          activeBoneGroup={activeBoneGroup}
-          boneFadeMode={boneFadeMode}
-          highlightBone={highlightBone}
-          onBaseReady={handleBaseReady.current}
-        />
+        {/* Single shared body group — ONE transform drives every layer, so all
+            layers stay perfectly aligned. Hidden until the skeleton reports its
+            transform to avoid a one-frame flash at the wrong scale. */}
+        <group
+          scale={bodyTransform ? bodyTransform.scale : [1, 1, 1]}
+          position={bodyTransform ? bodyTransform.position : [0, 0, 0]}
+          visible={bodyTransform !== null}
+        >
+          {/* SkeletonModel is ALWAYS mounted so it can report the shared transform
+              even when the skeleton layer is toggled off. */}
+          <SkeletonModel
+            visible={showSkeleton}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            heightPreset={heightPreset}
+            statureScale={statureScale}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+            activeBoneGroup={activeBoneGroup}
+            boneFadeMode={boneFadeMode}
+            highlightBone={highlightBone}
+            onTransformReady={handleTransformReady}
+          />
 
-        <MuscleModel
-          visible={showMuscles}
-          selectedBone={selectedBone}
-          onSelect={onSelect}
-          activeGroup={activeGroup}
-          filterMode={filterMode}
-          heightPreset={heightPreset}
-          statureScale={statureScale}
-          shoulderScale={shoulderScale}
-          hipScale={hipScale}
-          sharedBase={sharedBase}
-          sharedOffsetX={sharedOffsetX}
-          sharedOffsetZ={sharedOffsetZ}
-        />
+          <MuscleModel
+            visible={showMuscles}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeGroup}
+            filterMode={filterMode}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+          />
 
-        <JointModel
-          visible={showJoints}
-          selectedBone={selectedBone}
-          onSelect={onSelect}
-          activeGroup={activeJointGroup}
-          filterMode={jointFilterMode}
-          heightPreset={heightPreset}
-          statureScale={statureScale}
-          shoulderScale={shoulderScale}
-          hipScale={hipScale}
-          sharedBase={sharedBase}
-          sharedOffsetX={sharedOffsetX}
-          sharedOffsetZ={sharedOffsetZ}
-        />
+          <JointModel
+            visible={showJoints}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeJointGroup}
+            filterMode={jointFilterMode}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+          />
 
-        <VascularModel
-          visible={showVascular}
-          selectedBone={selectedBone}
-          onSelect={onSelect}
-          activeGroup={activeVascularGroup}
-          filterMode={vascularFilterMode}
-          heightPreset={heightPreset}
-          statureScale={statureScale}
-          shoulderScale={shoulderScale}
-          hipScale={hipScale}
-          sharedBase={sharedBase}
-          sharedOffsetX={sharedOffsetX}
-          sharedOffsetZ={sharedOffsetZ}
-        />
+          <VascularModel
+            visible={showVascular}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeVascularGroup}
+            filterMode={vascularFilterMode}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+          />
+        </group>
 
         <OrbitControls
           enableDamping

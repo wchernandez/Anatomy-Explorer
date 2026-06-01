@@ -260,18 +260,11 @@ export default function VascularModel({
   onSelect,
   activeGroup   = 'All Vessels',
   filterMode    = 'fade',
-  heightPreset  = 'short',
-  statureScale  = 1,
   shoulderScale = 1,
   hipScale      = 1,
-  sharedBase    = null,   // normalisation factor shared from SkeletonModel
-  sharedOffsetX = null,
-  sharedOffsetZ = null,
 }) {
   const { scene } = useGLTF('/Vascular.glb')
   const [hovered, setHovered] = useState(null)
-  const groupRef = useRef()
-  const snapRef  = useRef(null)
 
   useCursor(!!hovered && visible)
 
@@ -297,73 +290,6 @@ export default function VascularModel({
       mesh.raycast = visible ? THREE.Mesh.prototype.raycast : () => {}
     })
   }, [visible, meshes])
-
-  // ── Proportional scaling — identical to JointModel ───────────────────────
-  useEffect(() => {
-    if (!groupRef.current) return
-
-    if (!snapRef.current) {
-      const skull = [], lower = []
-      scene.traverse(child => {
-        if (!child.isMesh) return
-        const entry = {
-          mesh: child,
-          ox: child.scale.x,    oz: child.scale.z,
-          px: child.position.x, pz: child.position.z,
-        }
-        if      (isSkull(child.name)) skull.push(entry)
-        else if (isLower(child.name)) lower.push(entry)
-      })
-      snapRef.current = { skull, lower }
-    }
-
-    // Reset special meshes before measuring bbox
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x = ox; mesh.scale.z = oz
-      mesh.position.x = px; mesh.position.z = pz
-    }
-
-    groupRef.current.scale.set(1, 1, 1)
-    groupRef.current.position.set(0, 0, 0)
-    const box  = new THREE.Box3().setFromObject(groupRef.current)
-    const size = box.getSize(new THREE.Vector3())
-
-    // Use sharedBase from Skeleton so all layers normalise identically
-    const base = sharedBase ?? (3 / Math.max(size.x, size.y, size.z))
-
-    groupRef.current.scale.set(
-      base * shoulderScale,
-      base * statureScale,
-      base * shoulderScale,
-    )
-
-    const scaled = new THREE.Box3().setFromObject(groupRef.current)
-    const cx = (scaled.min.x + scaled.max.x) / 2
-    const cz = (scaled.min.z + scaled.max.z) / 2
-    const posX = sharedOffsetX !== null ? sharedOffsetX : -cx
-    const posZ = sharedOffsetZ !== null ? sharedOffsetZ : -cz
-    groupRef.current.position.set(posX, -1.5 - scaled.min.y, posZ)
-
-    // Skull: neutralise shoulder scale on shape & position
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x    = ox / shoulderScale
-      mesh.scale.z    = oz / shoulderScale
-      mesh.position.x = px / shoulderScale
-      mesh.position.z = pz / shoulderScale
-    }
-
-    // Lower: replace shoulderScale with hipScale on shape & position
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x    = ox * hipScale / shoulderScale
-      mesh.scale.z    = oz * hipScale / shoulderScale
-      mesh.position.x = px * hipScale / shoulderScale
-      mesh.position.z = pz * hipScale / shoulderScale
-    }
-  }, [scene, heightPreset, statureScale, shoulderScale, hipScale, sharedBase, sharedOffsetX, sharedOffsetZ])
 
   // ── Per-frame material assignment ────────────────────────────────────────
   const fadedMats = useMemo(() => new Map(), [])
@@ -399,8 +325,11 @@ export default function VascularModel({
     }
   })
 
+  // The shared body group (in Scene) owns the entire transform. Vessels inherit
+  // it directly — no per-mesh region corrections — so vessel endpoints track the
+  // bone/muscle endpoints exactly (same scale, same pivot) at any body size.
   return (
-    <group ref={groupRef} visible={visible}>
+    <group visible={visible}>
       <primitive
         object={scene}
         onClick={e => {
