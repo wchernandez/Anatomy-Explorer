@@ -148,6 +148,8 @@ const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness:
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
 const fadedMat    = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
 const hiddenMat   = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
+// Whole-layer fade: a semi-transparent ghost overlay for the entire skeleton.
+const layerFadedMat = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.2, depthWrite: false })
 
 export default function SkeletonModel({
   visible       = true,
@@ -161,6 +163,7 @@ export default function SkeletonModel({
   boneFadeMode  = 'fade',
   highlightBone = null,
   onTransformReady = null, // ({scale:[x,y,z], position:[x,y,z]}) => void — drives the shared body group
+  layerFaded    = false,   // ghost the whole layer (semi-transparent, non-interactive)
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered]                 = useState(null)
@@ -303,7 +306,12 @@ export default function SkeletonModel({
     }
 
     mesh.visible = true
-    mesh.raycast = THREE.Mesh.prototype.raycast
+    mesh.raycast = layerFaded ? () => {} : THREE.Mesh.prototype.raycast
+
+    if (layerFaded) {
+      mesh.material = layerFadedMat
+      return
+    }
 
     if (mesh === selectedBone || mesh === highlightedMesh) {
       mesh.material = selectedMat

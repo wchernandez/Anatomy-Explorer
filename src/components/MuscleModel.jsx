@@ -278,6 +278,7 @@ export default function MuscleModel({
   hipScale      = 1,
   headAnchorY   = null,   // shared head/neck anchor from SkeletonModel
   headBand      = null,   // max |py - anchor| eligible for Y de-stretch
+  layerFaded    = false,  // ghost the whole layer (semi-transparent, non-interactive)
 }) {
   const { scene } = useGLTF('/Muscles.glb')
   const [hovered, setHovered] = useState(null)
@@ -370,6 +371,21 @@ export default function MuscleModel({
     const inGroup = meshMatchesGroup(mesh.name, keywords)
     const base = getBaseMat(mesh)
     const isInteractive = visible && inGroup
+
+    // Whole-layer fade overrides everything else.
+    if (layerFaded) {
+      mesh.visible = true
+      mesh.raycast = () => null
+      if (!fadedMats.has('__layer__' + mesh.uuid)) {
+        const faded = base.clone()
+        faded.transparent = true
+        faded.opacity = 0.15
+        faded.depthWrite = false
+        fadedMats.set('__layer__' + mesh.uuid, faded)
+      }
+      mesh.material = fadedMats.get('__layer__' + mesh.uuid)
+      return
+    }
 
     if (mesh === selectedBone) {
       mesh.material = selectedMat

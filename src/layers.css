@@ -284,6 +284,32 @@
   scrollbar-color: rgba(255,255,255,0.1) transparent;
 }
 
+/* ── Whole-layer fade toggle ───────────────────────────────────────────── */
+.layer-fade-btn {
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  color: var(--layer-color, #cfd8e8);
+  border: 1px solid var(--layer-border, rgba(255,255,255,0.25));
+  background: rgba(255,255,255,0.04);
+  transition: all 0.18s ease;
+}
+.layer-fade-btn:hover {
+  background: var(--layer-bg, rgba(255,255,255,0.1));
+  box-shadow: 0 0 12px var(--layer-shadow, rgba(255,255,255,0.2));
+}
+.layer-fade-btn.active {
+  color: #1a1a1f;
+  background: var(--layer-color, #cfd8e8);
+  border-color: var(--layer-color, #cfd8e8);
+  box-shadow: 0 0 14px var(--layer-shadow, rgba(255,255,255,0.35));
+}
+
 /* ── Filter mode row ───────────────────────────────────────────────────── */
 .filter-mode-row {
   display: flex;

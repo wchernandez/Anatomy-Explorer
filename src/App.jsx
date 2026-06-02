@@ -48,6 +48,19 @@ export default function App() {
   const [showJoints,   setShowJoints]   = useState(false)
   const [showVascular, setShowVascular] = useState(false)
 
+  // Whole-layer fade — render a layer as a semi-transparent ghost
+  const [skeletonFaded, setSkeletonFaded] = useState(false)
+  const [musclesFaded,  setMusclesFaded]  = useState(false)
+  const [jointsFaded,   setJointsFaded]   = useState(false)
+  const [vascularFaded, setVascularFaded] = useState(false)
+  const faded = { skeleton: skeletonFaded, muscles: musclesFaded, joints: jointsFaded, vascular: vascularFaded }
+  function toggleFade(key) {
+    if      (key === 'skeleton') setSkeletonFaded(v => !v)
+    else if (key === 'muscles')  setMusclesFaded(v => !v)
+    else if (key === 'joints')   setJointsFaded(v => !v)
+    else if (key === 'vascular') setVascularFaded(v => !v)
+  }
+
   // Group filters
   const [activeGroup, setActiveGroup] = useState('All Muscles')
   const [filterMode,  setFilterMode]  = useState('fade')
@@ -180,6 +193,10 @@ export default function App() {
         showVascular={showVascular}
         activeVascularGroup={activeVascularGroup}
         vascularFilterMode={vascularFilterMode}
+        skeletonFaded={skeletonFaded}
+        musclesFaded={musclesFaded}
+        jointsFaded={jointsFaded}
+        vascularFaded={vascularFaded}
       />
 
       {/* ── Top bar with hamburger menu (dev menu) ─────────────────────────── */}
@@ -287,6 +304,7 @@ export default function App() {
         vascularFilterMode={vascularFilterMode}   setVascularFilterMode={setVascularFilterMode}
         activeBoneGroup={activeBoneGroup}         setActiveBoneGroup={setActiveBoneGroupC}
         boneFadeMode={boneFadeMode}               setBoneFadeMode={setBoneFadeMode}
+        faded={faded}                             onToggleFade={toggleFade}
       />
 
       {/* ── Demographic Regression Panel — floating, toggled from the menu ──── */}

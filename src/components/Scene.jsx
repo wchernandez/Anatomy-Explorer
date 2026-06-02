@@ -61,6 +61,11 @@ export default function Scene({
   showVascular    = false,
   activeVascularGroup = 'All Vessels',
   vascularFilterMode  = 'fade',
+  // Whole-layer fade (semi-transparent ghost per layer)
+  skeletonFaded   = false,
+  musclesFaded    = false,
+  jointsFaded     = false,
+  vascularFaded   = false,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
@@ -119,6 +124,7 @@ export default function Scene({
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
             onTransformReady={handleTransformReady}
+            layerFaded={skeletonFaded}
           />
 
           <MuscleModel
@@ -132,6 +138,7 @@ export default function Scene({
             hipScale={hipScale}
             headAnchorY={bodyTransform?.headAnchorY}
             headBand={bodyTransform?.headBand}
+            layerFaded={musclesFaded}
           />
 
           <JointModel
@@ -145,6 +152,7 @@ export default function Scene({
             hipScale={hipScale}
             headAnchorY={bodyTransform?.headAnchorY}
             headBand={bodyTransform?.headBand}
+            layerFaded={jointsFaded}
           />
 
           <VascularModel
@@ -155,6 +163,7 @@ export default function Scene({
             filterMode={vascularFilterMode}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            layerFaded={vascularFaded}
           />
         </group>
 

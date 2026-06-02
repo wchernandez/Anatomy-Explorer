@@ -262,6 +262,7 @@ export default function VascularModel({
   filterMode    = 'fade',
   shoulderScale = 1,
   hipScale      = 1,
+  layerFaded    = false,  // ghost the whole layer (semi-transparent, non-interactive)
 }) {
   const { scene } = useGLTF('/Vascular.glb')
   const [hovered, setHovered] = useState(null)
@@ -298,6 +299,21 @@ export default function VascularModel({
   meshes.forEach(mesh => {
     const inGroup = meshMatchesGroup(mesh.name, keywords)
     const base    = getBaseMat(mesh)
+
+    // Whole-layer fade overrides everything else.
+    if (layerFaded) {
+      mesh.visible = true
+      mesh.raycast = () => null
+      if (!fadedMats.has('__layer__' + mesh.uuid)) {
+        const faded = base.clone()
+        faded.transparent = true
+        faded.opacity = 0.15
+        faded.depthWrite = false
+        fadedMats.set('__layer__' + mesh.uuid, faded)
+      }
+      mesh.material = fadedMats.get('__layer__' + mesh.uuid)
+      return
+    }
 
     if (mesh === selectedBone) {
       mesh.material = selectedMat

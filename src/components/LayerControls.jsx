@@ -174,6 +174,8 @@ export default function LayerControls({
   // bone (from BoneControls, now merged here)
   activeBoneGroup,  setActiveBoneGroup,
   boneFadeMode,     setBoneFadeMode,
+  // whole-layer fade
+  faded = {},       onToggleFade = () => {},
 }) {
   // Which panel is open; null = all closed
   const [openPanel, setOpenPanel] = useState(null)
@@ -255,6 +257,15 @@ export default function LayerControls({
                   >✕</button>
                 </div>
                 <div className="dock-panel-body">
+                  <button
+                    type="button"
+                    className={`layer-fade-btn ${faded[layer.key] ? 'active' : ''}`}
+                    onClick={() => onToggleFade(layer.key)}
+                    title="Render this whole layer as a semi-transparent ghost"
+                  >
+                    {faded[layer.key] ? '◑ Layer faded — restore' : '◐ Fade whole layer'}
+                  </button>
+                  <div className="divider" />
                   <PanelContent layerKey={layer.key} state={panelState} />
                 </div>
               </div>
