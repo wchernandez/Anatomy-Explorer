@@ -1,42 +1,37 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SkeletonModel from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
+import JointModel from './JointModel.jsx'
+import VascularModel from './VascularModel.jsx'
 import { CAMERA_PRESETS } from './CameraControls.jsx'
 
-// Internal component to handle camera control
+// Animates the camera to a preset position
 function CameraManager({ cameraPresetKey }) {
   const { camera } = useThree()
-  const controlsRef = useRef()
 
   useEffect(() => {
     if (!cameraPresetKey || !CAMERA_PRESETS[cameraPresetKey]) return
 
-    const preset = CAMERA_PRESETS[cameraPresetKey]
-    const startPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
+    const preset    = CAMERA_PRESETS[cameraPresetKey]
+    const startPos  = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
     const targetPos = preset.position
-    const duration = 600 // milliseconds
+    const duration  = 600
+    let startTime   = null
 
-    let startTime = null
-    const animate = (currentTime) => {
+    const animate = currentTime => {
       if (startTime === null) startTime = currentTime
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
+      const elapsed  = currentTime - startTime
+      const t        = Math.min(elapsed / duration, 1)
+      const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 
-      // Smooth easing function (ease-in-out cubic)
-      const easeProgress = progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2
+      camera.position.x = startPos.x + (targetPos[0] - startPos.x) * ease
+      camera.position.y = startPos.y + (targetPos[1] - startPos.y) * ease
+      camera.position.z = startPos.z + (targetPos[2] - startPos.z) * ease
 
-      camera.position.x = startPos.x + (targetPos[0] - startPos.x) * easeProgress
-      camera.position.y = startPos.y + (targetPos[1] - startPos.y) * easeProgress
-      camera.position.z = startPos.z + (targetPos[2] - startPos.z) * easeProgress
-
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      }
+      if (t < 1) requestAnimationFrame(animate)
     }
 
     requestAnimationFrame(animate)
@@ -45,26 +40,39 @@ function CameraManager({ cameraPresetKey }) {
   return null
 }
 
-export default function Scene({ 
-  selectedBone, 
-  onSelect, 
-  showSkeleton, 
-  showMuscles, 
-  activeGroup, 
-  filterMode, 
-  heightPreset, 
-  statureScale = 1, 
-  shoulderScale = 1, 
-  hipScale = 1,
-  cameraPreset = 'front',
+export default function Scene({
+  selectedBone,
+  onSelect,
+  showSkeleton,
+  showMuscles,
+  showJoints,
+  activeGroup,
+  filterMode,
+  activeJointGroup,
+  jointFilterMode,
+  heightPreset,
+  statureScale    = 1,
+  shoulderScale   = 1,
+  hipScale        = 1,
+  cameraPreset    = 'front',
   activeBoneGroup = 'All Bones',
-  boneFadeMode = 'fade',
-  highlightBone = null,
+  boneFadeMode    = 'fade',
+  highlightBone   = null,
+  showVascular    = false,
+  activeVascularGroup = 'All Vessels',
+  vascularFilterMode  = 'fade',
 }) {
+  // The skeleton is the reference layer: it reports ONE transform (scale +
+  // position) that drives a single shared body group wrapping every layer, so
+  // all layers are guaranteed to stay perfectly aligned at any scale.
+  const [bodyTransform, setBodyTransform] = useState(null)
+
+  const handleTransformReady = useRef(t => setBodyTransform(t)).current
+
   return (
     <div id="canvas-container">
       <Canvas
-        camera={{ position: [0, 1.8, 4], fov: 50, near: 0.01, far: 200 }}
+        camera={{ position: [0, -0.2, 5], fov: 50, near: 0.01, far: 200 }}
         shadows
         gl={{
           antialias: true,
@@ -89,8 +97,18 @@ export default function Scene({
         <directionalLight color="#ffe0c0" intensity={0.4} position={[0, -3, -5]} />
         <pointLight color="#ffddbb" intensity={0.6} distance={12} position={[2, 3, 2]} />
 
-        {showSkeleton && (
+        {/* Single shared body group — ONE transform drives every layer, so all
+            layers stay perfectly aligned. Hidden until the skeleton reports its
+            transform to avoid a one-frame flash at the wrong scale. */}
+        <group
+          scale={bodyTransform ? bodyTransform.scale : [1, 1, 1]}
+          position={bodyTransform ? bodyTransform.position : [0, 0, 0]}
+          visible={bodyTransform !== null}
+        >
+          {/* SkeletonModel is ALWAYS mounted so it can report the shared transform
+              even when the skeleton layer is toggled off. */}
           <SkeletonModel
+            visible={showSkeleton}
             selectedBone={selectedBone}
             onSelect={onSelect}
             heightPreset={heightPreset}
@@ -100,29 +118,54 @@ export default function Scene({
             activeBoneGroup={activeBoneGroup}
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
+            onTransformReady={handleTransformReady}
           />
-        )}
 
-        <MuscleModel
-          visible={showMuscles}
-          selectedBone={selectedBone}
-          onSelect={onSelect}
-          activeGroup={activeGroup}
-          filterMode={filterMode}
-          heightPreset={heightPreset}
-          statureScale={statureScale}
-          shoulderScale={shoulderScale}
-          hipScale={hipScale}
-        />
+          <MuscleModel
+            visible={showMuscles}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeGroup}
+            filterMode={filterMode}
+            statureScale={statureScale}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+            headAnchorY={bodyTransform?.headAnchorY}
+            headBand={bodyTransform?.headBand}
+          />
+
+          <JointModel
+            visible={showJoints}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeJointGroup}
+            filterMode={jointFilterMode}
+            statureScale={statureScale}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+            headAnchorY={bodyTransform?.headAnchorY}
+            headBand={bodyTransform?.headBand}
+          />
+
+          <VascularModel
+            visible={showVascular}
+            selectedBone={selectedBone}
+            onSelect={onSelect}
+            activeGroup={activeVascularGroup}
+            filterMode={vascularFilterMode}
+            shoulderScale={shoulderScale}
+            hipScale={hipScale}
+          />
+        </group>
 
         <OrbitControls
           enableDamping
           dampingFactor={0.06}
           minDistance={0.5}
           maxDistance={12}
-          target={[0, 0.55, 0]}
+          target={[0, -0.2, 0]}
         />
-        
+
         <CameraManager cameraPresetKey={cameraPreset} />
       </Canvas>
     </div>

@@ -617,6 +617,24 @@ body::before {
   scrollbar-color: rgba(255, 255, 255, 0.18) rgba(255, 255, 255, 0.05);
 }
 
+/* bone-detail scrollbar (amber accent, from skull-fix) */
+.bone-detail::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bone-detail::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bone-detail::-webkit-scrollbar-thumb {
+  background: rgba(255, 170, 0, 0.35);
+  border-radius: 2px;
+}
+
+.bone-detail::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 170, 0, 0.6);
+}
+
 /* Button styling */
 button {
   width: 100%;

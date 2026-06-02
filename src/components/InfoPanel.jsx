@@ -30,7 +30,6 @@ function formatName(raw) {
 
 export default function InfoPanel({ selectedBone }) {
   const [description, setDescription] = useState('')
-  const [isExpanded, setIsExpanded] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const boneName = selectedBone ? (selectedBone.name || selectedBone.parent?.name) : null
