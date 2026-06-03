@@ -10,61 +10,86 @@ import { CAMERA_PRESETS } from './CameraControls.jsx'
 
 // Animates the camera to a preset position via spherical interpolation
 // so it always arcs around the model rather than cutting through it.
-function CameraManager({ cameraPresetKey }) {
+function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
   const { camera } = useThree()
   const rafRef = useRef(null)
 
-  useEffect(() => {
-    if (!cameraPresetKey || !CAMERA_PRESETS[cameraPresetKey]) return
-
-    // Cancel any in-progress animation
+  // Shared animation helper
+  const animateToPreset = (presetKey) => {
+    if (!CAMERA_PRESETS[presetKey]) return
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
 
-    const preset = CAMERA_PRESETS[cameraPresetKey]
+    const preset = CAMERA_PRESETS[presetKey]
     const target = new THREE.Vector3(...preset.target)
-
-    // Represent start and end as spherical coords relative to the target
     const startVec = camera.position.clone().sub(target)
     const endVec   = new THREE.Vector3(...preset.position).sub(target)
-
     const startSph = new THREE.Spherical().setFromVector3(startVec)
     const endSph   = new THREE.Spherical().setFromVector3(endVec)
-
-    // Always take the short way around in azimuth
     let dTheta = endSph.theta - startSph.theta
     if (dTheta >  Math.PI) dTheta -= 2 * Math.PI
     if (dTheta < -Math.PI) dTheta += 2 * Math.PI
-
     const duration = 900
+    let startTime  = null
+    const animate = currentTime => {
+      if (startTime === null) startTime = currentTime
+      const elapsed = currentTime - startTime
+      const t    = Math.min(elapsed / duration, 1)
+      const ease = -(Math.cos(Math.PI * t) - 1) / 2
+      const sph  = new THREE.Spherical(
+        startSph.radius + (endSph.radius - startSph.radius) * ease,
+        startSph.phi    + (endSph.phi    - startSph.phi)    * ease,
+        startSph.theta  + dTheta                            * ease,
+      )
+      camera.position.setFromSpherical(sph).add(target)
+      camera.lookAt(target)
+      if (t < 1) rafRef.current = requestAnimationFrame(animate)
+    }
+    rafRef.current = requestAnimationFrame(animate)
+  }
+
+  useEffect(() => {
+    if (!cameraPresetKey) return
+    animateToPreset(cameraPresetKey)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [cameraPresetKey, camera])
+
+  useEffect(() => {
+    if (!resetCounter) return
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+
+    const preset   = CAMERA_PRESETS['front']
+    const endTarget = new THREE.Vector3(...preset.target)
+    const endPos    = new THREE.Vector3(...preset.position)
+
+    const startPos    = camera.position.clone()
+    const startTarget = controlsRef?.current
+      ? controlsRef.current.target.clone()
+      : endTarget.clone()
+
+    const duration = 1400
     let startTime  = null
 
     const animate = currentTime => {
       if (startTime === null) startTime = currentTime
       const elapsed = currentTime - startTime
-      const t       = Math.min(elapsed / duration, 1)
-      // Smooth ease-in-out (sine)
-      const ease    = -(Math.cos(Math.PI * t) - 1) / 2
+      const t    = Math.min(elapsed / duration, 1)
+      const ease = -(Math.cos(Math.PI * t) - 1) / 2
 
-      const sph = new THREE.Spherical(
-        startSph.radius + (endSph.radius - startSph.radius) * ease,
-        startSph.phi    + (endSph.phi    - startSph.phi)    * ease,
-        startSph.theta  + dTheta                            * ease,
-      )
+      camera.position.lerpVectors(startPos, endPos, ease)
 
-      camera.position.setFromSpherical(sph).add(target)
-      camera.lookAt(target)
-
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(animate)
+      if (controlsRef?.current) {
+        controlsRef.current.target.lerpVectors(startTarget, endTarget, ease)
+        controlsRef.current.update()
       }
+
+      camera.lookAt(controlsRef?.current ? controlsRef.current.target : endTarget)
+
+      if (t < 1) rafRef.current = requestAnimationFrame(animate)
     }
 
     rafRef.current = requestAnimationFrame(animate)
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [cameraPresetKey, camera])
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [resetCounter, camera])
 
   return null
 }
@@ -94,18 +119,50 @@ export default function Scene({
   musclesFaded    = false,
   jointsFaded     = false,
   vascularFaded   = false,
+  onInteract,
+  resetCounter    = 0,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
   // all layers are guaranteed to stay perfectly aligned at any scale.
   const [bodyTransform, setBodyTransform] = useState(null)
+  const controlsRef = useRef(null)
+  const dragStart = useRef(null)
+  const didDrag = useRef(false)
 
   const handleTransformReady = useRef(t => setBodyTransform(t)).current
 
+  const handlePointerDown = (e) => {
+    dragStart.current = { x: e.clientX, y: e.clientY }
+    didDrag.current = false
+  }
+
+  const handlePointerMove = (e) => {
+    if (!dragStart.current) return
+    const dx = e.clientX - dragStart.current.x
+    const dy = e.clientY - dragStart.current.y
+    if (Math.sqrt(dx * dx + dy * dy) > 4) {
+      if (!didDrag.current) {
+        didDrag.current = true
+        onInteract && onInteract()
+      }
+    }
+  }
+
+  const handlePointerUp = () => {
+    dragStart.current = null
+  }
+
   return (
-    <div id="canvas-container">
+    <div
+      id="canvas-container"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+    >
       <Canvas
         camera={{ position: [0, -0.2, 5], fov: 50, near: 0.01, far: 200 }}
+        onPointerMissed={() => onSelect && onSelect(null)}
         shadows
         gl={{
           antialias: true,
@@ -190,6 +247,7 @@ export default function Scene({
         </group>
 
         <OrbitControls
+          ref={controlsRef}
           enableDamping
           dampingFactor={0.06}
           minDistance={0.5}
@@ -197,7 +255,7 @@ export default function Scene({
           target={[0, -0.2, 0]}
         />
 
-        <CameraManager cameraPresetKey={cameraPreset} />
+        <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} />
       </Canvas>
     </div>
   )

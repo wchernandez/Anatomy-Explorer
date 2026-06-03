@@ -47,6 +47,7 @@ export const JOINT_GROUPS = {
     'metacarpal', 'metacarpophalangeal',
     'articular capsules of distal interphalangeal joints',
     'articular capsules of proximal interphalangeal joints',
+    '!of foot',
     'collateral interphalangeal ligaments of hand',
     'palmar interphalangeal', 'dorsal radio-ulnar', 'palmar radio-ulnar',
     'pisohamate', 'pisometacarpal', 'pisotriquetral',
@@ -240,7 +241,10 @@ function getBaseMat(mesh) {
 function meshMatchesGroup(name, keywords) {
   if (!keywords) return true
   const lower = name.toLowerCase()
-  return keywords.some(k => lower.includes(k.toLowerCase()))
+  const includes = keywords.filter(k => !k.startsWith('!'))
+  const excludes = keywords.filter(k => k.startsWith('!')).map(k => k.slice(1).toLowerCase())
+  return includes.some(k => lower.includes(k.toLowerCase()))
+    && !excludes.some(k => lower.includes(k))
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────

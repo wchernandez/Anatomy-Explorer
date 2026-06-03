@@ -25,6 +25,8 @@ export default function App() {
   const [hipScale,      setHipScale]      = useState(1)
   const [showDemoPanel,    setShowDemoPanel]    = useState(false)
   const [showCameraPanel, setShowCameraPanel] = useState(false)
+  const [modelActivated,  setModelActivated]  = useState(false)
+  const [resetCounter,    setResetCounter]    = useState(0)
 
   const [quizStarted, setQuizStarted] = useState(false)
   const [quizLevel,   setQuizLevel]   = useState(1)
@@ -102,6 +104,11 @@ export default function App() {
   }, [])
 
   function handleBoneSelect(mesh) {
+    // Clicking the already-selected bone deselects it
+    if (mesh && selectedBone && mesh.uuid === selectedBone.uuid) {
+      setSelectedBone(null)
+      return
+    }
     setSelectedBone(mesh)
     if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
 
@@ -196,6 +203,8 @@ export default function App() {
         musclesFaded={musclesFaded}
         jointsFaded={jointsFaded}
         vascularFaded={vascularFaded}
+        onInteract={() => setModelActivated(true)}
+        resetCounter={resetCounter}
       />
 
       <div id="topbar">
@@ -204,22 +213,36 @@ export default function App() {
           <div className="title-sub">Human Anatomy · Interactive Model</div>
         </div>
 
-        <div id="nav-hints">
-          <div className="nav-hint">
-            <span className="nav-hint-key">Left drag</span> Rotate
+        <div id="nav-hints-group">
+          <div id="nav-hints">
+            <div className="nav-hint">
+              <span className="nav-hint-key">Left drag</span> Rotate
+            </div>
+            <div className="nav-hint-sep" />
+            <div className="nav-hint">
+              <span className="nav-hint-key">Right drag</span> Pan
+            </div>
+            <div className="nav-hint-sep" />
+            <div className="nav-hint">
+              <span className="nav-hint-key">Scroll</span> Zoom
+            </div>
+            <div className="nav-hint-sep" />
+            <div className="nav-hint">
+              <span className="nav-hint-key">Click</span> Select
+            </div>
           </div>
-          <div className="nav-hint-sep" />
-          <div className="nav-hint">
-            <span className="nav-hint-key">Right drag</span> Pan
-          </div>
-          <div className="nav-hint-sep" />
-          <div className="nav-hint">
-            <span className="nav-hint-key">Scroll</span> Zoom
-          </div>
-          <div className="nav-hint-sep" />
-          <div className="nav-hint">
-            <span className="nav-hint-key">Click</span> Select
-          </div>
+
+          {modelActivated && (
+            <button
+              id="reset-view-btn"
+              className="preset-btn"
+              onClick={() => { setResetCounter(c => c + 1); setModelActivated(false) }}
+              title="Reset View"
+            >
+              <span className="preset-ft">⟳</span>
+              <span className="preset-sub">Reset View</span>
+            </button>
+          )}
         </div>
 
         <div id="topbar-controls">
@@ -242,7 +265,6 @@ export default function App() {
           </button>
         </div>
       </div>
-
 
       {/* Demographic Regression Panel — separate floating panel */}
       <DemographicPanel
