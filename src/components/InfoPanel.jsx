@@ -83,7 +83,7 @@ function parseContent(raw) {
   return { intro, sourceUrl }
 }
 
-export default function InfoPanel({ selectedBone }) {
+export default function InfoPanel({ selectedBone, formatName, quizStarted }) {
   const [rawText, setRawText] = useState('')
   const [loading, setLoading] = useState(false)
   const contentRef = useRef(null)
@@ -118,7 +118,7 @@ export default function InfoPanel({ selectedBone }) {
   const { intro, sourceUrl } = parseContent(rawText)
 
   return (
-    <div id="info-panel" className={`panel${!selectedBone ? ' empty' : ''}`}>
+    <div id="info-panel" className={`panel${!selectedBone ? ' empty' : ''}${quizStarted ? ' quiz-disabled' : ''}`} style={quizStarted ? { opacity: 0.5, pointerEvents: 'none' } : {}}>
 
       <div className="info-header">
         <span className="panel-label">Selected Structure</span>
@@ -137,11 +137,11 @@ export default function InfoPanel({ selectedBone }) {
             <span className="info-loading-dot" />
             <span className="info-loading-dot" />
           </div>
-        ) : !selectedBone ? (
+        ) : !selectedBone || quizStarted ? (
           <div className="info-empty-state">
             <div className="info-empty-icon">⬡</div>
-            <div>Click any structure in the model to inspect it.</div>
-            <div className="info-empty-hint">Click again to deselect.</div>
+            <div>{quizStarted ? 'Quiz in Progress' : 'Click any structure in the model to inspect it.'}</div>
+            <div className="info-empty-hint">{quizStarted ? 'Complete the quiz to practice' : 'Click again to deselect.'}</div>
           </div>
         ) : !rawText || intro.length === 0 ? (
           <div className="info-empty-state">

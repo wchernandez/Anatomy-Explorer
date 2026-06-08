@@ -261,7 +261,12 @@ export default function App() {
         <div id="topbar-controls">
           <button
             className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-            onClick={() => setShowCameraPanel(v => !v)}
+            onClick={() => {
+              setShowCameraPanel(v => !v)
+              if (!showCameraPanel) {
+                setShowDemoPanel(false)
+              }
+            }}
             title="Camera Angles"
           >
             <span className="preset-ft">🎥</span>
@@ -270,7 +275,12 @@ export default function App() {
           <button
             id="demographic-toggle"
             className={`preset-btn${showDemoPanel ? ' active' : ''}`}
-            onClick={() => setShowDemoPanel(v => !v)}
+            onClick={() => {
+              setShowDemoPanel(v => !v)
+              if (!showDemoPanel) {
+                setShowCameraPanel(false)
+              }
+            }}
             title="Demographic Regression Scaling"
           >
             <span className="preset-ft">🧬</span>
@@ -305,6 +315,12 @@ export default function App() {
         musclesFaded={musclesFaded}           setMusclesFaded={setMusclesFaded}
         jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}
         vascularFaded={vascularFaded}         setVascularFaded={setVascularFaded}
+        showDemoPanel={showDemoPanel}
+        showCameraPanel={showCameraPanel}
+        onFiltersOpened={() => {
+          setShowDemoPanel(false)
+          setShowCameraPanel(false)
+        }}
       />
 
       <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
@@ -325,6 +341,7 @@ export default function App() {
       <InfoPanel
         selectedBone={selectedBone}
         formatName={formatName}
+        quizStarted={quizStarted}
       />
     </>
   )

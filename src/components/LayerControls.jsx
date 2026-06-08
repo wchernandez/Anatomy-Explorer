@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MUSCLE_GROUPS }   from './MuscleModel.jsx'
 import { JOINT_GROUPS }    from './JointModel.jsx'
 import { VASCULAR_GROUPS } from './VascularModel.jsx'
@@ -196,9 +196,20 @@ export default function LayerControls({
   musclesFaded,     setMusclesFaded,
   jointsFaded,      setJointsFaded,
   vascularFaded,    setVascularFaded,
+  // mutual exclusion with other panels
+  showDemoPanel,
+  showCameraPanel,
+  onFiltersOpened,
 }) {
   // Which panel is open; null = all closed
   const [openPanel, setOpenPanel] = useState(null)
+
+  // Close filter panel when other panels open
+  useEffect(() => {
+    if (showDemoPanel || showCameraPanel) {
+      setOpenPanel(null)
+    }
+  }, [showDemoPanel, showCameraPanel])
 
   const visibility = {
     skeleton: showSkeleton,
@@ -240,6 +251,10 @@ export default function LayerControls({
   const activeLayers = LAYERS.filter(l => visibility[l.key])
 
   function handleCircleClick(key) {
+    if (openPanel !== key) {
+      // Opening a filter panel - notify App to close other panels
+      onFiltersOpened()
+    }
     setOpenPanel(prev => prev === key ? null : key)
   }
 
