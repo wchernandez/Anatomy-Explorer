@@ -40,7 +40,6 @@ export default function App() {
   const [showQuizSetup, setShowQuizSetup] = useState(false)
   const [quizConfig,    setQuizConfig]    = useState({ level: 1, layer: 'skeleton', region: 'whole_body' })
   const [quizQuestions, setQuizQuestions] = useState([])
-  const [quizFocusToken, setQuizFocusToken] = useState(0)
   const [quiz,        setQuiz]        = useState(initialQuiz)
   const [showMenu,    setShowMenu]    = useState(true)
 
@@ -87,6 +86,11 @@ export default function App() {
   const [activeBoneGroup, setActiveBoneGroup] = useState('All Bones')
   const [boneFadeMode,    setBoneFadeMode]    = useState('fade')
 
+  // Explorer "Isolate" — hide everything but the active bone group and frame the
+  // camera on it (reuses the quiz's region-focus machinery).
+  const [isolated,   setIsolated]   = useState(false)
+  const [focusToken, setFocusToken] = useState(0)
+
   // Whole-layer faded state (semi-transparent overlay for each layer)
   const [skeletonFaded, setSkeletonFaded] = useState(false)
   const [musclesFaded,  setMusclesFaded]  = useState(false)
@@ -102,7 +106,6 @@ export default function App() {
   const setActiveGroupC        = clearingSet(setActiveGroup)
   const setActiveJointGroupC   = clearingSet(setActiveJointGroup)
   const setActiveVascularGroupC= clearingSet(setActiveVascularGroup)
-  const setActiveBoneGroupC    = clearingSet(setActiveBoneGroup)
 
   // Skeleton bone names (keyed by group, populated once model loads)
   const [skeletonBoneNames, setSkeletonBoneNames] = useState({})
@@ -232,7 +235,8 @@ export default function App() {
     setQuizFinished(false)
     setQuizStarted(true)
     setModelActivated(true)
-    setQuizFocusToken(t => t + 1)
+    setIsolated(false) // a quiz drives its own region lock
+    setFocusToken(t => t + 1)
   }
 
   function exitToExplorer() {
@@ -240,8 +244,31 @@ export default function App() {
     setQuizFinished(false)
     setQuiz(initialQuiz)
     setSelectedBone(null)
+    setIsolated(false)
     setResetCounter(c => c + 1) // fly the camera back to the default view
     setModelActivated(false)
+  }
+
+  // Filters → group selection. Reframe the camera if we're isolated so switching
+  // regions keeps the view focused on the new selection.
+  function handleSelectBoneGroup(group) {
+    setSelectedBone(null)
+    setActiveBoneGroup(group)
+    if (isolated) setFocusToken(t => t + 1)
+  }
+
+  // Filters → Isolate toggle. On: hide everything but the active group and frame
+  // it. Off: restore the normal view and fly the camera back to the whole body.
+  function handleToggleIsolate() {
+    if (isolated) {
+      setIsolated(false)
+      setResetCounter(c => c + 1)
+      setModelActivated(false)
+    } else {
+      setIsolated(true)
+      setModelActivated(true)
+      setFocusToken(t => t + 1)
+    }
   }
 
   function handleQuitQuiz() { exitToExplorer() }
@@ -262,11 +289,17 @@ export default function App() {
   // skeleton layer, other bones hidden) so the user can't stray off-topic.
   const quizGroupName = QUIZ_REGIONS[quizConfig.region]?.group || 'All Bones'
   const effBoneGroup  = quizStarted ? quizGroupName : activeBoneGroup
-  const effBoneFade   = quizStarted ? 'hide'        : boneFadeMode
+  const effBoneFade   = quizStarted ? 'hide' : (isolated ? 'hide' : boneFadeMode)
+  // Camera region-focus is shared by the quiz and the explorer's Isolate button —
+  // one focusToken is bumped by both, so switching modes never refocuses on its own.
+  const sceneFocusGroup = quizStarted ? quizGroupName : activeBoneGroup
   const effShowSkeleton = quizStarted ? true  : showSkeleton
   const effShowMuscles  = quizStarted ? false : showMuscles
   const effShowJoints   = quizStarted ? false : showJoints
   const effShowVascular = quizStarted ? false : showVascular
+  // Whole-layer fade would make the isolated/quizzed bones transparent too, so
+  // it's neutralised while isolating or quizzing (and the toggle is disabled).
+  const effSkeletonFaded = (quizStarted || isolated) ? false : skeletonFaded
 
   if (showMenu) {
     return (
@@ -307,14 +340,14 @@ export default function App() {
         activeVascularGroup={activeVascularGroup}
         vascularFilterMode={vascularFilterMode}
         onBoneNamesReady={setSkeletonBoneNames}
-        skeletonFaded={skeletonFaded}
+        skeletonFaded={effSkeletonFaded}
         musclesFaded={musclesFaded}
         jointsFaded={jointsFaded}
         vascularFaded={vascularFaded}
         onInteract={() => setModelActivated(true)}
         resetCounter={resetCounter}
-        quizFocusToken={quizFocusToken}
-        quizFocusGroup={quizGroupName}
+        focusToken={focusToken}
+        focusGroup={sceneFocusGroup}
         quizMode={quizStarted}
         quizGreenTarget={quizGreenTarget}
         quizRedMesh={quizRedMesh}
@@ -413,8 +446,10 @@ export default function App() {
         jointFilterMode={jointFilterMode}     setJointFilterMode={setJointFilterMode}
         activeVascularGroup={activeVascularGroup} setActiveVascularGroup={setActiveVascularGroupC}
         vascularFilterMode={vascularFilterMode}   setVascularFilterMode={setVascularFilterMode}
-        activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={setActiveBoneGroupC}
+        activeBoneGroup={activeBoneGroup}     setActiveBoneGroup={handleSelectBoneGroup}
         boneFadeMode={boneFadeMode}           setBoneFadeMode={setBoneFadeMode}
+        isolated={isolated}                   onToggleIsolate={handleToggleIsolate}
+        isolateEnabled={activeBoneGroup !== 'All Bones'}
         skeletonFaded={skeletonFaded}         setSkeletonFaded={setSkeletonFaded}
         musclesFaded={musclesFaded}           setMusclesFaded={setMusclesFaded}
         jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}

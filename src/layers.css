@@ -273,7 +273,8 @@
   color: var(--text-dim) !important;
 }
 
-.filter-toggle:hover { transform: none !important; color: var(--text) !important; }
+.filter-toggle:hover:not(:disabled) { transform: none !important; color: var(--text) !important; }
+.filter-toggle:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Per-accent selected states (muted) */
 .bone-toggle.selected {
@@ -387,6 +388,38 @@
 .muscle-dot.active   { background: #cf8a86; }
 .joint-dot.active    { background: #7bbcc4; }
 .vascular-dot.active { background: #8d9fd6; }
+
+/* Isolate-region button (skeleton filter panel) */
+.dock-isolate-btn {
+  width: 100% !important;
+  margin: 0.7rem 0 0 !important;
+  padding: 0.5rem !important;
+  border-radius: 8px !important;
+  font-size: 0.66rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  background: rgba(201, 183, 143, 0.12) !important;
+  border: 1px solid rgba(201, 183, 143, 0.45) !important;
+  color: #d8c8a4 !important;
+  transition: all 0.18s ease !important;
+}
+.dock-isolate-btn:hover:not(:disabled) {
+  background: rgba(201, 183, 143, 0.2) !important;
+  border-color: rgba(201, 183, 143, 0.65) !important;
+  transform: none !important;
+}
+.dock-isolate-btn.active {
+  background: var(--accent-soft) !important;
+  border-color: var(--accent-border) !important;
+  color: var(--accent) !important;
+}
+.dock-isolate-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
 /* Camera controls panel */
 #camera-panel {

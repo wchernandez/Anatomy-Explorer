@@ -179,8 +179,8 @@ export default function Scene({
   vascularFaded   = false,
   onInteract,
   resetCounter    = 0,
-  quizFocusToken  = 0,
-  quizFocusGroup  = 'All Bones',
+  focusToken      = 0,
+  focusGroup      = 'All Bones',
   quizMode        = false,
   quizGreenTarget = null,
   quizRedMesh     = null,
@@ -333,7 +333,7 @@ export default function Scene({
         />
 
         <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} />
-        <FocusManager focusToken={quizFocusToken} focusGroup={quizFocusGroup} controlsRef={controlsRef} skelScene={skelScene} />
+        <FocusManager focusToken={focusToken} focusGroup={focusGroup} controlsRef={controlsRef} skelScene={skelScene} />
       </Canvas>
     </div>
   )

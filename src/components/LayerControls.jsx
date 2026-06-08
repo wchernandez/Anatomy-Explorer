@@ -74,6 +74,7 @@ function PanelContent({ layerKey, state }) {
     activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
     activeVascularGroup,setActiveVascularGroup, vascularFilterMode,setVascularFilterMode,
     activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
+    isolated,           onToggleIsolate,       isolateEnabled,
     faded,              toggleFade,
   } = state
 
@@ -88,6 +89,7 @@ function PanelContent({ layerKey, state }) {
         accentClass="bone"
         layerFaded={faded.skeleton}
         onToggleLayerFade={toggleFade.skeleton}
+        isolate={{ active: isolated, enabled: isolateEnabled, onToggle: onToggleIsolate }}
       />
     )
   }
@@ -136,29 +138,36 @@ function PanelContent({ layerKey, state }) {
   return null
 }
 
-function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass, layerFaded, onToggleLayerFade }) {
+function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass, layerFaded, onToggleLayerFade, isolate }) {
   return (
     <>
-      <div className="filter-mode-row">
-        <span className="filter-label">Whole layer:</span>
-        <button
-          className={`filter-toggle ${accentClass}-toggle ${layerFaded ? 'selected' : ''}`}
-          onClick={onToggleLayerFade}
-        >Fade</button>
-      </div>
-      <div className="divider" />
-      <div className="filter-mode-row">
-        <span className="filter-label">Inactive:</span>
-        <button
-          className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'fade' ? 'selected' : ''}`}
-          onClick={() => setFadeMode('fade')}
-        >Fade</button>
-        <button
-          className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'hide' ? 'selected' : ''}`}
-          onClick={() => setFadeMode('hide')}
-        >Hide</button>
-      </div>
-      <div className="divider" />
+      {/* While isolating a region the fade controls are irrelevant (everything but
+          the active group is hidden), so both are tucked away — same as the dock
+          for the in-quiz lock. */}
+      {!isolate?.active && (
+        <>
+          <div className="filter-mode-row">
+            <span className="filter-label">Whole layer:</span>
+            <button
+              className={`filter-toggle ${accentClass}-toggle ${layerFaded ? 'selected' : ''}`}
+              onClick={onToggleLayerFade}
+            >Fade</button>
+          </div>
+          <div className="divider" />
+          <div className="filter-mode-row">
+            <span className="filter-label">Inactive:</span>
+            <button
+              className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'fade' ? 'selected' : ''}`}
+              onClick={() => setFadeMode('fade')}
+            >Fade</button>
+            <button
+              className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'hide' ? 'selected' : ''}`}
+              onClick={() => setFadeMode('hide')}
+            >Hide</button>
+          </div>
+          <div className="divider" />
+        </>
+      )}
       <div className="group-list">
         {groups.map(group => (
           <button
@@ -171,6 +180,17 @@ function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentCl
           </button>
         ))}
       </div>
+
+      {isolate && (
+        <button
+          className={`dock-isolate-btn${isolate.active ? ' active' : ''}`}
+          onClick={isolate.onToggle}
+          disabled={!isolate.active && !isolate.enabled}
+          title={!isolate.active && !isolate.enabled ? 'Pick a region above to isolate' : undefined}
+        >
+          {isolate.active ? 'Exit Isolation' : 'Isolate Region'}
+        </button>
+      )}
     </>
   )
 }
@@ -192,6 +212,9 @@ export default function LayerControls({
   // bone (from BoneControls, now merged here)
   activeBoneGroup,  setActiveBoneGroup,
   boneFadeMode,     setBoneFadeMode,
+  // isolate (skeleton only)
+  isolated,         onToggleIsolate,
+  isolateEnabled,
   // whole-layer fade
   skeletonFaded,    setSkeletonFaded,
   musclesFaded,     setMusclesFaded,
@@ -234,6 +257,7 @@ export default function LayerControls({
     activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
     activeVascularGroup,setActiveVascularGroup,vascularFilterMode,setVascularFilterMode,
     activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
+    isolated,           onToggleIsolate,       isolateEnabled,
     faded,              toggleFade,
   }
 
