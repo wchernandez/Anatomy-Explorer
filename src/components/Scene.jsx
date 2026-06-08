@@ -2,7 +2,7 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
-import SkeletonModel from './SkeletonModel.jsx'
+import SkeletonModel, { BONE_GROUPS } from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
 import JointModel from './JointModel.jsx'
 import VascularModel from './VascularModel.jsx'
@@ -94,6 +94,62 @@ function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
   return null
 }
 
+// Frames the camera on a body region (a BONE_GROUP) by measuring the world-space
+// bounding box of the meshes that belong to it, then smoothly flying the camera
+// and orbit target so only that region fills the view. Triggered whenever
+// focusToken changes (i.e. when a quiz starts).
+function FocusManager({ focusToken, focusGroup, controlsRef, skelScene }) {
+  const { camera } = useThree()
+  const rafRef = useRef(null)
+
+  useEffect(() => {
+    if (!focusToken || !skelScene) return
+
+    const keywords = BONE_GROUPS[focusGroup] // null = whole skeleton
+    const box = new THREE.Box3()
+    skelScene.updateWorldMatrix(true, true)
+    skelScene.traverse(c => {
+      if (!c.isMesh) return
+      if (keywords && !keywords.some(k => (c.name || '').toLowerCase().includes(k.toLowerCase()))) return
+      box.expandByObject(c)
+    })
+    if (box.isEmpty()) return
+
+    const center = box.getCenter(new THREE.Vector3())
+    const size   = box.getSize(new THREE.Vector3())
+    const maxDim = Math.max(size.x, size.y, size.z)
+    const fov    = (camera.fov * Math.PI) / 180
+    const dist   = (maxDim / 2) / Math.tan(fov / 2) * 1.7 + 0.25
+
+    // Frame from the front with a slight downward tilt onto the region centre.
+    const dir    = new THREE.Vector3(0, 0.12, 1).normalize()
+    const endPos    = center.clone().add(dir.multiplyScalar(dist))
+    const endTarget = center.clone()
+
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    const startPos    = camera.position.clone()
+    const startTarget = controlsRef?.current ? controlsRef.current.target.clone() : endTarget.clone()
+    const duration = 1100
+    let startTime = null
+    const animate = currentTime => {
+      if (startTime === null) startTime = currentTime
+      const t    = Math.min((currentTime - startTime) / duration, 1)
+      const ease = -(Math.cos(Math.PI * t) - 1) / 2
+      camera.position.lerpVectors(startPos, endPos, ease)
+      if (controlsRef?.current) {
+        controlsRef.current.target.lerpVectors(startTarget, endTarget, ease)
+        controlsRef.current.update()
+      }
+      camera.lookAt(controlsRef?.current ? controlsRef.current.target : endTarget)
+      if (t < 1) rafRef.current = requestAnimationFrame(animate)
+    }
+    rafRef.current = requestAnimationFrame(animate)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [focusToken])
+
+  return null
+}
+
 export default function Scene({
   selectedBone,
   onSelect,
@@ -123,11 +179,14 @@ export default function Scene({
   vascularFaded   = false,
   onInteract,
   resetCounter    = 0,
+  quizFocusToken  = 0,
+  quizFocusGroup  = 'All Bones',
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
   // all layers are guaranteed to stay perfectly aligned at any scale.
   const [bodyTransform, setBodyTransform] = useState(null)
+  const [skelScene, setSkelScene] = useState(null)
   const controlsRef = useRef(null)
   const dragStart = useRef(null)
   const didDrag = useRef(false)
@@ -213,6 +272,7 @@ export default function Scene({
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
             onTransformReady={handleTransformReady}
+            onSceneReady={setSkelScene}
             layerFaded={skeletonFaded}
           />
 
@@ -265,6 +325,7 @@ export default function Scene({
         />
 
         <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} />
+        <FocusManager focusToken={quizFocusToken} focusGroup={quizFocusGroup} controlsRef={controlsRef} skelScene={skelScene} />
       </Canvas>
     </div>
   )

@@ -82,7 +82,7 @@ export const BONE_GROUPS = {
     'finger of foot','sesamoid bones of foot',
   ],
   'Pelvis': [
-    'hip bone',
+    'hip bone','sacrum','coccyx',
   ],
 }
 
@@ -136,6 +136,7 @@ export default function SkeletonModel({
   boneFadeMode  = 'fade',
   highlightBone = null,
   onTransformReady = null, // ({scale:[x,y,z], position:[x,y,z]}) => void — drives the shared body group
+  onSceneReady = null,     // (scene) => void — exposes the skeleton scene for region camera framing
   layerFaded    = false,
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
@@ -158,6 +159,11 @@ export default function SkeletonModel({
     })
     return list
   }, [scene])
+
+  // Expose the scene (with cleaned mesh names) so the camera can frame regions.
+  useEffect(() => {
+    if (scene && meshes.length) onSceneReady?.(scene)
+  }, [scene, meshes, onSceneReady])
 
   // Find the mesh matching highlightBone string
   useEffect(() => {

@@ -1,11 +1,13 @@
 import { useState, useCallback } from 'react'
 import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
+import QuizSetup from './components/QuizSetup.jsx'
+import QuizResults from './components/QuizResults.jsx'
 import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
 import CameraControls from './components/CameraControls.jsx'
 import DemographicPanel from './components/DemographicPanel.jsx'
-import questions from './data/questions.json'
+import { QUIZ_REGIONS, buildQuiz } from './data/quizData.js'
 
 function formatName(raw) {
   if (!raw) return 'Unknown Structure'
@@ -16,7 +18,7 @@ function formatName(raw) {
   return name.replace(/\b\w/g, c => c.toUpperCase()).trim()
 }
 
-const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: 'Waiting for selection…' }
+const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: '', score: 0, wrong: [] }
 
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
@@ -32,16 +34,19 @@ export default function App() {
   const [modelActivated,  setModelActivated]  = useState(false)
   const [resetCounter,    setResetCounter]    = useState(0)
 
-  const [quizStarted, setQuizStarted] = useState(false)
-  const [quizLevel,   setQuizLevel]   = useState(1)
+  const [quizStarted,   setQuizStarted]   = useState(false)
+  const [quizFinished,  setQuizFinished]  = useState(false)
+  const [showQuizSetup, setShowQuizSetup] = useState(false)
+  const [quizConfig,    setQuizConfig]    = useState({ level: 1, layer: 'skeleton', region: 'whole_body' })
+  const [quizQuestions, setQuizQuestions] = useState([])
+  const [quizFocusToken, setQuizFocusToken] = useState(0)
   const [quiz,        setQuiz]        = useState(initialQuiz)
   const [showMenu,    setShowMenu]    = useState(true)
 
-  const levelQuestions = questions.filter(q => q.level === quizLevel)
-
+  const quizLevel = quizConfig.level
   const highlightBone =
-    quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && levelQuestions[quiz.currentQ]
-      ? levelQuestions[quiz.currentQ].target
+    quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && quizQuestions[quiz.currentQ]
+      ? quizQuestions[quiz.currentQ].target
       : null
 
   // Layer visibility
@@ -114,6 +119,19 @@ export default function App() {
     }
   }, [])
 
+  // Records the outcome of the current question: flips to the answered state,
+  // updates the running score and logs misses for the results screen.
+  function applyAnswer(correct, q, feedback) {
+    setQuiz(prev => ({
+      ...prev,
+      answered: true,
+      result:   correct ? 'correct' : 'wrong',
+      feedback,
+      score:    prev.score + (correct ? 1 : 0),
+      wrong:    correct ? prev.wrong : [...prev.wrong, { prompt: q.prompt, answer: q.answer }],
+    }))
+  }
+
   function handleBoneSelect(mesh) {
     // Clicking the already-selected bone deselects it
     if (mesh && selectedBone && mesh.uuid === selectedBone.uuid) {
@@ -123,57 +141,82 @@ export default function App() {
     setSelectedBone(mesh)
     if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
 
-    const q           = levelQuestions[quiz.currentQ]
+    const q           = quizQuestions[quiz.currentQ]
     const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
     if (!q) return
 
     const correct  = q.target === null || clickedName.includes(q.target)
     const boneName = formatName(mesh.name || mesh.parent?.name)
-    setQuiz(prev => ({
-      ...prev,
-      answered: true,
-      result:   correct ? 'correct' : 'wrong',
-      feedback: correct
-        ? (q.target === null ? `Good job! That's the ${boneName}.` : 'Correct! Well done.')
-        : `Not quite — that's the ${boneName}.`,
-    }))
+    applyAnswer(
+      correct, q,
+      correct ? `Correct! That's the ${q.answer}.` : `Not quite — that's the ${boneName}. The answer was the ${q.answer}.`,
+    )
   }
 
   function handleMultipleChoiceAnswer(option) {
     if (quiz.answered) return
-    const q = levelQuestions[quiz.currentQ]
+    const q = quizQuestions[quiz.currentQ]
     if (!q) return
     const correct = option.toLowerCase() === q.answer.toLowerCase()
-    setQuiz(prev => ({
-      ...prev,
-      answered: true,
-      result:   correct ? 'correct' : 'wrong',
-      feedback: correct ? 'Correct! Well done.' : `Not quite — the answer was ${q.answer}.`,
-    }))
+    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was ${q.answer}.`)
   }
 
   function handleTypeAnswer(input) {
     if (quiz.answered || !input.trim()) return
-    const q        = levelQuestions[quiz.currentQ]
+    const q        = quizQuestions[quiz.currentQ]
     if (!q) return
     const typed    = input.trim().toLowerCase()
     const target   = q.target.toLowerCase()
     const synonyms = q.synonyms || []
     const correct  = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
-    setQuiz(prev => ({
-      ...prev,
-      answered: true,
-      result:   correct ? 'correct' : 'wrong',
-      feedback: correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.target}".`,
-    }))
+    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.answer}".`)
   }
 
-  function handleStartQuiz()    { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(true) }
-  function handleEndQuiz()      { setSelectedBone(null); setQuiz(initialQuiz); setQuizStarted(false) }
+  function startQuiz(config = quizConfig) {
+    const qs = buildQuiz(config.region, config.level)
+    setQuizConfig(config)
+    setQuizQuestions(qs)
+    setQuiz(initialQuiz)
+    setSelectedBone(null)
+    setShowQuizSetup(false)
+    setQuizFinished(false)
+    setQuizStarted(true)
+    setModelActivated(true)
+    setQuizFocusToken(t => t + 1)
+  }
+
+  function exitToExplorer() {
+    setQuizStarted(false)
+    setQuizFinished(false)
+    setQuiz(initialQuiz)
+    setSelectedBone(null)
+    setResetCounter(c => c + 1) // fly the camera back to the default view
+    setModelActivated(false)
+  }
+
+  function handleQuitQuiz() { exitToExplorer() }
+
   function handleNextQuestion() {
     setSelectedBone(null)
-    setQuiz(prev => ({ ...initialQuiz, currentQ: (prev.currentQ + 1) % levelQuestions.length }))
+    if (quiz.currentQ >= quizQuestions.length - 1) {
+      // Finished — surface the results screen and release the model.
+      setQuizStarted(false)
+      setQuizFinished(true)
+      setResetCounter(c => c + 1)
+      return
+    }
+    setQuiz(prev => ({ ...prev, currentQ: prev.currentQ + 1, answered: false, result: null, feedback: '' }))
   }
+
+  // While a quiz is running the model is locked to the chosen region (only the
+  // skeleton layer, other bones hidden) so the user can't stray off-topic.
+  const quizGroupName = QUIZ_REGIONS[quizConfig.region]?.group || 'All Bones'
+  const effBoneGroup  = quizStarted ? quizGroupName : activeBoneGroup
+  const effBoneFade   = quizStarted ? 'hide'        : boneFadeMode
+  const effShowSkeleton = quizStarted ? true  : showSkeleton
+  const effShowMuscles  = quizStarted ? false : showMuscles
+  const effShowJoints   = quizStarted ? false : showJoints
+  const effShowVascular = quizStarted ? false : showVascular
 
   if (showMenu) {
     return (
@@ -192,9 +235,9 @@ export default function App() {
       <Scene
         selectedBone={selectedBone}
         onSelect={handleBoneSelect}
-        showSkeleton={showSkeleton}
-        showMuscles={showMuscles}
-        showJoints={showJoints}
+        showSkeleton={effShowSkeleton}
+        showMuscles={effShowMuscles}
+        showJoints={effShowJoints}
         activeGroup={activeGroup}
         filterMode={filterMode}
         activeJointGroup={activeJointGroup}
@@ -205,10 +248,10 @@ export default function App() {
         bodyShoulderScale={bodyShoulderScale}
         bodyHipScale={bodyHipScale}
         cameraPreset={cameraPreset}
-        activeBoneGroup={activeBoneGroup}
-        boneFadeMode={boneFadeMode}
+        activeBoneGroup={effBoneGroup}
+        boneFadeMode={effBoneFade}
         highlightBone={highlightBone}
-        showVascular={showVascular}
+        showVascular={effShowVascular}
         activeVascularGroup={activeVascularGroup}
         vascularFilterMode={vascularFilterMode}
         onBoneNamesReady={setSkeletonBoneNames}
@@ -218,6 +261,8 @@ export default function App() {
         vascularFaded={vascularFaded}
         onInteract={() => setModelActivated(true)}
         resetCounter={resetCounter}
+        quizFocusToken={quizFocusToken}
+        quizFocusGroup={quizGroupName}
       />
 
       <div id="topbar">
@@ -258,35 +303,48 @@ export default function App() {
           )}
         </div>
 
-        <div id="topbar-controls">
-          <button
-            className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-            onClick={() => setShowCameraPanel(v => !v)}
-            title="Camera Angles"
-          >
-            <span className="preset-ft">🎥</span>
-            <span className="preset-sub">Camera</span>
-          </button>
-          <button
-            id="demographic-toggle"
-            className={`preset-btn${showDemoPanel ? ' active' : ''}`}
-            onClick={() => setShowDemoPanel(v => !v)}
-            title="Demographic Regression Scaling"
-          >
-            <span className="preset-ft">🧬</span>
-            <span className="preset-sub">Demographics</span>
-          </button>
-        </div>
+        {!quizStarted && (
+          <div id="topbar-controls">
+            <button
+              className={`preset-btn${showQuizSetup ? ' active' : ''}`}
+              onClick={() => setShowQuizSetup(v => !v)}
+              title="Quiz Mode"
+            >
+              <span className="preset-ft">🎓</span>
+              <span className="preset-sub">Quiz</span>
+            </button>
+            <button
+              className={`preset-btn${showCameraPanel ? ' active' : ''}`}
+              onClick={() => setShowCameraPanel(v => !v)}
+              title="Camera Angles"
+            >
+              <span className="preset-ft">🎥</span>
+              <span className="preset-sub">Camera</span>
+            </button>
+            <button
+              id="demographic-toggle"
+              className={`preset-btn${showDemoPanel ? ' active' : ''}`}
+              onClick={() => setShowDemoPanel(v => !v)}
+              title="Demographic Regression Scaling"
+            >
+              <span className="preset-ft">🧬</span>
+              <span className="preset-sub">Demographics</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Demographic Regression Panel — separate floating panel */}
+      {!quizStarted && (
       <DemographicPanel
         visible={showDemoPanel}
         onClose={() => setShowDemoPanel(false)}
         onScaleChange={handleScaleChange}
       />
+      )}
 
       {/* LayerControls now absorbs BoneControls — all group props passed here */}
+      {!quizStarted && (
       <LayerControls
         skeletonBoneNames={skeletonBoneNames}
         showSkeleton={showSkeleton}           setShowSkeleton={setShowSkeletonC}
@@ -306,26 +364,55 @@ export default function App() {
         jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}
         vascularFaded={vascularFaded}         setVascularFaded={setVascularFaded}
       />
+      )}
 
-      <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
+      {!quizStarted && (
+        <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
+      )}
 
-      <QuizPanel
-        quiz={quiz}
-        questions={levelQuestions}
-        started={quizStarted}
-        quizLevel={quizLevel}
-        onLevelChange={setQuizLevel}
-        onStart={handleStartQuiz}
-        onEnd={handleEndQuiz}
-        onNext={handleNextQuestion}
-        onMultipleChoiceAnswer={handleMultipleChoiceAnswer}
-        onTypeAnswer={handleTypeAnswer}
-      />
+      {/* Info panel is hidden during a quiz — it would reveal the answer. */}
+      {!quizStarted && (
+        <InfoPanel
+          selectedBone={selectedBone}
+          formatName={formatName}
+        />
+      )}
 
-      <InfoPanel
-        selectedBone={selectedBone}
-        formatName={formatName}
-      />
+      {/* In-quiz heads-up panel */}
+      {quizStarted && (
+        <QuizPanel
+          quiz={quiz}
+          questions={quizQuestions}
+          quizLevel={quizLevel}
+          region={quizConfig.region}
+          onQuit={handleQuitQuiz}
+          onNext={handleNextQuestion}
+          onMultipleChoiceAnswer={handleMultipleChoiceAnswer}
+          onTypeAnswer={handleTypeAnswer}
+        />
+      )}
+
+      {/* Full-screen quiz configuration menu */}
+      {showQuizSetup && !quizStarted && (
+        <QuizSetup
+          config={quizConfig}
+          onChange={patch => setQuizConfig(c => ({ ...c, ...patch }))}
+          onStart={() => startQuiz(quizConfig)}
+          onClose={() => setShowQuizSetup(false)}
+        />
+      )}
+
+      {/* Full-screen results screen */}
+      {quizFinished && (
+        <QuizResults
+          score={quiz.score}
+          total={quizQuestions.length}
+          wrong={quiz.wrong}
+          config={quizConfig}
+          onRetry={() => startQuiz(quizConfig)}
+          onClose={exitToExplorer}
+        />
+      )}
     </>
   )
 }
