@@ -41,6 +41,34 @@ const LOWER_KEYS = [
 ]
 const isLower = n => LOWER_KEYS.some(k => n.toLowerCase().includes(k))
 
+// Materials whose meshes should NOT gain bulk with weight: passive connective
+// and joint structures, not contractile muscle tissue. Everything else — the
+// orange muscle bellies — thickens with weight.
+const NON_SCALING_MATERIALS = new Set([
+  'Articular capsule', 'Cartilage', 'Bursa', 'Fat', 'Ligament', 'Tendon',
+])
+
+// Named meshes force-excluded from weight scaling even though their material
+// would otherwise qualify:
+//   • epicranial aponeurosis — tendon sheet over the skull, shouldn't bulge.
+//   • platysma — thin paired sheet meeting at the neck midline; centroid scaling
+//     pulls the two halves apart (splits down the middle) when shrinking.
+const WEIGHT_SCALE_BLOCKLIST = ['epicranial aponeurosis', 'platysma']
+const blockedFromWeightScale = n =>
+  WEIGHT_SCALE_BLOCKLIST.some(k => n.toLowerCase().includes(k))
+
+// Named meshes force-INCLUDED in weight scaling even though their material is in
+// NON_SCALING_MATERIALS — the iliotibial tract is a Tendon but was specifically
+// requested to thicken with the thigh.
+const WEIGHT_SCALE_ALLOWLIST = ['iliotibial tract']
+const forcedWeightScale = n =>
+  WEIGHT_SCALE_ALLOWLIST.some(k => n.toLowerCase().includes(k))
+
+// Head (cranial) muscles — facial expression, mastication, extra-ocular and
+// scalp muscles — never gain bulk with body weight. Uses the model's own
+// "Cranial" muscle-group definition so it stays in sync with that grouping.
+const isHeadMuscle = n => meshMatchesGroup(n, MUSCLE_GROUPS.Cranial)
+
 // ── Overhauled Naming Correction Function ────────────────────────────────────
 function cleanMuscleName(name) {
   if (!name) return ''
@@ -273,9 +301,10 @@ export default function MuscleModel({
   onSelect,
   activeGroup,
   filterMode,
-  shoulderScale = 1,   // FULL (weight-included) upper-body X/Z target
-  hipScale      = 1,   // FULL (weight-included) lower-body X/Z target
-  bodyShoulderScale = 1, // weight-free X/Z scale actually applied by the shared group
+  shoulderScale = 1,     // FULL (weight-included) upper-body X/Z
+  hipScale      = 1,     // FULL (weight-included) lower-body X/Z
+  bodyShoulderScale = 1, // weight-FREE upper-body X/Z (height only) — matches shared group
+  bodyHipScale      = 1, // weight-FREE lower-body X/Z (height only)
   layerFaded    = false,
 }) {
   const { scene } = useGLTF('/Muscles.glb')
@@ -312,42 +341,70 @@ export default function MuscleModel({
 
   const snapRef = useRef(null)
 
-  // The overall muscle widening with weight is applied by the wrapper <group>
-  // below (scaled around the body centreline, so the layer broadens coherently
-  // instead of each mesh distorting around its own pivot). This per-mesh pass
-  // only applies the small region corrections relative to that full shoulder
-  // width: cancel it over the skull, swap it for hipScale over the lower body.
+  // Each muscle mesh gets two composed effects:
+  //
+  //  1. HEIGHT / proportion correction — about the LOCAL ORIGIN, matching the
+  //     skeleton so the layer stays glued to the bone. The shared body group is
+  //     weight-free, so these use the body* (height-only) scales: cancel the
+  //     shared shoulder width over the skull, swap it for hip width over the
+  //     lower body, leave the rest on the group's shoulder width.
+  //
+  //  2. WEIGHT gain — about the mesh's own CENTROID so it bulks up IN PLACE.
+  //     Applied ONLY to orange muscle-tissue meshes (baseForceMat); tendons,
+  //     ligaments, cartilage, bursae and fat (MAT_OVERRIDES) keep their size.
   useEffect(() => {
     if (!scene) return
 
     if (!snapRef.current) {
-      const skull = [], lower = []
+      const skull = [], lower = [], other = []
       scene.traverse(child => {
         if (!child.isMesh) return
+        if (!child.geometry.boundingBox) child.geometry.computeBoundingBox()
+        const c = child.geometry.boundingBox.getCenter(new THREE.Vector3())
         const entry = {
           mesh: child,
           ox: child.scale.x,    oz: child.scale.z,
           px: child.position.x, pz: child.position.z,
+          gx: c.x,              gz: c.z,   // geometry centroid (local space)
+          // Orange muscle bellies gain bulk with weight; passive structures
+          // (tendons, ligaments, cartilage, articular capsules, bursae, fat) and
+          // all head/cranial muscles stay fixed. Name allow/blocklists override
+          // the material rule (blocklist & head exclusion win), e.g. iliotibial
+          // tract scales, epicranial aponeurosis doesn't.
+          isMuscle: !blockedFromWeightScale(child.name)
+                    && !isHeadMuscle(child.name)
+                    && (forcedWeightScale(child.name)
+                        || !NON_SCALING_MATERIALS.has(child.userData.originalMatName)),
         }
         if      (isSkull(child.name)) skull.push(entry)
         else if (isLower(child.name)) lower.push(entry)
+        else                          other.push(entry)
       })
-      snapRef.current = { skull, lower }
+      snapRef.current = { skull, lower, other }
     }
 
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
-      mesh.scale.x    = ox / shoulderScale
-      mesh.scale.z    = oz / shoulderScale
-      mesh.position.x = px / shoulderScale
-      mesh.position.z = pz / shoulderScale
+    // Weight-only multipliers — 1.0 at the reference weight, >1 when heavier.
+    const upperWeight = bodyShoulderScale ? shoulderScale / bodyShoulderScale : 1
+    const lowerWeight = bodyHipScale      ? hipScale / bodyHipScale           : 1
+
+    const apply = (entries, heightCorr, regionWeight) => {
+      for (const e of entries) {
+        const weight = e.isMuscle ? regionWeight : 1   // only orange muscle bulks
+        const sx = e.ox * heightCorr
+        const sz = e.oz * heightCorr
+        e.mesh.scale.x    = sx * weight
+        e.mesh.scale.z    = sz * weight
+        e.mesh.position.x = e.px * heightCorr + sx * e.gx * (1 - weight)
+        e.mesh.position.z = e.pz * heightCorr + sz * e.gz * (1 - weight)
+      }
     }
-    for (const { mesh, ox, oz, px, pz } of snapRef.current.lower) {
-      mesh.scale.x    = ox * hipScale / shoulderScale
-      mesh.scale.z    = oz * hipScale / shoulderScale
-      mesh.position.x = px * hipScale / shoulderScale
-      mesh.position.z = pz * hipScale / shoulderScale
-    }
-  }, [scene, shoulderScale, hipScale])
+
+    const skullCorr = bodyShoulderScale ? 1 / bodyShoulderScale : 1
+    const lowerCorr = bodyShoulderScale ? bodyHipScale / bodyShoulderScale : 1
+    apply(snapRef.current.skull, skullCorr, upperWeight)
+    apply(snapRef.current.lower, lowerCorr, lowerWeight)
+    apply(snapRef.current.other, 1,         upperWeight)
+  }, [scene, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale])
 
   const fadedMats = useMemo(() => new Map(), [])
   const keywords = MUSCLE_GROUPS[activeGroup] ?? null
@@ -412,15 +469,8 @@ export default function MuscleModel({
     }
   })
 
-  // The shared body group is driven by the skeleton at the weight-FREE X/Z scale
-  // (bodyShoulderScale). Re-apply the weight component here as an X/Z group scale
-  // about the body centreline so the muscle layer alone broadens/narrows with
-  // weight, coherently, without per-mesh distortion. At the reference weight
-  // (full == free) this factor is 1, leaving the model untouched.
-  const weightWidth = bodyShoulderScale ? shoulderScale / bodyShoulderScale : 1
-
   return (
-    <group visible={visible} scale={[weightWidth, 1, weightWidth]}>
+    <group visible={visible}>
       <primitive
         object={scene}
         onClick={(e) => {
