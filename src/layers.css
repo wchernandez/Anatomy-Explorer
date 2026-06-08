@@ -1,4 +1,4 @@
-/* ── Layer toggle bar ───────────────────────────────────────────────────── */
+/* Layer toggle bar */
 #layer-bar {
   position: fixed;
   bottom: 2rem;
@@ -116,9 +116,7 @@
   border-color: rgba(60, 100, 220, 0.9);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   Circle dock — vertical stack on the left edge
-   ══════════════════════════════════════════════════════════════════════════ */
+/* Circle dock — vertical stack on the left edge */
 
 #layer-dock {
   position: fixed;
@@ -284,7 +282,7 @@
   scrollbar-color: rgba(255,255,255,0.1) transparent;
 }
 
-/* ── Filter mode row ───────────────────────────────────────────────────── */
+/* Filter mode row */
 .filter-mode-row {
   display: flex;
   align-items: center;
@@ -345,7 +343,7 @@
   color: #7aa8ff !important;
 }
 
-/* ── Group list ─────────────────────────────────────────────────────────── */
+/* Group list */
 .group-list {
   display: flex;
   flex-direction: column;
@@ -421,7 +419,7 @@
   color: #7aa8ff !important;
 }
 
-/* ── Group dots ─────────────────────────────────────────────────────────── */
+/* Group dots */
 .group-dot {
   width: 6px;
   height: 6px;
@@ -436,7 +434,7 @@
 .joint-dot.active  { background: #4dd8e8; box-shadow: 0 0 5px rgba(60,200,220,0.7); }
 .vascular-dot.active { background: #7aa8ff; box-shadow: 0 0 5px rgba(122,168,255,0.7); }
 
-/* ── Camera controls panel — unchanged positioning ──────────────────────── */
+/* Camera controls panel — unchanged positioning */
 #camera-panel {
   position: fixed;
   top: 9rem;
@@ -464,7 +462,7 @@
 }
 
 
-/* ── Camera panel collapse toggle ─────────────────────────────────────────── */
+/* Camera panel collapse toggle */
 .panel-collapse-btn {
   all: unset;
   cursor: pointer;
@@ -532,7 +530,7 @@
 }
 
 
-/* ── Bone name sub-list (shown inside a selected skeleton group) ─────────── */
+/* Bone name sub-list (shown inside a selected skeleton group) */
 .bone-name-sublist-label {
   font-size: 0.58rem;
   font-weight: 800;
@@ -569,7 +567,7 @@
   letter-spacing: 0.02em;
 }
 
-/* ── Responsive ─────────────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 768px) {
   #layer-bar {
     bottom: 1.5rem;

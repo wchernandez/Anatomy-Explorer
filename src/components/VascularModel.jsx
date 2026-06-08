@@ -132,22 +132,33 @@ export const VASCULAR_GROUPS = {
   ],
 
   'Heart': [
+    // Chambers, papillary muscles and valve leaflets
     'left atrium','right atrium','left ventricle','right ventricle',
     'papillary muscle','atrioventricular',
+    'coronary leaflet','semilunar leaflet',
+    // Coronary circulation (arteries + veins).
+    // 'interventricular artery' also covers "Septal branches of anterior
+    // interventricular artery", so a bare 'septal branch' keyword is NOT used —
+    // it would wrongly pull in nasal/ethmoid septal branches up in the head.
     'interventricular artery','circumflex artery of heart',
-    'cardiac vein','coronary leaflet','semilunar leaflet','leaflet',
-    'coronary sinus','coronary artery','right inferolateral',
-    'great cardiac vein','middle cardiac vein',
+    'coronary artery','coronary sinus','right inferolateral',
+    'cardiac vein','great cardiac vein','middle cardiac vein',
     'inferior vein of left ventricle',
-    'aortic arch','ascending aorta','thoracic aorta',
-    'pulmonary trunk','bifurcation of pulmonary',
-    'superior vena cava','septal branch','marginal artery',
+    // Great vessels at the heart only (the descending thoracic aorta is
+    // deliberately excluded — it belongs to the Thorax group). The
+    // brachiocephalic veins drain into the SVC and are grouped with the heart.
+    'aortic arch','ascending aorta',
+    'pulmonary trunk','bifurcation of pulmonary','superior vena cava',
+    'brachiocephalic vein',
   ],
 
   'Thorax': [
     'intercostal artery','intercostal arteries','intercostal vein',
     'internal thoracic','musculophrenic',
-    'brachiocephalic trunk','brachiocephalic vein',
+    'brachiocephalic trunk',
+    // Chest-wall vessels (moved here from Upper Limb)
+    'lateral thoracic artery','lateral thoracic vein',
+    'pectoral branch','thoraco-acromial','thoracodorsal',
     'azygos','hemiazygos','accessory hemi-azygos',
     'supreme intercostal',
     'first posterior intercostal','second posterior intercostal',
@@ -199,9 +210,7 @@ export const VASCULAR_GROUPS = {
     'palmar carpal branch','palmar digital vein',
     'cephalic vein','basilic vein','median cubital','median antebrachial',
     'circumflex humeral','circumflex scapular',
-    'pectoral branch','thoraco-acromial','thoracodorsal',
     'subscapular artery','subscapular vein',
-    'lateral thoracic artery','lateral thoracic vein',
     'superior ulnar collateral','inferior ulnar collateral',
     'middle collateral artery',
   ],
@@ -246,10 +255,25 @@ export const VASCULAR_GROUPS = {
   ],
 }
 
+// Substring match, but each keyword must BEGIN at a word boundary (start of the
+// name or after any non-letter — space, hyphen, parenthesis, dot). Without this,
+// plain substring matching wrongly groups vessels whose names merely contain a
+// keyword inside a longer word, e.g. 'axillary artery' → "Maxillary artery",
+// 'cephalic vein' → "Brachiocephalic vein", 'marginal artery' → "Callosomarginal
+// artery". The keyword's own end need NOT be a boundary, so partial roots like
+// 'sigmoid arteri' (→ "Sigmoid arteries") still match.
 function meshMatchesGroup(name, keywords) {
   if (!keywords) return true
   const lower = name.toLowerCase()
-  return keywords.some(k => lower.includes(k.toLowerCase()))
+  return keywords.some(k => {
+    const key = k.toLowerCase()
+    let idx = lower.indexOf(key)
+    while (idx !== -1) {
+      if (idx === 0 || !/[a-z]/.test(lower[idx - 1])) return true
+      idx = lower.indexOf(key, idx + 1)
+    }
+    return false
+  })
 }
 
 // ── Component ────────────────────────────────────────────────────────────────

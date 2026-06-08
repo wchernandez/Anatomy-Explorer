@@ -129,6 +129,77 @@
   box-shadow: 0 0 12px rgba(255, 170, 0, 0.35);
 }
 
+/* ── Section label row (with optional info button) ───────────────────────── */
+.dp-section-label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dp-info-btn {
+  all: unset;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 170, 0, 0.5);
+  color: rgba(255, 170, 0, 0.7);
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  margin-bottom: 2px; /* align with label baseline */
+}
+
+.dp-info-btn:hover {
+  background: rgba(255, 170, 0, 0.15);
+  border-color: #ffaa00;
+  color: #ffaa00;
+}
+
+/* ── Ethnicity info popover ───────────────────────────────────────────────── */
+.dp-eth-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 170, 0, 0.06);
+  border: 1px solid rgba(255, 170, 0, 0.25);
+  animation: dpSlideIn 0.2s ease;
+}
+
+.dp-eth-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.dp-eth-info-cat {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffcc44;
+  letter-spacing: 0.03em;
+}
+
+.dp-eth-info-sub {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: rgba(200, 190, 160, 0.75);
+}
+
+.dp-eth-info-note {
+  font-size: 0.52rem;
+  line-height: 1.35;
+  color: rgba(160, 140, 100, 0.6);
+  border-top: 1px solid rgba(255, 170, 0, 0.15);
+  padding-top: 0.35rem;
+  margin-top: 0.1rem;
+}
+
 /* ── Section label ────────────────────────────────────────────────────────── */
 .dp-section-label {
   font-size: 0.6rem;

@@ -48,7 +48,7 @@ export const ANSUR_AGE_MEAN = 30.2
 // ── Ethnicity display metadata ────────────────────────────────────────────────
 export const ETHNICITY_META = [
   { key: 'Caucasian',       label: 'Caucasian',        n: 2817 },
-  { key: 'Black',           label: 'Black',             n: 642  },
+  { key: 'Black',           label: 'African',           n: 642  },
   { key: 'Hispanic',        label: 'Hispanic',          n: 440  },
   { key: 'Asian',           label: 'Asian',             n: 117  },
   { key: 'NativeAmerican',  label: 'Native American',   n: 29   },

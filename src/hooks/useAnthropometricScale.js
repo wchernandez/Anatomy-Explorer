@@ -26,6 +26,12 @@ import {
   ANSUR_AGE_MEAN,
 } from '../utils/regressionCoefficients.js'
 
+// ANSUR II population mean weight (kg). Used as the reference weight for the
+// "body" scales (skeleton / joints / vascular): evaluating the regression at
+// this fixed weight removes the weight slider's influence from those layers,
+// so only the muscle layer thickens/thins with body weight.
+const REFERENCE_WEIGHT_KG = 85.5
+
 // Measurement keys we expose to the UI for educational display
 const DISPLAY_KEYS = [
   'sittingheight',
@@ -74,10 +80,12 @@ function clampScale(s) {
  * @param {number} params.weightKg    — subject weight in kg (40–160)
  *
  * @returns {object} {
- *   statureScale,   // 3D Y scale for the skeleton group
- *   shoulderScale,  // 3D X/Z scale for upper body
- *   hipScale,       // 3D X/Z scale for lower body
- *   measurements,   // array of { key, label, mm, cm } for UI display
+ *   statureScale,       // 3D Y scale (weight has no effect on stature)
+ *   shoulderScale,      // FULL X/Z upper-body scale (weight included) — muscle layer
+ *   hipScale,           // FULL X/Z lower-body scale (weight included) — muscle layer
+ *   bodyShoulderScale,  // weight-free upper-body X/Z — skeleton / joints / vascular
+ *   bodyHipScale,       // weight-free lower-body X/Z — skeleton / joints / vascular
+ *   measurements,       // array of { key, label, mm, cm } for UI display
  * }
  */
 export function useAnthropometricScale({ ethnicity, age, heightCm, weightKg }) {
@@ -96,20 +104,34 @@ export function useAnthropometricScale({ ethnicity, age, heightCm, weightKg }) {
     const statureScale = clampScale(statureMm / ANSUR_BASELINE.stature)
 
     // ── 2. Compute shoulder (biacromial) scale ────────────────────────────────
-    // Maps to shoulderScale — applied to upper-body X/Z in SkeletonModel.
+    // Two variants:
+    //   • shoulderScale     — FULL regression (actual weight) → drives the MUSCLE
+    //                         layer so it broadens/narrows with body weight.
+    //   • bodyShoulderScale — evaluated at REFERENCE_WEIGHT_KG so weight drops
+    //                         out → drives the skeleton / joints / vascular layers
+    //                         and the shared body group, which therefore stay
+    //                         fixed as the weight slider moves.
     const biacrMm = fitMeasurement(
       coefSet.biacromialbreadth, heightCm, weightKg, 'biacromialbreadth', age
     )
-    // shoulderScale drives both the group-level X/Z AND the per-mesh
-    // counter-scale applied to skull/lower meshes. Keep it normalised.
     const shoulderScale = clampScale(biacrMm / ANSUR_BASELINE.biacromialbreadth)
 
+    const biacrMmBody = fitMeasurement(
+      coefSet.biacromialbreadth, heightCm, REFERENCE_WEIGHT_KG, 'biacromialbreadth', age
+    )
+    const bodyShoulderScale = clampScale(biacrMmBody / ANSUR_BASELINE.biacromialbreadth)
+
     // ── 3. Compute hip scale ──────────────────────────────────────────────────
-    // Maps to hipScale — applied to lower-body X/Z in SkeletonModel.
+    // Same FULL vs weight-free split as the shoulder scale above.
     const hipMm = fitMeasurement(
       coefSet.hipbreadth, heightCm, weightKg, 'hipbreadth', age
     )
     const hipScale = clampScale(hipMm / ANSUR_BASELINE.hipbreadth)
+
+    const hipMmBody = fitMeasurement(
+      coefSet.hipbreadth, heightCm, REFERENCE_WEIGHT_KG, 'hipbreadth', age
+    )
+    const bodyHipScale = clampScale(hipMmBody / ANSUR_BASELINE.hipbreadth)
 
     // ── 4. Build educational display measurements ─────────────────────────────
     const measurements = DISPLAY_KEYS.map(key => {
@@ -122,6 +144,13 @@ export function useAnthropometricScale({ ethnicity, age, heightCm, weightKg }) {
       }
     })
 
-    return { statureScale, shoulderScale, hipScale, measurements }
+    return {
+      statureScale,
+      shoulderScale,
+      hipScale,
+      bodyShoulderScale,
+      bodyHipScale,
+      measurements,
+    }
   }, [ethnicity, age, heightCm, weightKg])
 }

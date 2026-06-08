@@ -93,8 +93,9 @@ function MeasRow({ label, cm, baseline, isMetric }) {
 // ── Main panel ────────────────────────────────────────────────────────────────
 
 export default function DemographicPanel({ visible, onClose, onScaleChange }) {
-  const [isMetric,  setIsMetric]  = useState(true)
-  const [ethnicity, setEthnicity] = useState(DEFAULT_ETH)
+  const [isMetric,      setIsMetric]      = useState(true)
+  const [ethnicity,     setEthnicity]     = useState(DEFAULT_ETH)
+  const [showEthInfo,   setShowEthInfo]   = useState(false)
   const [age,       setAge]       = useState(DEFAULT_AGE)
   const [heightCm,  setHeightCm]  = useState(DEFAULT_HEIGHT)
   const [weightKg,  setWeightKg]  = useState(DEFAULT_WEIGHT)
@@ -114,15 +115,18 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   }
 
   // ── Run regression engine ──────────────────────────────────────────────────
-  const { statureScale, shoulderScale, hipScale, measurements } =
+  // shoulderScale / hipScale are the FULL (weight-included) values shown in the
+  // chips and used by the muscle layer; bodyShoulderScale / bodyHipScale are the
+  // weight-free values that drive the skeleton / joints / vascular layers.
+  const { statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale, measurements } =
     useAnthropometricScale({ ethnicity, age, heightCm, weightKg })
 
   // ── Propagate scale changes upward to App → Scene → 3D models ─────────────
   // useEffect fires only when the numeric outputs actually change (not on every
   // render), preventing spurious re-renders in the 3D pipeline.
   useEffect(() => {
-    onScaleChange?.({ statureScale, shoulderScale, hipScale })
-  }, [statureScale, shoulderScale, hipScale, onScaleChange])
+    onScaleChange?.({ statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale })
+  }, [statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale, onScaleChange])
 
   function handleReset() {
     setEthnicity(DEFAULT_ETH)
@@ -156,7 +160,36 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
         <div className="dp-divider" />
 
         {/* ── Ethnicity selector ─────────────────────────────────────────── */}
-        <SectionLabel>Ethnicity</SectionLabel>
+        <div className="dp-section-label-row">
+          <SectionLabel>Ethnicity</SectionLabel>
+          <button
+            className="dp-info-btn"
+            onClick={() => setShowEthInfo(v => !v)}
+            aria-label="Ethnicity group information"
+          >?</button>
+        </div>
+
+        {showEthInfo && (
+          <div className="dp-eth-info">
+            {[
+              { cat: 'Caucasian',       sub: 'White — of European, Middle Eastern, or North African origin' },
+              { cat: 'African',         sub: 'Black or African American — African, Afro-Caribbean & African American origin' },
+              { cat: 'Hispanic',        sub: 'Hispanic / Latino — Mexican, Puerto Rican, Cuban, Central & South American, and other Spanish origin' },
+              { cat: 'Asian',           sub: 'Chinese, Filipino, Japanese, Korean, Vietnamese, Asian Indian, and other Asian origin' },
+              { cat: 'Native American', sub: 'American Indian & Alaska Native' },
+              { cat: 'Pacific Islander',sub: 'Native Hawaiian, Samoan, Chamorro / Guamanian, and other Pacific Islander origin' },
+            ].map(({ cat, sub }) => (
+              <div key={cat} className="dp-eth-info-row">
+                <span className="dp-eth-info-cat">{cat}</span>
+                <span className="dp-eth-info-sub">{sub}</span>
+              </div>
+            ))}
+            <div className="dp-eth-info-note">
+              Groups follow the ANSUR II / U.S. DoD race classifications. Selecting one sets the slider to that group's mean height &amp; weight.
+            </div>
+          </div>
+        )}
+
         <div className="dp-eth-grid">
           {ETHNICITY_META.map(({ key, label, n }) => (
             <button

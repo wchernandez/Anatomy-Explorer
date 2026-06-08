@@ -108,6 +108,8 @@ export default function Scene({
   statureScale    = 1,
   shoulderScale   = 1,
   hipScale        = 1,
+  bodyShoulderScale = 1,
+  bodyHipScale      = 1,
   cameraPreset    = 'front',
   activeBoneGroup = 'All Bones',
   boneFadeMode    = 'fade',
@@ -197,14 +199,16 @@ export default function Scene({
         >
           {/* SkeletonModel is ALWAYS mounted so it can report the shared transform
               even when the skeleton layer is toggled off. */}
+          {/* Skeleton drives the shared body group. Feed it the weight-FREE
+              X/Z scales so neither it nor the group respond to the weight slider. */}
           <SkeletonModel
             visible={showSkeleton}
             selectedBone={selectedBone}
             onSelect={onSelect}
             heightPreset={heightPreset}
             statureScale={statureScale}
-            shoulderScale={shoulderScale}
-            hipScale={hipScale}
+            shoulderScale={bodyShoulderScale}
+            hipScale={bodyHipScale}
             activeBoneGroup={activeBoneGroup}
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
@@ -212,6 +216,10 @@ export default function Scene({
             layerFaded={skeletonFaded}
           />
 
+          {/* Muscle is the only weight-responsive layer. It gets the FULL
+              (weight-included) target scales, plus bodyShoulderScale — the
+              shared group's actual weight-free X/Z scale — as the denominator
+              for its per-mesh corrections. */}
           <MuscleModel
             visible={showMuscles}
             selectedBone={selectedBone}
@@ -220,6 +228,7 @@ export default function Scene({
             filterMode={filterMode}
             shoulderScale={shoulderScale}
             hipScale={hipScale}
+            bodyShoulderScale={bodyShoulderScale}
             layerFaded={musclesFaded}
           />
 
@@ -229,8 +238,8 @@ export default function Scene({
             onSelect={onSelect}
             activeGroup={activeJointGroup}
             filterMode={jointFilterMode}
-            shoulderScale={shoulderScale}
-            hipScale={hipScale}
+            shoulderScale={bodyShoulderScale}
+            hipScale={bodyHipScale}
             layerFaded={jointsFaded}
           />
 
@@ -240,8 +249,8 @@ export default function Scene({
             onSelect={onSelect}
             activeGroup={activeVascularGroup}
             filterMode={vascularFilterMode}
-            shoulderScale={shoulderScale}
-            hipScale={hipScale}
+            shoulderScale={bodyShoulderScale}
+            hipScale={bodyHipScale}
             layerFaded={vascularFaded}
           />
         </group>

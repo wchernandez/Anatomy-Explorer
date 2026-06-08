@@ -23,6 +23,10 @@ export default function App() {
   const [statureScale,  setStatureScale]  = useState(1)
   const [shoulderScale, setShoulderScale] = useState(1)
   const [hipScale,      setHipScale]      = useState(1)
+  // Weight-free X/Z scales — drive the skeleton / joints / vascular layers so
+  // they do NOT respond to the weight slider (only the muscle layer does).
+  const [bodyShoulderScale, setBodyShoulderScale] = useState(1)
+  const [bodyHipScale,      setBodyHipScale]      = useState(1)
   const [showDemoPanel,    setShowDemoPanel]    = useState(false)
   const [showCameraPanel, setShowCameraPanel] = useState(false)
   const [modelActivated,  setModelActivated]  = useState(false)
@@ -91,15 +95,22 @@ export default function App() {
   const handleScaleChange = useCallback(function handleScaleChange(typeOrObj, value) {
     if (typeOrObj && typeof typeOrObj === 'object') {
       // Object form — emitted by ProportionPanel.emit() and DemographicPanel
-      const { statureScale: sY, shoulderScale: sXZ, hipScale: hXZ } = typeOrObj
+      const { statureScale: sY, shoulderScale: sXZ, hipScale: hXZ,
+              bodyShoulderScale: bsXZ, bodyHipScale: bhXZ } = typeOrObj
       if (sY  !== undefined) setStatureScale(sY)
       if (sXZ !== undefined) setShoulderScale(sXZ)
       if (hXZ !== undefined) setHipScale(hXZ)
+      // Fall back to the full scales for legacy emitters that don't supply the
+      // weight-free variants, so the skeleton still tracks them.
+      if (bsXZ !== undefined) setBodyShoulderScale(bsXZ)
+      else if (sXZ !== undefined) setBodyShoulderScale(sXZ)
+      if (bhXZ !== undefined) setBodyHipScale(bhXZ)
+      else if (hXZ !== undefined) setBodyHipScale(hXZ)
     } else {
       // Legacy string form (kept for backward compatibility)
       if      (typeOrObj === 'stature')  setStatureScale(value)
-      else if (typeOrObj === 'shoulder') setShoulderScale(value)
-      else if (typeOrObj === 'hip')      setHipScale(value)
+      else if (typeOrObj === 'shoulder') { setShoulderScale(value); setBodyShoulderScale(value) }
+      else if (typeOrObj === 'hip')      { setHipScale(value); setBodyHipScale(value) }
     }
   }, [])
 
@@ -191,6 +202,8 @@ export default function App() {
         statureScale={statureScale}
         shoulderScale={shoulderScale}
         hipScale={hipScale}
+        bodyShoulderScale={bodyShoulderScale}
+        bodyHipScale={bodyHipScale}
         cameraPreset={cameraPreset}
         activeBoneGroup={activeBoneGroup}
         boneFadeMode={boneFadeMode}

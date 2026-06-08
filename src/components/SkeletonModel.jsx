@@ -224,8 +224,8 @@ export default function SkeletonModel({
     // 6. Report the transform that drives the shared body group for ALL layers.
     onTransformReady?.({ scale: [sx, sy, sz], position: [-cx, -1.5 - minY, -cz] })
 
-    // 7. Skull: neutralise shoulder scale on shape AND position so skull
-    //    stays centred and doesn't widen with shoulderScale
+    // 7. Skull: neutralise X/Z scaling so the skull doesn't stretch
+    //    with shoulder width changes.
     for (const { mesh, ox, oz, px, pz } of snapRef.current.skull) {
       mesh.scale.x    = ox / shoulderScale
       mesh.scale.z    = oz / shoulderScale

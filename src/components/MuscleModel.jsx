@@ -273,8 +273,9 @@ export default function MuscleModel({
   onSelect,
   activeGroup,
   filterMode,
-  shoulderScale = 1,
-  hipScale      = 1,
+  shoulderScale = 1,   // FULL (weight-included) upper-body X/Z target
+  hipScale      = 1,   // FULL (weight-included) lower-body X/Z target
+  bodyShoulderScale = 1, // weight-free X/Z scale actually applied by the shared group
   layerFaded    = false,
 }) {
   const { scene } = useGLTF('/Muscles.glb')
@@ -311,9 +312,11 @@ export default function MuscleModel({
 
   const snapRef = useRef(null)
 
-  // The shared body group (in Scene) owns the overall scale + position. This
-  // layer only applies region-specific X/Z corrections per mesh: cancel the
-  // shared shoulderScale over the skull, swap it for hipScale over the lower body.
+  // The overall muscle widening with weight is applied by the wrapper <group>
+  // below (scaled around the body centreline, so the layer broadens coherently
+  // instead of each mesh distorting around its own pivot). This per-mesh pass
+  // only applies the small region corrections relative to that full shoulder
+  // width: cancel it over the skull, swap it for hipScale over the lower body.
   useEffect(() => {
     if (!scene) return
 
@@ -409,8 +412,15 @@ export default function MuscleModel({
     }
   })
 
+  // The shared body group is driven by the skeleton at the weight-FREE X/Z scale
+  // (bodyShoulderScale). Re-apply the weight component here as an X/Z group scale
+  // about the body centreline so the muscle layer alone broadens/narrows with
+  // weight, coherently, without per-mesh distortion. At the reference weight
+  // (full == free) this factor is 1, leaving the model untouched.
+  const weightWidth = bodyShoulderScale ? shoulderScale / bodyShoulderScale : 1
+
   return (
-    <group visible={visible}>
+    <group visible={visible} scale={[weightWidth, 1, weightWidth]}>
       <primitive
         object={scene}
         onClick={(e) => {
