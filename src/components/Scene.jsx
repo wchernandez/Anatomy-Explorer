@@ -276,10 +276,9 @@ export default function Scene({
             layerFaded={skeletonFaded}
           />
 
-          {/* Muscle is the only weight-responsive layer. It gets the FULL
-              (weight-included) target scales, plus bodyShoulderScale — the
-              shared group's actual weight-free X/Z scale — as the denominator
-              for its per-mesh corrections. */}
+          {/* Muscle tracks the skeleton via the weight-free body* scales; the
+              gap between those and the FULL scales is the weight-only gain,
+              applied as in-place thickening to the orange muscle tissue only. */}
           <MuscleModel
             visible={showMuscles}
             selectedBone={selectedBone}
@@ -289,6 +288,7 @@ export default function Scene({
             shoulderScale={shoulderScale}
             hipScale={hipScale}
             bodyShoulderScale={bodyShoulderScale}
+            bodyHipScale={bodyHipScale}
             layerFaded={musclesFaded}
           />
 
