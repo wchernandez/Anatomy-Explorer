@@ -120,6 +120,11 @@ function measureLocalBox(root) {
 const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
 const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness: 0.5,  metalness: 0.1, emissive: new THREE.Color(0x3a2a10), emissiveIntensity: 0.4 })
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
+// Quiz highlight materials: amber = the bone in question, green = correct answer,
+// red = the wrong bone the user picked.
+const quizAmberMat   = new THREE.MeshStandardMaterial({ color: 0xffc24a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a3d00), emissiveIntensity: 0.55 })
+const quizCorrectMat = new THREE.MeshStandardMaterial({ color: 0x49d98a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x0c4a26), emissiveIntensity: 0.6 })
+const quizWrongMat   = new THREE.MeshStandardMaterial({ color: 0xff5d6e, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a0c18), emissiveIntensity: 0.6 })
 const fadedMat      = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
 const hiddenMat     = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 const layerFadedMat = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.2, depthWrite: false })
@@ -138,10 +143,13 @@ export default function SkeletonModel({
   onTransformReady = null, // ({scale:[x,y,z], position:[x,y,z]}) => void — drives the shared body group
   onSceneReady = null,     // (scene) => void — exposes the skeleton scene for region camera framing
   layerFaded    = false,
+  quizMode        = false, // during a quiz, use the amber/green/red highlight scheme
+  quizGreenTarget = null,  // name substring of the correct bone → green (after answering)
+  quizRedMesh     = null,  // the wrong bone the user clicked → red (spot test / description)
+  quizRedTarget   = null,  // name substring of the wrong bone the user named → red (MC / type)
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered]                 = useState(null)
-  const [highlightedMesh, setHighlightedMesh] = useState(null)
   const groupRef = useRef()
   const snapRef  = useRef(null)   // { skull: [{mesh,ox,oz,px,pz}], lower: [{mesh,ox,oz,px,pz}] }
 
@@ -165,14 +173,6 @@ export default function SkeletonModel({
     if (scene && meshes.length) onSceneReady?.(scene)
   }, [scene, meshes, onSceneReady])
 
-  // Find the mesh matching highlightBone string
-  useEffect(() => {
-    if (!highlightBone) { setHighlightedMesh(null); return }
-    const target = meshes.find(m =>
-      (m.name || m.parent?.name || '').toLowerCase().includes(highlightBone.toLowerCase())
-    )
-    setHighlightedMesh(target || null)
-  }, [highlightBone, meshes])
 
   // ── Proportional scaling ──────────────────────────────────────────────────
   // The skeleton is the reference layer. It does NOT transform its own group;
@@ -265,8 +265,20 @@ export default function SkeletonModel({
       return
     }
 
-    if (mesh === selectedBone || mesh === highlightedMesh) {
-      mesh.material = selectedMat
+    const nameLc = (mesh.name || '').toLowerCase()
+    let chosen = null
+    if (quizMode) {
+      // green (correct) > red (wrong pick) > amber (the bone in question)
+      if (quizGreenTarget && nameLc.includes(quizGreenTarget.toLowerCase())) chosen = quizCorrectMat
+      else if ((quizRedMesh && mesh === quizRedMesh) ||
+               (quizRedTarget && nameLc.includes(quizRedTarget.toLowerCase()))) chosen = quizWrongMat
+      else if (highlightBone && nameLc.includes(highlightBone.toLowerCase())) chosen = quizAmberMat
+    } else if (mesh === selectedBone || (highlightBone && nameLc.includes(highlightBone.toLowerCase()))) {
+      chosen = selectedMat
+    }
+
+    if (chosen) {
+      mesh.material = chosen
     } else if (mesh === hovered) {
       mesh.material = hoverMat
     } else {

@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { ListChecks, Target, BookOpen, Keyboard } from '@phosphor-icons/react'
 import { QUIZ_MODES, QUIZ_LAYERS, QUIZ_REGIONS } from '../data/quizData.js'
+
+const MODE_ICONS = { 1: ListChecks, 2: Target, 3: BookOpen, 4: Keyboard }
 
 // Accessible custom dropdown that matches the neon aesthetic. Options carry an
 // icon, label, optional sub-text and an optional disabled/"soon" state.
@@ -100,18 +103,21 @@ export default function QuizSetup({ config, onChange, onStart, onClose }) {
         <div className="quiz-setup-section">
           <div className="quiz-setup-step">1 · Choose a mode</div>
           <div className="quiz-card-grid">
-            {QUIZ_MODES.map(m => (
-              <button
-                key={m.level}
-                type="button"
-                className={`quiz-card${config.level === m.level ? ' active' : ''}`}
-                onClick={() => onChange({ level: m.level })}
-              >
-                <span className="quiz-card-icon">{m.icon}</span>
-                <span className="quiz-card-title">{m.label}</span>
-                <span className="quiz-card-sub">{m.desc}</span>
-              </button>
-            ))}
+            {QUIZ_MODES.map(m => {
+              const Icon = MODE_ICONS[m.level]
+              return (
+                <button
+                  key={m.level}
+                  type="button"
+                  className={`quiz-card${config.level === m.level ? ' active' : ''}`}
+                  onClick={() => onChange({ level: m.level })}
+                >
+                  <span className="quiz-card-icon">{Icon && <Icon size={22} />}</span>
+                  <span className="quiz-card-title">{m.label}</span>
+                  <span className="quiz-card-sub">{m.desc}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
 

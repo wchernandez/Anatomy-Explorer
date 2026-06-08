@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Exam, VideoCamera, Ruler, ArrowCounterClockwise } from '@phosphor-icons/react'
 import Scene from './components/Scene.jsx'
 import QuizPanel from './components/QuizPanel.jsx'
 import QuizSetup from './components/QuizSetup.jsx'
@@ -18,7 +19,7 @@ function formatName(raw) {
   return name.replace(/\b\w/g, c => c.toUpperCase()).trim()
 }
 
-const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: '', score: 0, wrong: [] }
+const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: '', score: 0, wrong: [], wrongTarget: null }
 
 export default function App() {
   const [selectedBone, setSelectedBone] = useState(null)
@@ -44,9 +45,24 @@ export default function App() {
   const [showMenu,    setShowMenu]    = useState(true)
 
   const quizLevel = quizConfig.level
+  const activeQuestion = quizQuestions[quiz.currentQ]
+  // Amber "this is the bone" highlight — only before answering, for the modes
+  // that show the bone (multiple choice / type the name).
   const highlightBone =
-    quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && quizQuestions[quiz.currentQ]
-      ? quizQuestions[quiz.currentQ].target
+    quizStarted && (quizLevel === 1 || quizLevel === 4) && !quiz.answered && activeQuestion
+      ? activeQuestion.target
+      : null
+  // After answering: the correct bone turns green; the user's wrong answer turns
+  // red — a wrong clicked bone (spot test / description) or the bone they named
+  // (multiple choice / type the name).
+  const quizGreenTarget = quizStarted && quiz.answered && activeQuestion ? activeQuestion.target : null
+  const quizRedMesh =
+    quizStarted && quiz.answered && quiz.result === 'wrong' && (quizLevel === 2 || quizLevel === 3)
+      ? selectedBone
+      : null
+  const quizRedTarget =
+    quizStarted && quiz.answered && quiz.result === 'wrong' && (quizLevel === 1 || quizLevel === 4)
+      ? quiz.wrongTarget
       : null
 
   // Layer visibility
@@ -119,38 +135,65 @@ export default function App() {
     }
   }, [])
 
+  // Resolves a user's answer text (a multiple-choice option or typed name) to the
+  // matching bone's mesh target within the current region — or null if it doesn't
+  // correspond to a bone we know (so nothing gets highlighted).
+  function resolveBoneTarget(input) {
+    if (!input) return null
+    const pool = QUIZ_REGIONS[quizConfig.region]?.bones || []
+    const s = String(input).trim().toLowerCase()
+    if (!s) return null
+    const bone = pool.find(b =>
+      b.name.toLowerCase() === s ||
+      b.target.toLowerCase() === s ||
+      (b.synonyms || []).some(syn => syn.toLowerCase() === s)
+    )
+    return bone ? bone.target : null
+  }
+
   // Records the outcome of the current question: flips to the answered state,
   // updates the running score and logs misses for the results screen.
-  function applyAnswer(correct, q, feedback) {
+  // wrongTarget = the bone the user wrongly named (multiple choice / type modes),
+  // used to highlight that bone red. Null when their answer maps to no known bone.
+  function applyAnswer(correct, q, feedback, wrongTarget = null) {
     setQuiz(prev => ({
       ...prev,
       answered: true,
       result:   correct ? 'correct' : 'wrong',
       feedback,
+      wrongTarget,
       score:    prev.score + (correct ? 1 : 0),
       wrong:    correct ? prev.wrong : [...prev.wrong, { prompt: q.prompt, answer: q.answer }],
     }))
   }
 
   function handleBoneSelect(mesh) {
-    // Clicking the already-selected bone deselects it
+    // During a quiz the only meaningful click is answering a spot-test / description
+    // question that hasn't been answered yet. Every other click (after answering, or
+    // in the multiple-choice / type modes) is ignored, so only the correct/wrong
+    // answer bones stay highlighted. Hovering is unaffected.
+    if (quizStarted) {
+      if ((quizLevel === 2 || quizLevel === 3) && !quiz.answered && mesh) {
+        const q = quizQuestions[quiz.currentQ]
+        if (!q) return
+        setSelectedBone(mesh)
+        const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
+        const correct  = q.target === null || clickedName.includes(q.target)
+        const boneName = formatName(mesh.name || mesh.parent?.name)
+        applyAnswer(
+          correct, q,
+          correct ? `Correct! That's the ${q.answer}.` : `Not quite — that's the ${boneName}. The answer was the ${q.answer}.`,
+        )
+      }
+      return
+    }
+
+    // Explorer: clicking the already-selected bone deselects it.
     if (mesh && selectedBone && mesh.uuid === selectedBone.uuid) {
       setSelectedBone(null)
       return
     }
     setSelectedBone(mesh)
-    if (!quizStarted || (quizLevel !== 2 && quizLevel !== 3) || quiz.answered || !mesh) return
-
-    const q           = quizQuestions[quiz.currentQ]
-    const clickedName = (mesh.name || mesh.parent?.name || '').toLowerCase()
-    if (!q) return
-
-    const correct  = q.target === null || clickedName.includes(q.target)
-    const boneName = formatName(mesh.name || mesh.parent?.name)
-    applyAnswer(
-      correct, q,
-      correct ? `Correct! That's the ${q.answer}.` : `Not quite — that's the ${boneName}. The answer was the ${q.answer}.`,
-    )
   }
 
   function handleMultipleChoiceAnswer(option) {
@@ -158,7 +201,10 @@ export default function App() {
     const q = quizQuestions[quiz.currentQ]
     if (!q) return
     const correct = option.toLowerCase() === q.answer.toLowerCase()
-    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was ${q.answer}.`)
+    // The wrong option is itself a bone name → highlight that bone red.
+    const rt = correct ? null : resolveBoneTarget(option)
+    const wrongTarget = rt && rt !== q.target ? rt : null
+    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was ${q.answer}.`, wrongTarget)
   }
 
   function handleTypeAnswer(input) {
@@ -169,7 +215,11 @@ export default function App() {
     const target   = q.target.toLowerCase()
     const synonyms = q.synonyms || []
     const correct  = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
-    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.answer}".`)
+    // If what they typed matches a different known bone, highlight it red.
+    // Otherwise (unrecognised) show nothing but the correct bone.
+    const rt = correct ? null : resolveBoneTarget(typed)
+    const wrongTarget = rt && rt !== target ? rt : null
+    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.answer}".`, wrongTarget)
   }
 
   function startQuiz(config = quizConfig) {
@@ -205,7 +255,7 @@ export default function App() {
       setResetCounter(c => c + 1)
       return
     }
-    setQuiz(prev => ({ ...prev, currentQ: prev.currentQ + 1, answered: false, result: null, feedback: '' }))
+    setQuiz(prev => ({ ...prev, currentQ: prev.currentQ + 1, answered: false, result: null, feedback: '', wrongTarget: null }))
   }
 
   // While a quiz is running the model is locked to the chosen region (only the
@@ -222,9 +272,11 @@ export default function App() {
     return (
       <div className="main-menu">
         <div className="menu-card panel">
-          <div className="menu-title">Smoke and Mirrors</div>
-          <div className="menu-subtitle">Step into the interactive model and test your anatomy knowledge.</div>
-          <button onClick={() => setShowMenu(false)}>Begin Learning</button>
+          <div className="menu-eyebrow">University of Waikato</div>
+          <div className="menu-title">Anatomy Explorer</div>
+          <div className="menu-divider" />
+          <div className="menu-subtitle">COMPX241 &mdash; Smoke &amp; Mirrors</div>
+          <button onClick={() => setShowMenu(false)}>Enter Explorer</button>
         </div>
       </div>
     )
@@ -263,12 +315,16 @@ export default function App() {
         resetCounter={resetCounter}
         quizFocusToken={quizFocusToken}
         quizFocusGroup={quizGroupName}
+        quizMode={quizStarted}
+        quizGreenTarget={quizGreenTarget}
+        quizRedMesh={quizRedMesh}
+        quizRedTarget={quizRedTarget}
       />
 
       <div id="topbar">
         <div>
           <div className="title-main">Anatomy Explorer</div>
-          <div className="title-sub">Human Anatomy · Interactive Model</div>
+          <div className="title-sub">Human Body · Interactive Model</div>
         </div>
 
         <div id="nav-hints-group">
@@ -297,7 +353,7 @@ export default function App() {
               onClick={() => { setResetCounter(c => c + 1); setModelActivated(false) }}
               title="Reset View"
             >
-              <span className="preset-ft">⟳</span>
+              <span className="preset-ft"><ArrowCounterClockwise size={17} /></span>
               <span className="preset-sub">Reset View</span>
             </button>
           )}
@@ -310,24 +366,24 @@ export default function App() {
               onClick={() => setShowQuizSetup(v => !v)}
               title="Quiz Mode"
             >
-              <span className="preset-ft">🎓</span>
+              <span className="preset-ft"><Exam size={17} /></span>
               <span className="preset-sub">Quiz</span>
             </button>
             <button
               className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-              onClick={() => setShowCameraPanel(v => !v)}
+              onClick={() => { setShowDemoPanel(false); setShowCameraPanel(v => !v) }}
               title="Camera Angles"
             >
-              <span className="preset-ft">🎥</span>
+              <span className="preset-ft"><VideoCamera size={17} /></span>
               <span className="preset-sub">Camera</span>
             </button>
             <button
               id="demographic-toggle"
               className={`preset-btn${showDemoPanel ? ' active' : ''}`}
-              onClick={() => setShowDemoPanel(v => !v)}
+              onClick={() => { setShowCameraPanel(false); setShowDemoPanel(v => !v) }}
               title="Demographic Regression Scaling"
             >
-              <span className="preset-ft">🧬</span>
+              <span className="preset-ft"><Ruler size={17} /></span>
               <span className="preset-sub">Demographics</span>
             </button>
           </div>

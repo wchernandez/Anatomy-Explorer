@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@phosphor-icons/react": "^2.1.10",
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.17.10",
     "lil-gui": "^0.21.0",

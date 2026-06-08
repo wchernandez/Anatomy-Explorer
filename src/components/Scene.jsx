@@ -181,6 +181,10 @@ export default function Scene({
   resetCounter    = 0,
   quizFocusToken  = 0,
   quizFocusGroup  = 'All Bones',
+  quizMode        = false,
+  quizGreenTarget = null,
+  quizRedMesh     = null,
+  quizRedTarget   = null,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
@@ -274,6 +278,10 @@ export default function Scene({
             onTransformReady={handleTransformReady}
             onSceneReady={setSkelScene}
             layerFaded={skeletonFaded}
+            quizMode={quizMode}
+            quizGreenTarget={quizGreenTarget}
+            quizRedMesh={quizRedMesh}
+            quizRedTarget={quizRedTarget}
           />
 
           {/* Muscle tracks the skeleton via the weight-free body* scales; the

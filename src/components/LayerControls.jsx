@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Bone, Barbell, LinkSimple, Drop } from '@phosphor-icons/react'
 import { MUSCLE_GROUPS }   from './MuscleModel.jsx'
 import { JOINT_GROUPS }    from './JointModel.jsx'
 import { VASCULAR_GROUPS } from './VascularModel.jsx'
@@ -13,39 +14,39 @@ const BONE_GROUP_KEYS     = Object.keys(BONE_GROUPS)
 const LAYERS = [
   {
     key:      'skeleton',
-    icon:     '🦴',
+    icon:     Bone,
     label:    'Skeleton',
-    color:    '#00ff88',
-    shadow:   'rgba(0,255,136,0.45)',
-    border:   'rgba(0,255,136,0.55)',
-    bg:       'rgba(0,255,136,0.12)',
+    color:    '#c9b78f',
+    shadow:   'rgba(201,183,143,0.4)',
+    border:   'rgba(201,183,143,0.5)',
+    bg:       'rgba(201,183,143,0.1)',
   },
   {
     key:      'muscles',
-    icon:     '💪',
+    icon:     Barbell,
     label:    'Muscles',
-    color:    '#ff6b6b',
-    shadow:   'rgba(255,80,80,0.45)',
-    border:   'rgba(255,80,80,0.55)',
-    bg:       'rgba(255,60,60,0.12)',
+    color:    '#cf8a86',
+    shadow:   'rgba(207,138,134,0.4)',
+    border:   'rgba(207,138,134,0.5)',
+    bg:       'rgba(207,138,134,0.1)',
   },
   {
     key:      'joints',
-    icon:     '🔗',
+    icon:     LinkSimple,
     label:    'Joints',
-    color:    '#4dd8e8',
-    shadow:   'rgba(40,190,210,0.45)',
-    border:   'rgba(60,200,220,0.55)',
-    bg:       'rgba(0,180,200,0.12)',
+    color:    '#7bbcc4',
+    shadow:   'rgba(123,188,196,0.4)',
+    border:   'rgba(123,188,196,0.5)',
+    bg:       'rgba(123,188,196,0.1)',
   },
   {
     key:      'vascular',
-    icon:     '🩸',
+    icon:     Drop,
     label:    'Vascular',
-    color:    '#7aa8ff',
-    shadow:   'rgba(20,50,200,0.5)',
-    border:   'rgba(40,80,200,0.65)',
-    bg:       'rgba(10,30,120,0.45)',
+    color:    '#8d9fd6',
+    shadow:   'rgba(141,159,214,0.4)',
+    border:   'rgba(141,159,214,0.5)',
+    bg:       'rgba(141,159,214,0.1)',
   },
 ]
 
@@ -254,7 +255,7 @@ export default function LayerControls({
             className={`layer-btn ${visibility[layer.key] ? `active ${layer.key}` : 'inactive'}`}
             onClick={toggleLayer[layer.key]}
           >
-            <span className="layer-icon">{layer.icon}</span>
+            <layer.icon className="layer-icon" size={17} weight="regular" />
             {layer.label}
           </button>
         ))}
@@ -278,7 +279,7 @@ export default function LayerControls({
                 title={`${layer.label} groups`}
                 aria-expanded={isOpen}
               >
-                <span className="dock-icon">{layer.icon}</span>
+                <layer.icon className="dock-icon" size={22} weight="regular" />
               </button>
 
               {/* Slide-out panel */}

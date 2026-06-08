@@ -13,13 +13,12 @@
  *   - Does NOT directly touch any Three.js object — pure React/math layer
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAnthropometricScale } from '../hooks/useAnthropometricScale.js'
 import {
   ETHNICITY_META,
   ANSUR_AGE_MIN,
   ANSUR_AGE_MAX,
-  ANSUR_BASELINE,
 } from '../utils/regressionCoefficients.js'
 import './DemographicPanel.css'
 
@@ -71,25 +70,6 @@ function DualSlider({ id, label, value, min, max, step = 1, displayVal, unit, on
   )
 }
 
-function MeasRow({ label, cm, baseline, isMetric }) {
-  // Deviation from ANSUR baseline as a small bar indicator
-  const pct = Math.max(0, Math.min(200, (cm / (baseline / 10)) * 100))
-  const deviation = pct - 100
-  const displayVal = isMetric ? `${cm.toFixed(1)} cm` : `${(cm / 2.54).toFixed(1)} in`
-  return (
-    <div className="dp-meas-row">
-      <span className="dp-meas-label">{label}</span>
-      <div className="dp-meas-bar-wrap">
-        <div
-          className={`dp-meas-bar ${deviation >= 0 ? 'above' : 'below'}`}
-          style={{ width: `${Math.min(100, Math.abs(deviation) * 1.5)}%` }}
-        />
-      </div>
-      <span className="dp-meas-val">{displayVal}</span>
-    </div>
-  )
-}
-
 // ── Main panel ────────────────────────────────────────────────────────────────
 
 export default function DemographicPanel({ visible, onClose, onScaleChange }) {
@@ -99,6 +79,20 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   const [age,       setAge]       = useState(DEFAULT_AGE)
   const [heightCm,  setHeightCm]  = useState(DEFAULT_HEIGHT)
   const [weightKg,  setWeightKg]  = useState(DEFAULT_WEIGHT)
+  const ethInfoRef = useRef(null)
+
+  // Close the ethnicity disclaimer popover on outside click / Escape.
+  useEffect(() => {
+    if (!showEthInfo) return
+    const onDown = e => { if (ethInfoRef.current && !ethInfoRef.current.contains(e.target)) setShowEthInfo(false) }
+    const onKey = e => { if (e.key === 'Escape') setShowEthInfo(false) }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [showEthInfo])
 
   function handleUnitToggle(toMetric) {
     if (toMetric === isMetric) return
@@ -118,7 +112,7 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   // shoulderScale / hipScale are the FULL (weight-included) values shown in the
   // chips and used by the muscle layer; bodyShoulderScale / bodyHipScale are the
   // weight-free values that drive the skeleton / joints / vascular layers.
-  const { statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale, measurements } =
+  const { statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale } =
     useAnthropometricScale({ ethnicity, age, heightCm, weightKg })
 
   // ── Propagate scale changes upward to App → Scene → 3D models ─────────────
@@ -145,7 +139,6 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
       <div className="dp-header">
         <div className="dp-title">
           <span className="dp-title-main">Demographic Scaling</span>
-          <span className="dp-title-badge">ANSUR II · OLS</span>
         </div>
         <button className="dp-close" onClick={onClose} aria-label="Close">✕</button>
       </div>
@@ -160,35 +153,41 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
         <div className="dp-divider" />
 
         {/* ── Ethnicity selector ─────────────────────────────────────────── */}
-        <div className="dp-section-label-row">
+        <div className="dp-section-label-row" ref={ethInfoRef}>
           <SectionLabel>Ethnicity</SectionLabel>
           <button
             className="dp-info-btn"
             onClick={() => setShowEthInfo(v => !v)}
             aria-label="Ethnicity group information"
+            aria-expanded={showEthInfo}
           >?</button>
-        </div>
 
-        {showEthInfo && (
-          <div className="dp-eth-info">
-            {[
-              { cat: 'Caucasian',       sub: 'White — of European, Middle Eastern, or North African origin' },
-              { cat: 'African',         sub: 'Black or African American — African, Afro-Caribbean & African American origin' },
-              { cat: 'Hispanic',        sub: 'Hispanic / Latino — Mexican, Puerto Rican, Cuban, Central & South American, and other Spanish origin' },
-              { cat: 'Asian',           sub: 'Chinese, Filipino, Japanese, Korean, Vietnamese, Asian Indian, and other Asian origin' },
-              { cat: 'Native American', sub: 'American Indian & Alaska Native' },
-              { cat: 'Pacific Islander',sub: 'Native Hawaiian, Samoan, Chamorro / Guamanian, and other Pacific Islander origin' },
-            ].map(({ cat, sub }) => (
-              <div key={cat} className="dp-eth-info-row">
-                <span className="dp-eth-info-cat">{cat}</span>
-                <span className="dp-eth-info-sub">{sub}</span>
+          {showEthInfo && (
+            <div className="dp-eth-info" role="dialog" aria-label="Ethnicity group information">
+              <button
+                className="dp-eth-info-close"
+                onClick={() => setShowEthInfo(false)}
+                aria-label="Close"
+              >✕</button>
+              {[
+                { cat: 'Caucasian',       sub: 'White — of European, Middle Eastern, or North African origin' },
+                { cat: 'African',         sub: 'Black or African American — African, Afro-Caribbean & African American origin' },
+                { cat: 'Hispanic',        sub: 'Hispanic / Latino — Mexican, Puerto Rican, Cuban, Central & South American, and other Spanish origin' },
+                { cat: 'Asian',           sub: 'Chinese, Filipino, Japanese, Korean, Vietnamese, Asian Indian, and other Asian origin' },
+                { cat: 'Native American', sub: 'American Indian & Alaska Native' },
+                { cat: 'Pacific Islander',sub: 'Native Hawaiian, Samoan, Chamorro / Guamanian, and other Pacific Islander origin' },
+              ].map(({ cat, sub }) => (
+                <div key={cat} className="dp-eth-info-row">
+                  <span className="dp-eth-info-cat">{cat}</span>
+                  <span className="dp-eth-info-sub">{sub}</span>
+                </div>
+              ))}
+              <div className="dp-eth-info-note">
+                Groups follow the ANSUR II / U.S. DoD race classifications. Selecting one sets the slider to that group's mean height &amp; weight.
               </div>
-            ))}
-            <div className="dp-eth-info-note">
-              Groups follow the ANSUR II / U.S. DoD race classifications. Selecting one sets the slider to that group's mean height &amp; weight.
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className="dp-eth-grid">
           {ETHNICITY_META.map(({ key, label, n }) => (
@@ -283,22 +282,6 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
 
         <div className="dp-divider" />
 
-        {/* ── Estimated measurements (educational) ───────────────────────── */}
-        <SectionLabel>Estimated Measurements</SectionLabel>
-        <div className="dp-meas-list">
-          {measurements.map(({ key, label, cm }) => (
-            <MeasRow
-              key={key}
-              label={label}
-              cm={cm}
-              baseline={ANSUR_BASELINE[key]}
-              isMetric={isMetric}
-            />
-          ))}
-        </div>
-
-        <div className="dp-divider" />
-
         {/* ── Footer ─────────────────────────────────────────────────────── */}
         <div className="dp-footer-row">
           <button className="dp-reset-btn" onClick={handleReset} title="Reset to ANSUR mean">
@@ -307,7 +290,7 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
         </div>
 
         <div className="dp-source">
-          ANSUR II Male · n = 4,082 · DODRace groups · US Army 2012
+          ANSUR II Male · n = 4,082 · US Army 2012
         </div>
 
       </div>
