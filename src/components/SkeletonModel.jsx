@@ -82,7 +82,7 @@ export const BONE_GROUPS = {
     'finger of foot','sesamoid bones of foot',
   ],
   'Pelvis': [
-    'hip bone',
+    'hip bone','sacrum','coccyx',
   ],
 }
 
@@ -120,6 +120,8 @@ function measureLocalBox(root) {
 const defaultMat  = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
 const hoverMat    = new THREE.MeshStandardMaterial({ color: 0xe8d8b8, roughness: 0.5,  metalness: 0.1, emissive: new THREE.Color(0x3a2a10), emissiveIntensity: 0.4 })
 const selectedMat = new THREE.MeshStandardMaterial({ color: 0xff8060, roughness: 0.4,  metalness: 0.1, emissive: new THREE.Color(0x8a2010), emissiveIntensity: 0.6 })
+// Quiz highlight — yellow, used for the bone being asked about during a quiz.
+const quizHighlightMat = new THREE.MeshStandardMaterial({ color: 0xffd24a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x6a5010), emissiveIntensity: 0.7 })
 const fadedMat      = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.3 })
 const hiddenMat     = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 const layerFadedMat = new THREE.MeshStandardMaterial({ color: 0xc8b89a, roughness: 0.65, metalness: 0.05, transparent: true, opacity: 0.2, depthWrite: false })
@@ -136,7 +138,9 @@ export default function SkeletonModel({
   boneFadeMode  = 'fade',
   highlightBone = null,
   onTransformReady = null, // ({scale:[x,y,z], position:[x,y,z]}) => void — drives the shared body group
+  onSceneReady = null,     // (scene) => void — exposes the skeleton scene for region camera framing
   layerFaded    = false,
+  quizMode      = false,   // during a quiz: highlight target yellow, never keep a clicked bone selected (red)
 }) {
   const { scene } = useGLTF('/Skeleton.glb')
   const [hovered, setHovered]                 = useState(null)
@@ -158,6 +162,11 @@ export default function SkeletonModel({
     })
     return list
   }, [scene])
+
+  // Expose the scene (with cleaned mesh names) so the camera can frame regions.
+  useEffect(() => {
+    if (scene && meshes.length) onSceneReady?.(scene)
+  }, [scene, meshes, onSceneReady])
 
   // Find the mesh matching highlightBone string
   useEffect(() => {
@@ -259,7 +268,11 @@ export default function SkeletonModel({
       return
     }
 
-    if (mesh === selectedBone || mesh === highlightedMesh) {
+    if (mesh === highlightedMesh) {
+      // Quiz target → yellow; outside a quiz the highlight reuses the selected look.
+      mesh.material = quizMode ? quizHighlightMat : selectedMat
+    } else if (mesh === selectedBone && !quizMode) {
+      // Persistent red selection only applies outside the quiz.
       mesh.material = selectedMat
     } else if (mesh === hovered) {
       mesh.material = hoverMat

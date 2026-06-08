@@ -2,7 +2,7 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
-import SkeletonModel from './SkeletonModel.jsx'
+import SkeletonModel, { BONE_GROUPS } from './SkeletonModel.jsx'
 import MuscleModel from './MuscleModel.jsx'
 import JointModel from './JointModel.jsx'
 import VascularModel from './VascularModel.jsx'
@@ -10,7 +10,7 @@ import { CAMERA_PRESETS } from './CameraControls.jsx'
 
 // Animates the camera to a preset position via spherical interpolation
 // so it always arcs around the model rather than cutting through it.
-function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
+function CameraManager({ cameraPresetKey, cameraPresetToken, resetCounter, controlsRef, disabled }) {
   const { camera } = useThree()
   const rafRef = useRef(null)
 
@@ -48,10 +48,11 @@ function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
   }
 
   useEffect(() => {
-    if (!cameraPresetKey) return
+    if (disabled || !cameraPresetKey) return
     animateToPreset(cameraPresetKey)
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
-  }, [cameraPresetKey, camera])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cameraPresetToken])
 
   useEffect(() => {
     if (!resetCounter) return
@@ -94,6 +95,92 @@ function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
   return null
 }
 
+// Direction the camera sits from the region centre for each preset angle.
+const REGION_PRESET_DIRS = {
+  front:     [0, 0.12, 1],
+  back:      [0, 0.12, -1],
+  left:      [-1, 0.12, 0],
+  right:     [1, 0.12, 0],
+  top:       [0, 1, 0.001],
+  bottom:    [0, -1, 0.001],
+  isometric: [1, 0.6, 1],
+}
+
+// Quiz camera. Measures the world-space bounding box of the meshes in the chosen
+// region (a BONE_GROUP) and flies the camera + orbit target so that region fills
+// the view. The same framing powers the preset angles and the Reset View button,
+// all relative to the region the user is being quizzed on.
+function RegionCamera({ active, focusToken, focusGroup, cameraPreset, cameraPresetToken, controlsRef, skelScene }) {
+  const { camera } = useThree()
+  const rafRef    = useRef(null)
+  const regionRef = useRef(null) // { center: Vector3, maxDim: number }
+
+  const computeRegion = () => {
+    if (!skelScene) return null
+    const keywords = BONE_GROUPS[focusGroup] // null = whole skeleton
+    const box = new THREE.Box3()
+    skelScene.updateWorldMatrix(true, true)
+    skelScene.traverse(c => {
+      if (!c.isMesh) return
+      if (keywords && !keywords.some(k => (c.name || '').toLowerCase().includes(k.toLowerCase()))) return
+      box.expandByObject(c)
+    })
+    if (box.isEmpty()) return null
+    const size = box.getSize(new THREE.Vector3())
+    return { center: box.getCenter(new THREE.Vector3()), maxDim: Math.max(size.x, size.y, size.z) }
+  }
+
+  const flyTo = (dirArr) => {
+    const region = regionRef.current
+    if (!region) return
+    const { center, maxDim } = region
+    const fov  = (camera.fov * Math.PI) / 180
+    const dist = (maxDim / 2) / Math.tan(fov / 2) * 1.7 + 0.25
+    const dir  = new THREE.Vector3(...dirArr).normalize()
+    const endPos    = center.clone().add(dir.multiplyScalar(dist))
+    const endTarget = center.clone()
+
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    const startPos    = camera.position.clone()
+    const startTarget = controlsRef?.current ? controlsRef.current.target.clone() : endTarget.clone()
+    const duration = 900
+    let startTime = null
+    const animate = currentTime => {
+      if (startTime === null) startTime = currentTime
+      const t    = Math.min((currentTime - startTime) / duration, 1)
+      const ease = -(Math.cos(Math.PI * t) - 1) / 2
+      camera.position.lerpVectors(startPos, endPos, ease)
+      if (controlsRef?.current) {
+        controlsRef.current.target.lerpVectors(startTarget, endTarget, ease)
+        controlsRef.current.update()
+      }
+      camera.lookAt(controlsRef?.current ? controlsRef.current.target : endTarget)
+      if (t < 1) rafRef.current = requestAnimationFrame(animate)
+    }
+    rafRef.current = requestAnimationFrame(animate)
+  }
+
+  // Quiz start / Reset View — recompute the region and frame it from the front.
+  useEffect(() => {
+    if (!active || !focusToken) return
+    regionRef.current = computeRegion()
+    flyTo(REGION_PRESET_DIRS.front)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusToken])
+
+  // Preset angle selected during the quiz — relative to the region centre.
+  useEffect(() => {
+    if (!active || !cameraPresetToken) return
+    if (!regionRef.current) regionRef.current = computeRegion()
+    flyTo(REGION_PRESET_DIRS[cameraPreset] || REGION_PRESET_DIRS.front)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cameraPresetToken])
+
+  return null
+}
+
 export default function Scene({
   selectedBone,
   onSelect,
@@ -123,11 +210,16 @@ export default function Scene({
   vascularFaded   = false,
   onInteract,
   resetCounter    = 0,
+  quizFocusToken  = 0,
+  quizFocusGroup  = 'All Bones',
+  quizMode        = false,
+  cameraPresetToken = 0,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
   // all layers are guaranteed to stay perfectly aligned at any scale.
   const [bodyTransform, setBodyTransform] = useState(null)
+  const [skelScene, setSkelScene] = useState(null)
   const controlsRef = useRef(null)
   const dragStart = useRef(null)
   const didDrag = useRef(false)
@@ -213,7 +305,9 @@ export default function Scene({
             boneFadeMode={boneFadeMode}
             highlightBone={highlightBone}
             onTransformReady={handleTransformReady}
+            onSceneReady={setSkelScene}
             layerFaded={skeletonFaded}
+            quizMode={quizMode}
           />
 
           {/* Muscle tracks the skeleton via the weight-free body* scales; the
@@ -264,7 +358,22 @@ export default function Scene({
           target={[0, -0.2, 0]}
         />
 
-        <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} />
+        <CameraManager
+          cameraPresetKey={cameraPreset}
+          cameraPresetToken={cameraPresetToken}
+          resetCounter={resetCounter}
+          controlsRef={controlsRef}
+          disabled={quizMode}
+        />
+        <RegionCamera
+          active={quizMode}
+          focusToken={quizFocusToken}
+          focusGroup={quizFocusGroup}
+          cameraPreset={cameraPreset}
+          cameraPresetToken={cameraPresetToken}
+          controlsRef={controlsRef}
+          skelScene={skelScene}
+        />
       </Canvas>
     </div>
   )
