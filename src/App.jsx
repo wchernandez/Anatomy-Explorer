@@ -29,6 +29,7 @@ export default function App() {
   const [bodyHipScale,      setBodyHipScale]      = useState(1)
   const [showDemoPanel,    setShowDemoPanel]    = useState(false)
   const [showCameraPanel, setShowCameraPanel] = useState(false)
+  const [showFiltersPanel, setShowFiltersPanel] = useState(false)
   const [modelActivated,  setModelActivated]  = useState(false)
   const [resetCounter,    setResetCounter]    = useState(0)
 
@@ -265,6 +266,7 @@ export default function App() {
               setShowCameraPanel(v => !v)
               if (!showCameraPanel) {
                 setShowDemoPanel(false)
+                setShowFiltersPanel(false)
               }
             }}
             title="Camera Angles"
@@ -273,12 +275,27 @@ export default function App() {
             <span className="preset-sub">Camera</span>
           </button>
           <button
+            className={`preset-btn${showFiltersPanel ? ' active' : ''}`}
+            onClick={() => {
+              setShowFiltersPanel(v => !v)
+              if (!showFiltersPanel) {
+                setShowDemoPanel(false)
+                setShowCameraPanel(false)
+              }
+            }}
+            title="Layer Filters"
+          >
+            <span className="preset-ft">◎</span>
+            <span className="preset-sub">Filters</span>
+          </button>
+          <button
             id="demographic-toggle"
             className={`preset-btn${showDemoPanel ? ' active' : ''}`}
             onClick={() => {
               setShowDemoPanel(v => !v)
               if (!showDemoPanel) {
                 setShowCameraPanel(false)
+                setShowFiltersPanel(false)
               }
             }}
             title="Demographic Regression Scaling"
@@ -315,6 +332,8 @@ export default function App() {
         musclesFaded={musclesFaded}           setMusclesFaded={setMusclesFaded}
         jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}
         vascularFaded={vascularFaded}         setVascularFaded={setVascularFaded}
+        showFiltersPanel={showFiltersPanel}
+        setShowFiltersPanel={setShowFiltersPanel}
         showDemoPanel={showDemoPanel}
         showCameraPanel={showCameraPanel}
         onFiltersOpened={() => {

@@ -196,20 +196,23 @@ export default function LayerControls({
   musclesFaded,     setMusclesFaded,
   jointsFaded,      setJointsFaded,
   vascularFaded,    setVascularFaded,
+  // filters menu (top bar)
+  showFiltersPanel,
+  setShowFiltersPanel,
   // mutual exclusion with other panels
   showDemoPanel,
   showCameraPanel,
   onFiltersOpened,
 }) {
-  // Which panel is open; null = all closed
+  // Which layer's filter detail is open; null = strip only (step 1)
   const [openPanel, setOpenPanel] = useState(null)
 
-  // Close filter panel when other panels open
+  // Close layer detail when filters menu or other panels close
   useEffect(() => {
-    if (showDemoPanel || showCameraPanel) {
+    if (!showFiltersPanel || showDemoPanel || showCameraPanel) {
       setOpenPanel(null)
     }
-  }, [showDemoPanel, showCameraPanel])
+  }, [showFiltersPanel, showDemoPanel, showCameraPanel])
 
   const visibility = {
     skeleton: showSkeleton,
@@ -250,13 +253,14 @@ export default function LayerControls({
   // Active layers in order — determines which circles appear
   const activeLayers = LAYERS.filter(l => visibility[l.key])
 
-  function handleCircleClick(key) {
+  function handleLayerChipClick(key) {
     if (openPanel !== key) {
-      // Opening a filter panel - notify App to close other panels
       onFiltersOpened()
     }
     setOpenPanel(prev => prev === key ? null : key)
   }
+
+  const openLayer = LAYERS.find(l => l.key === openPanel)
 
   return (
     <>
@@ -275,45 +279,64 @@ export default function LayerControls({
         ))}
       </div>
 
-      {/* ── Left-side circle dock ────────────────────────────────────────── */}
-      <div id="layer-dock">
-        <div className="dock-header-label">Filters</div>
-        {activeLayers.map((layer, i) => {
-          const isOpen = openPanel === layer.key
-          return (
-            <div
-              key={layer.key}
-              className="dock-row"
-              style={{ '--layer-color': layer.color, '--layer-shadow': layer.shadow, '--layer-border': layer.border, '--layer-bg': layer.bg }}
-            >
-              {/* Circle trigger */}
-              <button
-                className={`dock-circle ${isOpen ? 'open' : ''}`}
-                onClick={() => handleCircleClick(layer.key)}
-                title={`${layer.label} groups`}
-                aria-expanded={isOpen}
-              >
-                <span className="dock-icon">{layer.icon}</span>
-              </button>
+      {/* ── Top filters menu (step 1: layer strip, step 2: filter detail) ── */}
+      {showFiltersPanel && (
+        <div id="filters-menu">
+          <div id="filters-strip">
+            <span className="filters-strip-label">Active Layers</span>
+            {activeLayers.length === 0 ? (
+              <span className="filters-strip-empty">Turn on layers below to filter them</span>
+            ) : (
+              <div className="filters-strip-chips">
+                {activeLayers.map(layer => {
+                  const isOpen = openPanel === layer.key
+                  return (
+                    <button
+                      key={layer.key}
+                      className={`filter-layer-chip ${layer.key} ${isOpen ? 'open' : ''}`}
+                      onClick={() => handleLayerChipClick(layer.key)}
+                      title={`${layer.label} filters`}
+                      aria-expanded={isOpen}
+                    >
+                      <span className="filter-layer-icon">{layer.icon}</span>
+                      {layer.label}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+            <button
+              className="filters-strip-close"
+              onClick={() => setShowFiltersPanel(false)}
+              aria-label="Close filters"
+            >✕</button>
+          </div>
 
-              {/* Slide-out panel */}
-              <div className={`dock-panel ${isOpen ? 'visible' : ''}`}>
-                <div className="dock-panel-header">
-                  <span className="dock-panel-title">{layer.label} Groups</span>
-                  <button
-                    className="dock-panel-close"
-                    onClick={() => setOpenPanel(null)}
-                    aria-label="Close"
-                  >✕</button>
-                </div>
-                <div className="dock-panel-body">
-                  <PanelContent layerKey={layer.key} state={panelState} />
-                </div>
+          {openLayer && (
+            <div
+              id="filter-detail-panel"
+              style={{
+                '--layer-color': openLayer.color,
+                '--layer-shadow': openLayer.shadow,
+                '--layer-border': openLayer.border,
+                '--layer-bg': openLayer.bg,
+              }}
+            >
+              <div className="filter-detail-header">
+                <span className="filter-detail-title">{openLayer.label} Filters</span>
+                <button
+                  className="filter-detail-close"
+                  onClick={() => setOpenPanel(null)}
+                  aria-label="Close layer filters"
+                >✕</button>
+              </div>
+              <div className="filter-detail-body">
+                <PanelContent layerKey={openLayer.key} state={panelState} />
               </div>
             </div>
-          )
-        })}
-      </div>
+          )}
+        </div>
+      )}
     </>
   )
 }

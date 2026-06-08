@@ -116,139 +116,175 @@
   border-color: rgba(15, 76, 127, 0.6);
 }
 
-/* Circle dock — vertical stack on the right side, above info panel */
+/* Top filters menu — below topbar, right-aligned */
 
-#layer-dock {
+#filters-menu {
   position: fixed;
+  top: 4.5rem;
   right: 2rem;
-  bottom: calc(2rem + 550px);
-  transform: none;
   z-index: 11;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  padding: 0.75rem 0;
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(6, 182, 212, 0.15);
-  border-right: none;
-  border-radius: 16px 0 0 16px;
-  backdrop-filter: blur(18px);
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
-  align-items: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+  animation: filtersSlideIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dock-header-label {
-  font-size: 0.58rem;
+@keyframes filtersSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#filters-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1.5px solid rgba(6, 182, 212, 0.3);
+  border-radius: 50px;
+  backdrop-filter: blur(20px);
+  padding: 0.45rem 0.55rem 0.45rem 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  max-width: calc(100vw - 4rem);
+}
+
+.filters-strip-label {
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-dim);
-  opacity: 0.85;
-  padding: 0 0.5rem 0.25rem 0.5rem;
   white-space: nowrap;
-  border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-  width: 100%;
-  text-align: center;
-  margin-bottom: 0.2rem;
-}
-
-/* Each row holds a circle + its panel side-by-side */
-.dock-row {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-/* ── Circle trigger button ─────────────────────────────────────────────── */
-.dock-circle {
-  position: relative;
-  width: 48px; 
-  height: 48px; 
-  border-radius: 50%;
-  border: 2px solid var(--layer-border);
-  background: var(--layer-bg);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 9px;
-  transition: all 0.22s ease;
-  padding: 0;
-  box-shadow: none;
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(100, 116, 139, 0.3);
   flex-shrink: 0;
 }
 
-.dock-circle:hover {
-  transform: scale(1.08);
-  background: color-mix(in srgb, var(--layer-color) 20%, transparent) !important;
-  box-shadow: 0 0 14px var(--layer-shadow) !important;
-  border-color: var(--layer-color) !important;
+.filters-strip-empty {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-style: italic;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
 }
 
-.dock-circle.open {
-  background: color-mix(in srgb, var(--layer-color) 22%, transparent) !important;
-  border-color: var(--layer-color) !important;
-  box-shadow: 0 0 18px var(--layer-shadow) !important;
-  transform: scale(1.05);
+.filters-strip-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
-/* Pulsing ring when open */
-.dock-circle.open::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1.5px solid var(--layer-color);
-  opacity: 0.4;
-  animation: dock-pulse 2s ease-in-out infinite;
+.filter-layer-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.85rem;
+  border-radius: 30px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1.5px solid rgba(100, 116, 139, 0.3);
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--text-dim);
+  width: auto;
+  margin: 0;
+  box-shadow: none;
+  white-space: nowrap;
 }
 
-@keyframes dock-pulse {
-  0%, 100% { transform: scale(1);    opacity: 0.4; }
-  50%       { transform: scale(1.18); opacity: 0; }
+.filter-layer-chip:hover {
+  transform: none;
+  color: var(--text);
+  border-color: rgba(6, 182, 212, 0.45);
+  background: rgba(6, 182, 212, 0.1);
 }
 
-.dock-icon {
-  font-size: 1.45rem; 
+.filter-layer-chip.open {
+  border-color: rgba(6, 182, 212, 0.6);
+  background: rgba(6, 182, 212, 0.18);
+  color: #06b6d4;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
+}
+
+.filter-layer-chip.skeleton.open {
+  border-color: rgba(148, 163, 184, 0.6);
+  background: rgba(148, 163, 184, 0.18);
+  color: #cbd5e1;
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.2);
+}
+
+.filter-layer-chip.muscles.open {
+  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(220, 38, 38, 0.18);
+  color: #fca5a5;
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
+}
+
+.filter-layer-chip.joints.open {
+  border-color: rgba(6, 182, 212, 0.6);
+  background: rgba(6, 182, 212, 0.18);
+  color: #67e8f9;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
+}
+
+.filter-layer-chip.vascular.open {
+  border-color: rgba(15, 76, 127, 0.6);
+  background: rgba(15, 76, 127, 0.18);
+  color: #93c5e6;
+  box-shadow: 0 0 12px rgba(15, 76, 127, 0.2);
+}
+
+.filter-layer-icon {
+  font-size: 0.95rem;
   line-height: 1;
-  pointer-events: none;
 }
 
-/* ── Slide-out panel ───────────────────────────────────────────────────── */
-.dock-panel {
-  position: absolute;
-  right: 68px; 
-  top: 0; 
-  transform: translateX(8px) translateY(-20px);
-  width: 220px;
+.filters-strip-close {
+  all: unset;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  color: rgba(160, 165, 180, 0.7);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.filters-strip-close:hover {
+  color: #06b6d4;
+  background: rgba(6, 182, 212, 0.12);
+}
+
+/* Step 2 — filter detail panel below the strip */
+#filter-detail-panel {
+  width: 260px;
   background: rgba(15, 23, 42, 0.96);
-  border: 1.5px solid var(--layer-border);
+  border: 1.5px solid var(--layer-border, rgba(6, 182, 212, 0.3));
   border-radius: 14px;
   backdrop-filter: blur(24px);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.2s ease;
-  z-index: 25;
+  animation: filtersSlideIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dock-panel.visible {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(0);
-}
-
-.dock-panel-header {
+.filter-detail-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 0.85rem 0.55rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   background: color-mix(in srgb, var(--layer-color) 10%, transparent);
 }
 
-.dock-panel-title {
+.filter-detail-title {
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -256,11 +292,11 @@
   color: var(--layer-color);
 }
 
-.dock-panel-close {
+.filter-detail-close {
   all: unset;
   cursor: pointer;
   font-size: 0.75rem;
-  color: rgba(160,160,192,0.55);
+  color: rgba(160, 160, 192, 0.55);
   width: 20px;
   height: 20px;
   display: flex;
@@ -269,17 +305,18 @@
   border-radius: 50%;
   transition: all 0.15s ease;
 }
-.dock-panel-close:hover {
+
+.filter-detail-close:hover {
   color: var(--layer-color);
   background: color-mix(in srgb, var(--layer-color) 15%, transparent);
 }
 
-.dock-panel-body {
+.filter-detail-body {
   padding: 0.75rem 0.85rem 0.9rem;
-  max-height: 55vh;
+  max-height: 50vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 /* Filter mode row */
@@ -580,28 +617,26 @@
     font-size: 0.7rem;
   }
 
-  #layer-dock {
-    top: auto;
-    bottom: 5.5rem;
-    transform: none;
-    flex-direction: row;
-    border-radius: 14px 14px 0 0;
-    border-left: 1px solid rgba(255,255,255,0.07);
-    border-bottom: none;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.5rem 0.6rem;
+  #filters-menu {
+    top: 4rem;
+    right: 1rem;
+    left: 1rem;
+    align-items: stretch;
   }
 
-  .dock-panel {
-    left: 50%;
-    top: auto;
-    bottom: calc(100% + 10px);
-    transform: translateX(-50%) translateY(6px);
+  #filters-strip {
+    border-radius: 14px;
+    flex-wrap: wrap;
+    padding: 0.6rem 0.75rem;
   }
 
-  .dock-panel.visible {
-    transform: translateX(-50%) translateY(0);
+  .filters-strip-chips {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #filter-detail-panel {
+    width: 100%;
   }
 
   #camera-panel {
@@ -612,8 +647,11 @@
 }
 
 @media (max-width: 640px) {
-  #layer-dock {
-    display: none;
+  #filters-menu {
+    top: auto;
+    bottom: 5.5rem;
+    left: 1rem;
+    right: 1rem;
   }
 
   #camera-panel {
