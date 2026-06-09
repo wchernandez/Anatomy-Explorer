@@ -8,21 +8,53 @@ import JointModel from './JointModel.jsx'
 import VascularModel from './VascularModel.jsx'
 import { CAMERA_PRESETS } from './CameraControls.jsx'
 
+// Measures the world-space framing for a body region (a BONE_GROUP): returns
+// { center, dist } so the camera can orbit that region instead of the whole body.
+function frameRegion(skelScene, focusGroup, camera) {
+  if (!skelScene) return null
+  const keywords = BONE_GROUPS[focusGroup] // null/All Bones = whole skeleton
+  const box = new THREE.Box3()
+  skelScene.updateWorldMatrix(true, true)
+  skelScene.traverse(c => {
+    if (!c.isMesh) return
+    if (keywords && !keywords.some(k => (c.name || '').toLowerCase().includes(k.toLowerCase()))) return
+    box.expandByObject(c)
+  })
+  if (box.isEmpty()) return null
+  const center = box.getCenter(new THREE.Vector3())
+  const size   = box.getSize(new THREE.Vector3())
+  const maxDim = Math.max(size.x, size.y, size.z)
+  const fov    = (camera.fov * Math.PI) / 180
+  const dist   = (maxDim / 2) / Math.tan(fov / 2) * 1.7 + 0.25
+  return { center, dist }
+}
+
 // Animates the camera to a preset position via spherical interpolation
 // so it always arcs around the model rather than cutting through it.
-function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
+function CameraManager({ cameraPresetKey, resetCounter, controlsRef, focusGroup, skelScene, regionFocused }) {
   const { camera } = useThree()
   const rafRef = useRef(null)
 
-  // Shared animation helper
+  // Shared animation helper. When a region is isolated/quizzed, the preset angle
+  // is applied RELATIVE to that region (its bbox centre + a fitted distance)
+  // instead of the whole body.
   const animateToPreset = (presetKey) => {
     if (!CAMERA_PRESETS[presetKey]) return
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
 
-    const preset = CAMERA_PRESETS[presetKey]
-    const target = new THREE.Vector3(...preset.target)
-    const startVec = camera.position.clone().sub(target)
-    const endVec   = new THREE.Vector3(...preset.position).sub(target)
+    const preset  = CAMERA_PRESETS[presetKey]
+    const framing = regionFocused ? frameRegion(skelScene, focusGroup, camera) : null
+
+    // Target = region centre (when focused) or the preset's world target.
+    const target  = framing ? framing.center.clone() : new THREE.Vector3(...preset.target)
+    // Direction the camera looks FROM (same for the whole body), scaled to the
+    // region's fitted distance when focused.
+    const endVec  = framing
+      ? new THREE.Vector3(...preset.position).sub(new THREE.Vector3(...preset.target)).normalize().multiplyScalar(framing.dist)
+      : new THREE.Vector3(...preset.position).sub(target)
+
+    const startVec    = camera.position.clone().sub(target)
+    const startTarget = controlsRef?.current ? controlsRef.current.target.clone() : target.clone()
     const startSph = new THREE.Spherical().setFromVector3(startVec)
     const endSph   = new THREE.Spherical().setFromVector3(endVec)
     let dTheta = endSph.theta - startSph.theta
@@ -40,8 +72,11 @@ function CameraManager({ cameraPresetKey, resetCounter, controlsRef }) {
         startSph.phi    + (endSph.phi    - startSph.phi)    * ease,
         startSph.theta  + dTheta                            * ease,
       )
-      camera.position.setFromSpherical(sph).add(target)
-      camera.lookAt(target)
+      // Fly the orbit target to the region centre too, so it stays framed.
+      const curTarget = startTarget.clone().lerp(target, ease)
+      camera.position.setFromSpherical(sph).add(curTarget)
+      if (controlsRef?.current) { controlsRef.current.target.copy(curTarget); controlsRef.current.update() }
+      camera.lookAt(curTarget)
       if (t < 1) rafRef.current = requestAnimationFrame(animate)
     }
     rafRef.current = requestAnimationFrame(animate)
@@ -181,6 +216,7 @@ export default function Scene({
   resetCounter    = 0,
   focusToken      = 0,
   focusGroup      = 'All Bones',
+  regionFocused   = false,
   quizMode        = false,
   quizGreenTarget = null,
   quizRedMesh     = null,
@@ -332,7 +368,7 @@ export default function Scene({
           target={[0, -0.2, 0]}
         />
 
-        <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} />
+        <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} focusGroup={focusGroup} skelScene={skelScene} regionFocused={regionFocused} />
         <FocusManager focusToken={focusToken} focusGroup={focusGroup} controlsRef={controlsRef} skelScene={skelScene} />
       </Canvas>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Bone, Barbell, LinkSimple, Drop } from '@phosphor-icons/react'
 import { MUSCLE_GROUPS }   from './MuscleModel.jsx'
 import { JOINT_GROUPS }    from './JointModel.jsx'
@@ -12,162 +12,62 @@ const BONE_GROUP_KEYS     = Object.keys(BONE_GROUPS)
 
 // Layer definitions — order determines vertical stack position
 const LAYERS = [
-  {
-    key:      'skeleton',
-    icon:     Bone,
-    label:    'Skeleton',
-    color:    '#c9b78f',
-    shadow:   'rgba(201,183,143,0.4)',
-    border:   'rgba(201,183,143,0.5)',
-    bg:       'rgba(201,183,143,0.1)',
-  },
-  {
-    key:      'muscles',
-    icon:     Barbell,
-    label:    'Muscles',
-    color:    '#cf8a86',
-    shadow:   'rgba(207,138,134,0.4)',
-    border:   'rgba(207,138,134,0.5)',
-    bg:       'rgba(207,138,134,0.1)',
-  },
-  {
-    key:      'joints',
-    icon:     LinkSimple,
-    label:    'Joints',
-    color:    '#7bbcc4',
-    shadow:   'rgba(123,188,196,0.4)',
-    border:   'rgba(123,188,196,0.5)',
-    bg:       'rgba(123,188,196,0.1)',
-  },
-  {
-    key:      'vascular',
-    icon:     Drop,
-    label:    'Vascular',
-    color:    '#8d9fd6',
-    shadow:   'rgba(141,159,214,0.4)',
-    border:   'rgba(141,159,214,0.5)',
-    bg:       'rgba(141,159,214,0.1)',
-  },
+  { key: 'skeleton', icon: Bone,       label: 'Skeleton', accent: 'bone',     color: '#c9b78f', shadow: 'rgba(201,183,143,0.4)', border: 'rgba(201,183,143,0.5)', bg: 'rgba(201,183,143,0.1)' },
+  { key: 'muscles',  icon: Barbell,    label: 'Muscles',  accent: 'muscle',   color: '#cf8a86', shadow: 'rgba(207,138,134,0.4)', border: 'rgba(207,138,134,0.5)', bg: 'rgba(207,138,134,0.1)' },
+  { key: 'joints',   icon: LinkSimple, label: 'Joints',   accent: 'joint',    color: '#7bbcc4', shadow: 'rgba(123,188,196,0.4)', border: 'rgba(123,188,196,0.5)', bg: 'rgba(123,188,196,0.1)' },
+  { key: 'vascular', icon: Drop,       label: 'Vascular', accent: 'vascular', color: '#8d9fd6', shadow: 'rgba(141,159,214,0.4)', border: 'rgba(141,159,214,0.5)', bg: 'rgba(141,159,214,0.1)' },
 ]
 
-// Fade/Hide only — no group selector
-function FadePanel({ fadeMode, setFadeMode, accentClass }) {
+const GROUP_KEYS = {
+  skeleton: BONE_GROUP_KEYS,
+  muscles:  MUSCLE_GROUP_KEYS,
+  joints:   JOINT_GROUP_KEYS,
+  vascular: VASCULAR_GROUP_KEYS,
+}
+
+// Whole-layer Show / Fade / Hide — label on top, buttons stacked underneath.
+function LayerModeBlock({ accent, mode, onSet }) {
   return (
-    <div className="filter-mode-row">
-      <span className="filter-label">Inactive:</span>
-      <button
-        className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'fade' ? 'selected' : ''}`}
-        onClick={() => setFadeMode('fade')}
-      >Fade</button>
-      <button
-        className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'hide' ? 'selected' : ''}`}
-        onClick={() => setFadeMode('hide')}
-      >Hide</button>
+    <div className="layer-mode-block">
+      <span className="filter-label">Whole layer</span>
+      <div className="layer-mode-row">
+        {['show', 'fade', 'hide'].map(m => (
+          <button
+            key={m}
+            className={`filter-toggle ${accent}-toggle ${mode === m ? 'selected' : ''}`}
+            onClick={() => onSet(m)}
+          >
+            {m[0].toUpperCase() + m.slice(1)}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
 
-// Panel content for each layer
-function PanelContent({ layerKey, state }) {
-  const {
-    activeGroup,        setActiveGroup,        filterMode,        setFilterMode,
-    activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
-    activeVascularGroup,setActiveVascularGroup, vascularFilterMode,setVascularFilterMode,
-    activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
-    isolated,           onToggleIsolate,       isolateEnabled,
-    faded,              toggleFade,
-  } = state
-
-  if (layerKey === 'skeleton') {
-    return (
-      <GroupPanel
-        groups={BONE_GROUP_KEYS}
-        active={activeBoneGroup}
-        setActive={setActiveBoneGroup}
-        fadeMode={boneFadeMode}
-        setFadeMode={setBoneFadeMode}
-        accentClass="bone"
-        layerFaded={faded.skeleton}
-        onToggleLayerFade={toggleFade.skeleton}
-        isolate={{ active: isolated, enabled: isolateEnabled, onToggle: onToggleIsolate }}
-      />
-    )
-  }
-  if (layerKey === 'muscles') {
-    return (
-      <GroupPanel
-        groups={MUSCLE_GROUP_KEYS}
-        active={activeGroup}
-        setActive={setActiveGroup}
-        fadeMode={filterMode}
-        setFadeMode={setFilterMode}
-        accentClass="muscle"
-        layerFaded={faded.muscles}
-        onToggleLayerFade={toggleFade.muscles}
-      />
-    )
-  }
-  if (layerKey === 'joints') {
-    return (
-      <GroupPanel
-        groups={JOINT_GROUP_KEYS}
-        active={activeJointGroup}
-        setActive={setActiveJointGroup}
-        fadeMode={jointFilterMode}
-        setFadeMode={setJointFilterMode}
-        accentClass="joint"
-        layerFaded={faded.joints}
-        onToggleLayerFade={toggleFade.joints}
-      />
-    )
-  }
-  if (layerKey === 'vascular') {
-    return (
-      <GroupPanel
-        groups={VASCULAR_GROUP_KEYS}
-        active={activeVascularGroup}
-        setActive={setActiveVascularGroup}
-        fadeMode={vascularFilterMode}
-        setFadeMode={setVascularFilterMode}
-        accentClass="vascular"
-        layerFaded={faded.vascular}
-        onToggleLayerFade={toggleFade.vascular}
-      />
-    )
-  }
-  return null
-}
-
-function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass, layerFaded, onToggleLayerFade, isolate }) {
+// Group selector + inactive-group fade/hide + (skeleton) isolate.
+function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentClass, isolate }) {
   return (
     <>
-      {/* While isolating a region the fade controls are irrelevant (everything but
-          the active group is hidden), so both are tucked away — same as the dock
-          for the in-quiz lock. */}
       {!isolate?.active && (
         <>
-          <div className="filter-mode-row">
-            <span className="filter-label">Whole layer:</span>
-            <button
-              className={`filter-toggle ${accentClass}-toggle ${layerFaded ? 'selected' : ''}`}
-              onClick={onToggleLayerFade}
-            >Fade</button>
-          </div>
-          <div className="divider" />
-          <div className="filter-mode-row">
-            <span className="filter-label">Inactive:</span>
-            <button
-              className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'fade' ? 'selected' : ''}`}
-              onClick={() => setFadeMode('fade')}
-            >Fade</button>
-            <button
-              className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'hide' ? 'selected' : ''}`}
-              onClick={() => setFadeMode('hide')}
-            >Hide</button>
+          <div className="filter-mode-block">
+            <span className="filter-label">Inactive groups</span>
+            <div className="layer-mode-row">
+              <button
+                className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'fade' ? 'selected' : ''}`}
+                onClick={() => setFadeMode('fade')}
+              >Fade</button>
+              <button
+                className={`filter-toggle ${accentClass}-toggle ${fadeMode === 'hide' ? 'selected' : ''}`}
+                onClick={() => setFadeMode('hide')}
+              >Hide</button>
+            </div>
           </div>
           <div className="divider" />
         </>
       )}
+
       <div className="group-list">
         {groups.map(group => (
           <button
@@ -195,135 +95,113 @@ function GroupPanel({ groups, active, setActive, fadeMode, setFadeMode, accentCl
   )
 }
 
+function panelPropsFor(key, state) {
+  switch (key) {
+    case 'skeleton': return { groups: GROUP_KEYS.skeleton, active: state.activeBoneGroup,     setActive: state.setActiveBoneGroup,     fadeMode: state.boneFadeMode,     setFadeMode: state.setBoneFadeMode,     accentClass: 'bone',     isolate: { active: state.isolated, enabled: state.isolateEnabled, onToggle: state.onToggleIsolate } }
+    case 'muscles':  return { groups: GROUP_KEYS.muscles,  active: state.activeGroup,         setActive: state.setActiveGroup,         fadeMode: state.filterMode,       setFadeMode: state.setFilterMode,       accentClass: 'muscle' }
+    case 'joints':   return { groups: GROUP_KEYS.joints,   active: state.activeJointGroup,    setActive: state.setActiveJointGroup,    fadeMode: state.jointFilterMode,  setFadeMode: state.setJointFilterMode,  accentClass: 'joint' }
+    case 'vascular': return { groups: GROUP_KEYS.vascular, active: state.activeVascularGroup, setActive: state.setActiveVascularGroup, fadeMode: state.vascularFilterMode, setFadeMode: state.setVascularFilterMode, accentClass: 'vascular' }
+    default: return null
+  }
+}
+
 export default function LayerControls({
   showSkeleton,     setShowSkeleton,
   showMuscles,      setShowMuscles,
   showJoints,       setShowJoints,
   showVascular,     setShowVascular,
-  // muscle
   activeGroup,      setActiveGroup,
   filterMode,       setFilterMode,
-  // joint
   activeJointGroup,   setActiveJointGroup,
   jointFilterMode,    setJointFilterMode,
-  // vascular
   activeVascularGroup, setActiveVascularGroup,
   vascularFilterMode,  setVascularFilterMode,
-  // bone (from BoneControls, now merged here)
   activeBoneGroup,  setActiveBoneGroup,
   boneFadeMode,     setBoneFadeMode,
-  // isolate (skeleton only)
   isolated,         onToggleIsolate,
   isolateEnabled,
-  // whole-layer fade
   skeletonFaded,    setSkeletonFaded,
   musclesFaded,     setMusclesFaded,
   jointsFaded,      setJointsFaded,
   vascularFaded,    setVascularFaded,
+  onOpen,           // notify parent when a panel opens (for mutual-exclusivity)
+  closeToken = 0,   // bump from parent → close any open layer panel
 }) {
-  // Which panel is open; null = all closed
   const [openPanel, setOpenPanel] = useState(null)
 
-  const visibility = {
-    skeleton: showSkeleton,
-    muscles:  showMuscles,
-    joints:   showJoints,
-    vascular: showVascular,
-  }
+  // Parent opened another floating panel (Demographics/Camera) → close ours.
+  useEffect(() => { setOpenPanel(null) }, [closeToken])
 
-  const faded = {
-    skeleton: skeletonFaded,
-    muscles:  musclesFaded,
-    joints:   jointsFaded,
-    vascular: vascularFaded,
-  }
+  const show  = { skeleton: showSkeleton,  muscles: showMuscles,  joints: showJoints,  vascular: showVascular }
+  const setShow = { skeleton: setShowSkeleton, muscles: setShowMuscles, joints: setShowJoints, vascular: setShowVascular }
+  const faded = { skeleton: skeletonFaded, muscles: musclesFaded, joints: jointsFaded, vascular: vascularFaded }
+  const setFaded = { skeleton: setSkeletonFaded, muscles: setMusclesFaded, joints: setJointsFaded, vascular: setVascularFaded }
 
-  const toggleFade = {
-    skeleton: () => setSkeletonFaded(v => !v),
-    muscles:  () => setMusclesFaded(v => !v),
-    joints:   () => setJointsFaded(v => !v),
-    vascular: () => setVascularFaded(v => !v),
-  }
-
-  const toggleLayer = {
-    skeleton: () => { setShowSkeleton(v => !v); if (openPanel === 'skeleton') setOpenPanel(null) },
-    muscles:  () => { setShowMuscles(v => !v);  if (openPanel === 'muscles')  setOpenPanel(null) },
-    joints:   () => { setShowJoints(v => !v);   if (openPanel === 'joints')   setOpenPanel(null) },
-    vascular: () => { setShowVascular(v => !v); if (openPanel === 'vascular') setOpenPanel(null) },
+  // Derive the 3-state mode and apply one.
+  const modeOf = key => (!show[key] ? 'hide' : faded[key] ? 'fade' : 'show')
+  const setMode = (key, mode) => {
+    if (mode === 'show')      { setShow[key](true);  setFaded[key](false) }
+    else if (mode === 'fade') { setShow[key](true);  setFaded[key](true)  }
+    else                      { setShow[key](false) }
   }
 
   const panelState = {
-    activeGroup,        setActiveGroup,        filterMode,        setFilterMode,
-    activeJointGroup,   setActiveJointGroup,   jointFilterMode,   setJointFilterMode,
-    activeVascularGroup,setActiveVascularGroup,vascularFilterMode,setVascularFilterMode,
-    activeBoneGroup,    setActiveBoneGroup,    boneFadeMode,      setBoneFadeMode,
-    isolated,           onToggleIsolate,       isolateEnabled,
-    faded,              toggleFade,
+    activeGroup, setActiveGroup, filterMode, setFilterMode,
+    activeJointGroup, setActiveJointGroup, jointFilterMode, setJointFilterMode,
+    activeVascularGroup, setActiveVascularGroup, vascularFilterMode, setVascularFilterMode,
+    activeBoneGroup, setActiveBoneGroup, boneFadeMode, setBoneFadeMode,
+    isolated, onToggleIsolate, isolateEnabled,
   }
 
-  // Active layers in order — determines which circles appear
-  const activeLayers = LAYERS.filter(l => visibility[l.key])
-
   function handleCircleClick(key) {
-    setOpenPanel(prev => prev === key ? null : key)
+    setOpenPanel(prev => {
+      const next = prev === key ? null : key
+      if (next) onOpen?.()   // opening a layer panel → close other floating panels
+      return next
+    })
   }
 
   return (
-    <>
-      {/* ── Bottom layer toggle bar ──────────────────────────────────────── */}
-      <div id="layer-bar">
-        <div className="layer-label">Layers</div>
-        {LAYERS.map(layer => (
-          <button
+    <div id="layer-dock">
+      <div className="dock-header-label">Layers</div>
+      {LAYERS.map(layer => {
+        const isOpen = openPanel === layer.key
+        const mode   = modeOf(layer.key)
+        const gp     = panelPropsFor(layer.key, panelState)
+        return (
+          <div
             key={layer.key}
-            className={`layer-btn ${visibility[layer.key] ? `active ${layer.key}` : 'inactive'}`}
-            onClick={toggleLayer[layer.key]}
+            className="dock-row"
+            style={{ '--layer-color': layer.color, '--layer-shadow': layer.shadow, '--layer-border': layer.border, '--layer-bg': layer.bg }}
           >
-            <layer.icon className="layer-icon" size={17} weight="regular" />
-            {layer.label}
-          </button>
-        ))}
-      </div>
-
-      {/* ── Left-side circle dock ────────────────────────────────────────── */}
-      <div id="layer-dock">
-        <div className="dock-header-label">Filters</div>
-        {activeLayers.map((layer, i) => {
-          const isOpen = openPanel === layer.key
-          return (
-            <div
-              key={layer.key}
-              className="dock-row"
-              style={{ '--layer-color': layer.color, '--layer-shadow': layer.shadow, '--layer-border': layer.border, '--layer-bg': layer.bg }}
+            <button
+              className={`dock-circle mode-${mode} ${isOpen ? 'open' : ''}`}
+              onClick={() => handleCircleClick(layer.key)}
+              title={`${layer.label} — ${mode}`}
+              aria-expanded={isOpen}
             >
-              {/* Circle trigger */}
-              <button
-                className={`dock-circle ${isOpen ? 'open' : ''}`}
-                onClick={() => handleCircleClick(layer.key)}
-                title={`${layer.label} groups`}
-                aria-expanded={isOpen}
-              >
-                <layer.icon className="dock-icon" size={22} weight="regular" />
-              </button>
+              <layer.icon className="dock-icon" size={22} weight="regular" />
+            </button>
 
-              {/* Slide-out panel */}
-              <div className={`dock-panel ${isOpen ? 'visible' : ''}`}>
-                <div className="dock-panel-header">
-                  <span className="dock-panel-title">{layer.label} Groups</span>
-                  <button
-                    className="dock-panel-close"
-                    onClick={() => setOpenPanel(null)}
-                    aria-label="Close"
-                  >✕</button>
-                </div>
-                <div className="dock-panel-body">
-                  <PanelContent layerKey={layer.key} state={panelState} />
-                </div>
+            <div className={`dock-panel ${isOpen ? 'visible' : ''}`}>
+              <div className="dock-panel-header">
+                <span className="dock-panel-title">{layer.label}</span>
+                <button className="dock-panel-close" onClick={() => setOpenPanel(null)} aria-label="Close">✕</button>
+              </div>
+              <div className="dock-panel-body">
+                <LayerModeBlock accent={layer.accent} mode={mode} onSet={m => setMode(layer.key, m)} />
+                {/* Group filters only matter while the layer is visible */}
+                {mode !== 'hide' && (
+                  <>
+                    <div className="divider" />
+                    <GroupPanel {...gp} />
+                  </>
+                )}
               </div>
             </div>
-          )
-        })}
-      </div>
-    </>
+          </div>
+        )
+      })}
+    </div>
   )
 }

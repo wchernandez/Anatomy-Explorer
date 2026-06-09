@@ -164,6 +164,20 @@
   transform: none;
 }
 
+/* Visual state of each layer (all four circles are always shown) */
+.dock-circle.mode-show {
+  background: color-mix(in srgb, var(--layer-color) 22%, transparent) !important;
+  border-color: var(--layer-color) !important;
+}
+.dock-circle.mode-fade {
+  border-style: dashed;
+  border-color: var(--layer-color) !important;
+}
+.dock-circle.mode-hide {
+  opacity: 0.4;
+}
+.dock-circle.mode-hide:hover { opacity: 0.75; }
+
 .dock-icon {
   line-height: 1;
   pointer-events: none;
@@ -233,7 +247,7 @@
 
 .dock-panel-body {
   padding: 0.8rem 0.85rem 0.9rem;
-  max-height: 55vh;
+  max-height: 78vh;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--panel-border-strong) transparent;
@@ -245,6 +259,23 @@
   align-items: center;
   gap: 0.4rem;
   margin-bottom: 0.5rem;
+}
+
+/* Stacked control block: subtitle on top, buttons underneath */
+.layer-mode-block,
+.filter-mode-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.55rem;
+}
+.layer-mode-row {
+  display: flex;
+  gap: 0.4rem;
+}
+.layer-mode-row .filter-toggle {
+  flex: 1;
+  text-align: center;
 }
 
 .filter-label {

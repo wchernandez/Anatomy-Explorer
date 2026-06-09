@@ -143,24 +143,30 @@ export default function InfoPanel({ selectedBone }) {
             <div>Click any structure in the model to inspect it.</div>
             <div className="info-empty-hint">Click again to deselect.</div>
           </div>
-        ) : !rawText || intro.length === 0 ? (
-          <div className="info-empty-state">
-            <div className="info-empty-icon">∅</div>
-            <div>No anatomical data found for this structure.</div>
-          </div>
         ) : (
           <>
-            {intro.map((p, i) => (
-              <p key={i} className="info-paragraph">{p}</p>
-            ))}
-
-            {sourceUrl && (
-              <div className="info-source">
-                <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
-                  External links ↗
-                </a>
+            {(!rawText || intro.length === 0) ? (
+              <div className="info-empty-state">
+                <div className="info-empty-icon">∅</div>
+                <div>No anatomical data found for this structure.</div>
               </div>
+            ) : (
+              intro.map((p, i) => (
+                <p key={i} className="info-paragraph">{p}</p>
+              ))
             )}
+
+            {/* Always offer an external link — the file's source if present,
+                otherwise a Wikipedia search for the structure. */}
+            <div className="info-source">
+              <a
+                href={sourceUrl || `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(formatName(boneName))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                External links ↗
+              </a>
+            </div>
           </>
         )}
       </div>

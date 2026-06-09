@@ -19,6 +19,21 @@ function formatName(raw) {
   return name.replace(/\b\w/g, c => c.toUpperCase()).trim()
 }
 
+// Levenshtein edit distance — used to accept near-correct spelling in the
+// type-the-name quiz (Level 4) instead of rejecting tiny typos.
+function levenshtein(a, b) {
+  const m = Array.from({ length: b.length + 1 }, (_, i) => [i])
+  for (let j = 0; j <= a.length; j++) m[0][j] = j
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      m[i][j] = b[i - 1] === a[j - 1]
+        ? m[i - 1][j - 1]
+        : Math.min(m[i - 1][j - 1] + 1, m[i][j - 1] + 1, m[i - 1][j] + 1)
+    }
+  }
+  return m[b.length][a.length]
+}
+
 const initialQuiz = { currentQ: 0, answered: false, result: null, feedback: '', score: 0, wrong: [], wrongTarget: null }
 
 export default function App() {
@@ -32,6 +47,16 @@ export default function App() {
   const [bodyHipScale,      setBodyHipScale]      = useState(1)
   const [showDemoPanel,    setShowDemoPanel]    = useState(false)
   const [showCameraPanel, setShowCameraPanel] = useState(false)
+  const [dockCloseToken,  setDockCloseToken]  = useState(0)  // bump → close the Layers panel
+
+  // Opening a floating panel (Demographics/Camera) closes the others, the Layers
+  // panel, and any selected structure — so nothing overlaps the info panel.
+  function openExclusive(which) {
+    setSelectedBone(null)
+    setDockCloseToken(t => t + 1)
+    if (which === 'demo')   { setShowCameraPanel(false); setShowDemoPanel(v => !v) }
+    if (which === 'camera') { setShowDemoPanel(false);   setShowCameraPanel(v => !v) }
+  }
   const [modelActivated,  setModelActivated]  = useState(false)
   const [resetCounter,    setResetCounter]    = useState(0)
 
@@ -196,6 +221,8 @@ export default function App() {
       setSelectedBone(null)
       return
     }
+    // Selecting a structure closes the floating panels so they never overlap the info panel.
+    if (mesh) { setShowDemoPanel(false); setShowCameraPanel(false) }
     setSelectedBone(mesh)
   }
 
@@ -216,13 +243,26 @@ export default function App() {
     if (!q) return
     const typed    = input.trim().toLowerCase()
     const target   = q.target.toLowerCase()
-    const synonyms = q.synonyms || []
-    const correct  = typed === target || synonyms.map(s => s.toLowerCase()).includes(typed)
-    // If what they typed matches a different known bone, highlight it red.
-    // Otherwise (unrecognised) show nothing but the correct bone.
-    const rt = correct ? null : resolveBoneTarget(typed)
-    const wrongTarget = rt && rt !== target ? rt : null
-    applyAnswer(correct, q, correct ? 'Correct! Well done.' : `Not quite — the answer was "${q.answer}".`, wrongTarget)
+    const answer   = (q.answer || q.target).toLowerCase()
+    const synonyms = (q.synonyms || []).map(s => s.toLowerCase())
+
+    const exact = typed === target || typed === answer || synonyms.includes(typed)
+    // Spelling tolerance: accept near-misses within a small edit distance of
+    // the target/answer (longer words allow one more typo).
+    const dist      = Math.min(levenshtein(typed, target), levenshtein(typed, answer))
+    const threshold = answer.length > 6 ? 3 : 2
+    const fuzzy     = !exact && dist <= threshold
+
+    if (exact || fuzzy) {
+      applyAnswer(true, q, exact
+        ? 'Correct! Well done.'
+        : `Correct! Just watch the spelling — it's "${q.answer}".`, null)
+    } else {
+      // If what they typed matches a different known bone, highlight it red.
+      const rt = resolveBoneTarget(typed)
+      const wrongTarget = rt && rt !== target ? rt : null
+      applyAnswer(false, q, `Not quite — the answer was "${q.answer}".`, wrongTarget)
+    }
   }
 
   function startQuiz(config = quizConfig) {
@@ -348,6 +388,7 @@ export default function App() {
         resetCounter={resetCounter}
         focusToken={focusToken}
         focusGroup={sceneFocusGroup}
+        regionFocused={isolated || quizStarted}
         quizMode={quizStarted}
         quizGreenTarget={quizGreenTarget}
         quizRedMesh={quizRedMesh}
@@ -379,11 +420,28 @@ export default function App() {
             </div>
           </div>
 
+          {/* Camera angles button during a quiz (explorer has it in the top-right bar) */}
+          {quizStarted && (
+            <button
+              className={`preset-btn${showCameraPanel ? ' active' : ''}`}
+              onClick={() => setShowCameraPanel(v => !v)}
+              title="Camera Angles"
+            >
+              <span className="preset-ft"><VideoCamera size={17} /></span>
+              <span className="preset-sub">Camera</span>
+            </button>
+          )}
+
           {modelActivated && (
             <button
               id="reset-view-btn"
               className="preset-btn"
-              onClick={() => { setResetCounter(c => c + 1); setModelActivated(false) }}
+              onClick={() => {
+                // When a region is isolated/quizzed, reset re-frames that region;
+                // otherwise it flies back to the whole-body default view.
+                if (isolated || quizStarted) setFocusToken(t => t + 1)
+                else { setResetCounter(c => c + 1); setModelActivated(false) }
+              }}
               title="Reset View"
             >
               <span className="preset-ft"><ArrowCounterClockwise size={17} /></span>
@@ -404,7 +462,7 @@ export default function App() {
             </button>
             <button
               className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-              onClick={() => { setShowDemoPanel(false); setShowCameraPanel(v => !v) }}
+              onClick={() => openExclusive('camera')}
               title="Camera Angles"
             >
               <span className="preset-ft"><VideoCamera size={17} /></span>
@@ -413,7 +471,7 @@ export default function App() {
             <button
               id="demographic-toggle"
               className={`preset-btn${showDemoPanel ? ' active' : ''}`}
-              onClick={() => { setShowCameraPanel(false); setShowDemoPanel(v => !v) }}
+              onClick={() => openExclusive('demo')}
               title="Demographic Regression Scaling"
             >
               <span className="preset-ft"><Ruler size={17} /></span>
@@ -454,12 +512,14 @@ export default function App() {
         musclesFaded={musclesFaded}           setMusclesFaded={setMusclesFaded}
         jointsFaded={jointsFaded}             setJointsFaded={setJointsFaded}
         vascularFaded={vascularFaded}         setVascularFaded={setVascularFaded}
+        closeToken={dockCloseToken}
+        onOpen={() => { setShowDemoPanel(false); setShowCameraPanel(false); setSelectedBone(null) }}
       />
       )}
 
-      {!quizStarted && (
-        <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
-      )}
+      {/* Camera angles — available in both explorer and quiz (gated by `visible`).
+          During a quiz the presets are relative to the locked region. */}
+      <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
 
       {/* Info panel is hidden during a quiz — it would reveal the answer. */}
       {!quizStarted && (

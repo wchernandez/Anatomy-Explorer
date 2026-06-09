@@ -43,7 +43,7 @@ function cleanBoneName(name) {
   // Fallback: glued laterality (no space), e.g. "muscler"→"muscle", "toer"→"toe".
   // Skip if preceded by 'a' (plantar, fibular, dorsal…) or 'o' (extensor, flexor…)
   // — those are real anatomical word endings, not laterality suffixes.
-  else if (s.length > 2) {
+  else if (s.length > 2 && !NO_LATERALITY_STRIP.has(s.toLowerCase())) {
     const last = s[s.length - 1]
     const prev = s[s.length - 2].toLowerCase()
     if ((last === 'l' || last === 'L') && prev !== 'a') s = s.slice(0, -1).trim()
@@ -51,6 +51,9 @@ function cleanBoneName(name) {
   }
   return s.replace(/\b\w/g, c => c.toUpperCase())
 }
+
+// Real bones whose name legitimately ends in l/r — never strip a "laterality" suffix.
+const NO_LATERALITY_STRIP = new Set(['vomer'])
 
 // ── Bone Groups for skeletal filtering ───────────────────────────────────────
 export const BONE_GROUPS = {
@@ -63,7 +66,7 @@ export const BONE_GROUPS = {
     'canine','incisor','molar','premolar',
   ],
   'Spine': [
-    'vertebra','atlas','axis','sacrum','coccyx',
+    'vertebra','atlas','axis',
   ],
   'Thorax': [
     'sternum','manubrium','xiphoid','rib','costal','clavicle','scapula',
