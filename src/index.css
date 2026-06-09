@@ -605,14 +605,14 @@ body::before {
   gap: 0.4rem;
   padding: 1rem 0;
   text-align: center;
-  color: var(--text-faint);
+  color: var(--text);
   font-size: 0.8rem;
   line-height: 1.5;
 }
 
 .info-empty-icon {
   font-size: 1.6rem;
-  opacity: 0.4;
+  opacity: 0.7;
   margin-bottom: 0.2rem;
 }
 

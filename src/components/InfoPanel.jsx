@@ -120,15 +120,19 @@ export default function InfoPanel({ selectedBone }) {
   return (
     <div id="info-panel" className={`panel${!selectedBone ? ' empty' : ''}`}>
 
-      <div className="info-header">
-        <span className="panel-label">Selected Structure</span>
-      </div>
+      {selectedBone && (
+        <>
+          <div className="info-header">
+            <span className="panel-label">Selected Structure</span>
+          </div>
 
-      <div className="bone-name">
-        {selectedBone ? formatName(boneName) : '—'}
-      </div>
+          <div className="bone-name">
+            {formatName(boneName)}
+          </div>
 
-      <div className="divider" />
+          <div className="divider" />
+        </>
+      )}
 
       <div className="bone-detail" ref={contentRef}>
         {loading ? (
@@ -155,21 +159,23 @@ export default function InfoPanel({ selectedBone }) {
                 <p key={i} className="info-paragraph">{p}</p>
               ))
             )}
-
-            {/* Always offer an external link — the file's source if present,
-                otherwise a Wikipedia search for the structure. */}
-            <div className="info-source">
-              <a
-                href={sourceUrl || `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(formatName(boneName))}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                External links ↗
-              </a>
-            </div>
           </>
         )}
       </div>
+
+      {/* Pinned below the scroll area so it stays visible — the file's source
+          if present, otherwise a Wikipedia search for the structure. */}
+      {selectedBone && !loading && (
+        <div className="info-source">
+          <a
+            href={sourceUrl || `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(formatName(boneName))}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            External Link (Wikipedia) ↗
+          </a>
+        </div>
+      )}
     </div>
   )
 }

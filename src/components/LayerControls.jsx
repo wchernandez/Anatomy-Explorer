@@ -161,13 +161,15 @@ export default function LayerControls({
     })
   }
 
+  const openLayer = LAYERS.find(l => l.key === openPanel) ?? null
+
   return (
     <div id="layer-dock">
       <div className="dock-header-label">Layers</div>
+
       {LAYERS.map(layer => {
         const isOpen = openPanel === layer.key
         const mode   = modeOf(layer.key)
-        const gp     = panelPropsFor(layer.key, panelState)
         return (
           <div
             key={layer.key}
@@ -182,26 +184,38 @@ export default function LayerControls({
             >
               <layer.icon className="dock-icon" size={22} weight="regular" />
             </button>
-
-            <div className={`dock-panel ${isOpen ? 'visible' : ''}`}>
-              <div className="dock-panel-header">
-                <span className="dock-panel-title">{layer.label}</span>
-                <button className="dock-panel-close" onClick={() => setOpenPanel(null)} aria-label="Close">✕</button>
-              </div>
-              <div className="dock-panel-body">
-                <LayerModeBlock accent={layer.accent} mode={mode} onSet={m => setMode(layer.key, m)} />
-                {/* Group filters only matter while the layer is visible */}
-                {mode !== 'hide' && (
-                  <>
-                    <div className="divider" />
-                    <GroupPanel {...gp} />
-                  </>
-                )}
-              </div>
-            </div>
           </div>
         )
       })}
+
+      {/* Single shared flyout — always anchored to the top of the dock and
+          height-bounded to the viewport, so the group list stays reachable
+          regardless of which layer is open or the browser zoom level. */}
+      {openLayer && (() => {
+        const mode = modeOf(openLayer.key)
+        const gp   = panelPropsFor(openLayer.key, panelState)
+        return (
+          <div
+            className="dock-panel"
+            style={{ '--layer-color': openLayer.color, '--layer-shadow': openLayer.shadow, '--layer-border': openLayer.border, '--layer-bg': openLayer.bg }}
+          >
+            <div className="dock-panel-header">
+              <span className="dock-panel-title">{openLayer.label}</span>
+              <button className="dock-panel-close" onClick={() => setOpenPanel(null)} aria-label="Close">✕</button>
+            </div>
+            <div className="dock-panel-body">
+              <LayerModeBlock accent={openLayer.accent} mode={mode} onSet={m => setMode(openLayer.key, m)} />
+              {/* Group filters only matter while the layer is visible */}
+              {mode !== 'hide' && (
+                <>
+                  <div className="divider" />
+                  <GroupPanel {...gp} />
+                </>
+              )}
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
