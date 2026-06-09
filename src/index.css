@@ -203,6 +203,12 @@ body::before {
   #nav-hints-group { display: none; }
 }
 
+/* The top bar passes clicks through (pointer-events: none); its interactive
+   buttons must re-enable them. This covers the Reset View and quiz Camera buttons. */
+#nav-hints-group .preset-btn {
+  pointer-events: all;
+}
+
 #reset-view-btn {
   pointer-events: all;
   animation: fadeInReset 0.2s ease;
