@@ -266,7 +266,7 @@ export default function App() {
   }
 
   function startQuiz(config = quizConfig) {
-    const qs = buildQuiz(config.region, config.level)
+    const qs = buildQuiz(quizConfig.region, quizConfig.level, quizConfig.layer)
     setQuizConfig(config)
     setQuizQuestions(qs)
     setQuiz(initialQuiz)
@@ -327,16 +327,18 @@ export default function App() {
 
   // While a quiz is running the model is locked to the chosen region (only the
   // skeleton layer, other bones hidden) so the user can't stray off-topic.
-  const quizGroupName = QUIZ_REGIONS[quizConfig.region]?.group || 'All Bones'
+// Targets visible during quiz for non-skeleton layers
+  const quizVisibleTargets = quizStarted && quizConfig.layer !== 'skeleton'? (QUIZ_REGIONS[quizConfig.region]?.[quizConfig.layer] || []).map(b => b.target.toLowerCase()): null
+  const quizGroupName = quizConfig.layer === 'skeleton'? (QUIZ_REGIONS[quizConfig.region]?.group || 'All Bones') : 'All Bones'  
   const effBoneGroup  = quizStarted ? quizGroupName : activeBoneGroup
-  const effBoneFade   = quizStarted ? 'hide' : (isolated ? 'hide' : boneFadeMode)
+  const effBoneFade   = quizStarted ? (quizConfig.layer === 'skeleton' ? 'hide' : boneFadeMode) : (isolated ? 'hide' : boneFadeMode)
   // Camera region-focus is shared by the quiz and the explorer's Isolate button —
   // one focusToken is bumped by both, so switching modes never refocuses on its own.
   const sceneFocusGroup = quizStarted ? quizGroupName : activeBoneGroup
-  const effShowSkeleton = quizStarted ? true  : showSkeleton
-  const effShowMuscles  = quizStarted ? false : showMuscles
-  const effShowJoints   = quizStarted ? false : showJoints
-  const effShowVascular = quizStarted ? false : showVascular
+  const effShowSkeleton = quizStarted ? quizConfig.layer === 'skeleton' : showSkeleton
+  const effShowMuscles  = quizStarted ? quizConfig.layer === 'muscles'  : showMuscles
+  const effShowJoints   = quizStarted ? quizConfig.layer === 'joints'   : showJoints
+  const effShowVascular = quizStarted ? quizConfig.layer === 'vascular' : showVascular
   // Whole-layer fade would make the isolated/quizzed bones transparent too, so
   // it's neutralised while isolating or quizzing (and the toggle is disabled).
   const effSkeletonFaded = (quizStarted || isolated) ? false : skeletonFaded
@@ -393,6 +395,7 @@ export default function App() {
         quizGreenTarget={quizGreenTarget}
         quizRedMesh={quizRedMesh}
         quizRedTarget={quizRedTarget}
+        quizVisibleTargets={quizVisibleTargets}
       />
 
       <div id="topbar">

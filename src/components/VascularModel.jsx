@@ -76,6 +76,11 @@ const selectedMat = new THREE.MeshStandardMaterial({
   emissiveIntensity: 0.7,
 })
 
+// Quiz highlight materials
+const quizAmberMat   = new THREE.MeshStandardMaterial({ color: 0xffc24a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a3d00), emissiveIntensity: 0.55 })
+const quizCorrectMat = new THREE.MeshStandardMaterial({ color: 0x49d98a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x0c4a26), emissiveIntensity: 0.6 })
+const quizWrongMat   = new THREE.MeshStandardMaterial({ color: 0xff5d6e, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a0c18), emissiveIntensity: 0.6 })
+
 /** Pick a base material from the mesh name / original material name */
 function getBaseMat(mesh) {
   const name = (mesh.name + ' ' + (mesh.userData.originalMatName ?? '')).toLowerCase()
@@ -282,11 +287,17 @@ export default function VascularModel({
   visible,
   selectedBone,
   onSelect,
-  activeGroup   = 'All Vessels',
-  filterMode    = 'fade',
-  shoulderScale = 1,
-  hipScale      = 1,
-  layerFaded    = false,
+  activeGroup      = 'All Vessels',
+  filterMode       = 'fade',
+  shoulderScale    = 1,
+  hipScale         = 1,
+  layerFaded       = false,
+  highlightBone    = null,
+  quizMode         = false,
+  quizGreenTarget  = null,
+  quizRedMesh      = null,
+  quizRedTarget    = null,
+  quizVisibleTargets = null
 }) {
   const { scene } = useGLTF('/Vascular.glb')
   const [hovered, setHovered] = useState(null)
@@ -338,6 +349,26 @@ export default function VascularModel({
       return
     }
 
+    const nameLc = (mesh.name || '').toLowerCase()
+    if (quizMode) {
+      mesh.visible = true
+      const inPool = !quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t))
+      if (!inPool) {
+        mesh.visible = false
+        return
+      }
+      if (quizGreenTarget && nameLc.includes(quizGreenTarget.toLowerCase())) {
+        mesh.material = quizCorrectMat
+      } else if ((quizRedMesh && mesh === quizRedMesh) || (quizRedTarget && nameLc.includes(quizRedTarget.toLowerCase()))) {
+        mesh.material = quizWrongMat
+      } else if (highlightBone && nameLc.includes(highlightBone.toLowerCase())) {
+        mesh.material = quizAmberMat
+      } else {
+        mesh.material = base
+      }
+      return
+    }
+
     if (mesh === selectedBone) {
       mesh.material = selectedMat
       mesh.visible  = true
@@ -374,14 +405,22 @@ export default function VascularModel({
         onClick={e => {
           if (!visible) return
           e.stopPropagation()
-          if (meshMatchesGroup(e.object.name, keywords)) {
+          const nameLc = e.object.name.toLowerCase()
+          const selectable = quizMode
+            ? (!quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t)))
+            : meshMatchesGroup(e.object.name, keywords)
+          if (selectable) {
             onSelect(e.object)
           }
         }}
         onPointerOver={e => {
           if (!visible) return
           e.stopPropagation()
-          if (meshMatchesGroup(e.object.name, keywords)) {
+          const nameLc = e.object.name.toLowerCase()
+          const hoverable = quizMode
+            ? (!quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t)))
+            : meshMatchesGroup(e.object.name, keywords)
+          if (hoverable) {
             setHovered(e.object)
           }
         }}
