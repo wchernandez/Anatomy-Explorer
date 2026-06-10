@@ -57,7 +57,6 @@ export default function App() {
     if (which === 'demo')   { setShowCameraPanel(false); setShowDemoPanel(v => !v) }
     if (which === 'camera') { setShowDemoPanel(false);   setShowCameraPanel(v => !v) }
   }
-  const [modelActivated,  setModelActivated]  = useState(false)
   const [resetCounter,    setResetCounter]    = useState(0)
 
   const [quizStarted,   setQuizStarted]   = useState(false)
@@ -278,7 +277,6 @@ export default function App() {
     setShowQuizSetup(false)
     setQuizFinished(false)
     setQuizStarted(true)
-    setModelActivated(true)
     setIsolated(false) // a quiz drives its own region lock
     setFocusToken(t => t + 1)
   }
@@ -290,7 +288,6 @@ export default function App() {
     setSelectedBone(null)
     setIsolated(false)
     setResetCounter(c => c + 1) // fly the camera back to the default view
-    setModelActivated(false)
   }
 
   // Filters → group selection. Reframe the camera if we're isolated so switching
@@ -307,10 +304,8 @@ export default function App() {
     if (isolated) {
       setIsolated(false)
       setResetCounter(c => c + 1)
-      setModelActivated(false)
     } else {
       setIsolated(true)
-      setModelActivated(true)
       setFocusToken(t => t + 1)
     }
   }
@@ -393,7 +388,6 @@ export default function App() {
         musclesFaded={musclesFaded}
         jointsFaded={jointsFaded}
         vascularFaded={vascularFaded}
-        onInteract={() => setModelActivated(true)}
         resetCounter={resetCounter}
         focusToken={focusToken}
         focusGroup={sceneFocusGroup}
@@ -432,22 +426,20 @@ export default function App() {
         </div>
 
         {/* Reset View: a slim one-line button tucked under the top bar, right-
-            aligned with the Camera tab. Shown in both explorer and quiz. */}
-        {modelActivated && (
-          <button
-            id="reset-view-btn"
-            onClick={() => {
-              // When a region is isolated/quizzed, reset re-frames that region;
-              // otherwise it flies back to the whole-body default view.
-              if (isolated || quizStarted) setFocusToken(t => t + 1)
-              else { setResetCounter(c => c + 1); setModelActivated(false) }
-            }}
-            title="Reset View"
-          >
-            <ArrowCounterClockwise size={15} weight="bold" />
-            <span className="reset-view-label">Reset View</span>
-          </button>
-        )}
+            aligned with the Camera tab. Always available — in explorer and quiz. */}
+        <button
+          id="reset-view-btn"
+          onClick={() => {
+            // When a region is isolated/quizzed, reset re-frames that region;
+            // otherwise it flies back to the whole-body default view.
+            if (isolated || quizStarted) setFocusToken(t => t + 1)
+            else { setResetCounter(c => c + 1) }
+          }}
+          title="Reset View"
+        >
+          <ArrowCounterClockwise size={15} weight="bold" />
+          <span className="reset-view-label">Reset View</span>
+        </button>
 
         {/* Top-right controls. Quiz & Demographics are explorer-only, but the
             Camera button is always the right-most item so it keeps the exact

@@ -256,7 +256,6 @@ export default function Scene({
   musclesFaded    = false,
   jointsFaded     = false,
   vascularFaded   = false,
-  onInteract,
   resetCounter    = 0,
   focusToken      = 0,
   focusGroup      = 'All Bones',
@@ -276,39 +275,11 @@ export default function Scene({
   const [spinning, setSpinning] = useState(true)
   const allowSpin = !quizMode && !regionFocused
   const controlsRef = useRef(null)
-  const dragStart = useRef(null)
-  const didDrag = useRef(false)
 
   const handleTransformReady = useRef(t => setBodyTransform(t)).current
 
-  const handlePointerDown = (e) => {
-    dragStart.current = { x: e.clientX, y: e.clientY }
-    didDrag.current = false
-  }
-
-  const handlePointerMove = (e) => {
-    if (!dragStart.current) return
-    const dx = e.clientX - dragStart.current.x
-    const dy = e.clientY - dragStart.current.y
-    if (Math.sqrt(dx * dx + dy * dy) > 4) {
-      if (!didDrag.current) {
-        didDrag.current = true
-        onInteract && onInteract()
-      }
-    }
-  }
-
-  const handlePointerUp = () => {
-    dragStart.current = null
-  }
-
   return (
-    <div
-      id="canvas-container"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-    >
+    <div id="canvas-container">
       <Canvas
         camera={{ position: [0, -0.2, 5], fov: 50, near: 0.01, far: 200 }}
         onPointerMissed={() => onSelect && onSelect(null)}
@@ -433,7 +404,7 @@ export default function Scene({
           maxDistance={12}
           target={[0, -0.2, 0]}
           autoRotate={spinning && allowSpin}
-          autoRotateSpeed={-2}
+          autoRotateSpeed={-1.2}
         />
 
         <CameraManager cameraPresetKey={cameraPreset} cameraPresetNonce={cameraPresetNonce} resetCounter={resetCounter} controlsRef={controlsRef} focusGroup={focusGroup} skelScene={skelScene} regionFocused={regionFocused} />

@@ -50,6 +50,20 @@ export const ETHNICITY_META = [
   { key: 'PacificIslander', label: 'Pacific Islander',  n: 34   },
 ]
 
+// ── Per-ethnicity mean height & weight (computed from ANSUR_II_MALE_Public.csv) ─
+// Column means of `stature` (mm→cm) and `weightkg` (field÷10→kg) grouped by
+// DODRace. Selecting an ethnicity snaps the height/weight sliders to these so the
+// model reflects that group's average build (stature's regression betas are the
+// same for every ethnicity, so the input height is what must change).
+export const ETHNICITY_MEANS = {
+  Caucasian:       { heightCm: 176.4, weightKg: 85.8 },
+  Black:           { heightCm: 176.2, weightKg: 87.5 },
+  Hispanic:        { heightCm: 171.8, weightKg: 83.7 },
+  Asian:           { heightCm: 169.9, weightKg: 74.8 },
+  NativeAmerican:  { heightCm: 175.8, weightKg: 88.9 },
+  PacificIslander: { heightCm: 170.4, weightKg: 80.4 },
+}
+
 // ── Regression coefficient lookup ─────────────────────────────────────────────
 // REGRESSION_COEFFICIENTS[ethnicityKey][measurementKey] = { beta0, beta1, beta2 }
 //

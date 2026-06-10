@@ -15,14 +15,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useAnthropometricScale } from '../hooks/useAnthropometricScale.js'
-import { ETHNICITY_META } from '../utils/regressionCoefficients.js'
+import { ETHNICITY_META, ETHNICITY_MEANS } from '../utils/regressionCoefficients.js'
 import './DemographicPanel.css'
 
-// ── ANSUR II population mean height & weight (used as slider defaults) ────────
-// Mean stature: 1756.21mm → 175.6cm; mean weight field ÷10 → ~85.5kg
-const DEFAULT_HEIGHT = 175.6
-const DEFAULT_WEIGHT = 85.5
+// ── Slider defaults ──────────────────────────────────────────────────────────
+// The defaults track the selected ethnicity's mean build, so on load the model
+// reflects the average Caucasian male (the default group) rather than the
+// overall ANSUR mean.
 const DEFAULT_ETH    = 'Caucasian'
+const DEFAULT_HEIGHT = ETHNICITY_MEANS[DEFAULT_ETH].heightCm
+const DEFAULT_WEIGHT = ETHNICITY_MEANS[DEFAULT_ETH].weightKg
 
 // Height and weight range for the sliders
 const HEIGHT_MIN = 140
@@ -116,10 +118,20 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
     onScaleChange?.({ statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale })
   }, [statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale, onScaleChange])
 
+  // Selecting an ethnicity snaps the height/weight sliders to that group's mean
+  // build (see ETHNICITY_MEANS), so the model visibly reflects the choice. The
+  // user can then fine-tune from that starting point.
+  function selectEthnicity(key) {
+    setEthnicity(key)
+    const mean = ETHNICITY_MEANS[key]
+    if (mean) {
+      setHeightCm(mean.heightCm)
+      setWeightKg(mean.weightKg)
+    }
+  }
+
   function handleReset() {
-    setEthnicity(DEFAULT_ETH)
-    setHeightCm(DEFAULT_HEIGHT)
-    setWeightKg(DEFAULT_WEIGHT)
+    selectEthnicity(DEFAULT_ETH)
   }
 
   // Small-sample ethnicity keys — show caution indicator
@@ -188,7 +200,7 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
               key={key}
               id={`eth-btn-${key}`}
               className={`dp-eth-btn${ethnicity === key ? ' active' : ''}`}
-              onClick={() => setEthnicity(key)}
+              onClick={() => selectEthnicity(key)}
               title={`n = ${n.toLocaleString()} subjects`}
             >
               <span className="dp-eth-label">{label}</span>
