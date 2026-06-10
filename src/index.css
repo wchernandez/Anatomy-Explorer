@@ -203,15 +203,43 @@ body::before {
   #nav-hints-group { display: none; }
 }
 
-/* The top bar passes clicks through (pointer-events: none); its interactive
-   buttons must re-enable them. This covers the Reset View and quiz Camera buttons. */
-#nav-hints-group .preset-btn {
-  pointer-events: all;
-}
-
+/* Reset View: a slim one-line button anchored just under the top bar, its right
+   edge aligned with the top-bar content edge (i.e. the Camera tab). */
 #reset-view-btn {
+  position: absolute;
+  top: 100%;
+  right: 1.75rem;
+  margin-top: 0.55rem;
+  width: auto;          /* override global button { width: 100% } */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: 9px;
+  border: 1px solid var(--panel-border);
+  background: rgba(17, 24, 33, 0.8);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  color: var(--text-dim);
+  cursor: pointer;
   pointer-events: all;
   animation: fadeInReset 0.2s ease;
+}
+
+#reset-view-btn:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--text-bright);
+  transform: none;      /* cancel global button:hover lift */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.reset-view-label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 @keyframes fadeInReset {
@@ -1257,6 +1285,7 @@ button:active {
 
 @media (max-width: 1024px) {
   #topbar { padding: 0.85rem 1.25rem; }
+  #reset-view-btn { right: 1.25rem; }
   #info-panel { width: 270px; }
   #quiz-panel { width: 270px; }
   .title-main { font-size: 1.2rem; }
@@ -1285,6 +1314,7 @@ button:active {
 /* Phone: stack everything; single-column controls */
 @media (max-width: 560px) {
   #topbar { padding: 0.75rem 1rem; }
+  #reset-view-btn { right: 1rem; }
   .title-main { font-size: 1.05rem; }
   .title-sub { font-size: 0.62rem; }
   #topbar-controls { gap: 0.4rem; }

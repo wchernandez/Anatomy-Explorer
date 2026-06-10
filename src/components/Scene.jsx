@@ -185,6 +185,46 @@ function FocusManager({ focusToken, focusGroup, controlsRef, skelScene }) {
   return null
 }
 
+// Slowly turntables the skeleton around the vertical (Y) axis while idle — this
+// keeps it standing straight up. Any interaction (orbit/zoom/pan, picking a
+// camera angle, focusing a region) stops the spin and it stays stopped. Hitting
+// Reset View is what resumes the spin (CameraManager flies back to default in
+// parallel). Spinning is driven by toggling OrbitControls' autoRotate via the
+// `spinning` state.
+function IdleSpinner({ controlsRef, allowSpin, setSpinning, cameraPreset, focusToken, resetCounter }) {
+  // Stop spinning the instant the user grabs the model. 'start' fires on a
+  // user pointer/wheel grab — never for autoRotate itself.
+  useEffect(() => {
+    const controls = controlsRef.current
+    if (!controls) return
+    const onStart = () => setSpinning(false)
+    controls.addEventListener('start', onStart)
+    return () => controls.removeEventListener('start', onStart)
+  }, [controlsRef.current])
+
+  // Picking a camera angle or focusing a region also stops the spin. Skip the
+  // initial mount so the load spin isn't cancelled.
+  const firstRun = useRef(true)
+  useEffect(() => {
+    if (firstRun.current) { firstRun.current = false; return }
+    setSpinning(false)
+  }, [cameraPreset, focusToken])
+
+  // Reset View resumes the idle spin (skip the initial mount).
+  const firstReset = useRef(true)
+  useEffect(() => {
+    if (firstReset.current) { firstReset.current = false; return }
+    setSpinning(true)
+  }, [resetCounter])
+
+  // Never spin during quiz/isolation.
+  useEffect(() => {
+    if (!allowSpin) setSpinning(false)
+  }, [allowSpin])
+
+  return null
+}
+
 export default function Scene({
   selectedBone,
   onSelect,
@@ -227,6 +267,9 @@ export default function Scene({
   // all layers are guaranteed to stay perfectly aligned at any scale.
   const [bodyTransform, setBodyTransform] = useState(null)
   const [skelScene, setSkelScene] = useState(null)
+  // Idle turntable spin: on by default, paused while the user interacts.
+  const [spinning, setSpinning] = useState(true)
+  const allowSpin = !quizMode && !regionFocused
   const controlsRef = useRef(null)
   const dragStart = useRef(null)
   const didDrag = useRef(false)
@@ -366,10 +409,13 @@ export default function Scene({
           minDistance={0.5}
           maxDistance={12}
           target={[0, -0.2, 0]}
+          autoRotate={spinning && allowSpin}
+          autoRotateSpeed={-3}
         />
 
         <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} focusGroup={focusGroup} skelScene={skelScene} regionFocused={regionFocused} />
         <FocusManager focusToken={focusToken} focusGroup={focusGroup} controlsRef={controlsRef} skelScene={skelScene} />
+        <IdleSpinner controlsRef={controlsRef} allowSpin={allowSpin} setSpinning={setSpinning} cameraPreset={cameraPreset} focusToken={focusToken} resetCounter={resetCounter} />
       </Canvas>
     </div>
   )

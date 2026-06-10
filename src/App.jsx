@@ -419,39 +419,31 @@ export default function App() {
               <span className="nav-hint-key">Click</span> Select
             </div>
           </div>
-
-          {/* Camera angles button during a quiz (explorer has it in the top-right bar) */}
-          {quizStarted && (
-            <button
-              className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-              onClick={() => setShowCameraPanel(v => !v)}
-              title="Camera Angles"
-            >
-              <span className="preset-ft"><VideoCamera size={17} /></span>
-              <span className="preset-sub">Camera</span>
-            </button>
-          )}
-
-          {modelActivated && (
-            <button
-              id="reset-view-btn"
-              className="preset-btn"
-              onClick={() => {
-                // When a region is isolated/quizzed, reset re-frames that region;
-                // otherwise it flies back to the whole-body default view.
-                if (isolated || quizStarted) setFocusToken(t => t + 1)
-                else { setResetCounter(c => c + 1); setModelActivated(false) }
-              }}
-              title="Reset View"
-            >
-              <span className="preset-ft"><ArrowCounterClockwise size={17} /></span>
-              <span className="preset-sub">Reset View</span>
-            </button>
-          )}
         </div>
 
-        {!quizStarted && (
-          <div id="topbar-controls">
+        {/* Reset View: a slim one-line button tucked under the top bar, right-
+            aligned with the Camera tab. Shown in both explorer and quiz. */}
+        {modelActivated && (
+          <button
+            id="reset-view-btn"
+            onClick={() => {
+              // When a region is isolated/quizzed, reset re-frames that region;
+              // otherwise it flies back to the whole-body default view.
+              if (isolated || quizStarted) setFocusToken(t => t + 1)
+              else { setResetCounter(c => c + 1); setModelActivated(false) }
+            }}
+            title="Reset View"
+          >
+            <ArrowCounterClockwise size={15} weight="bold" />
+            <span className="reset-view-label">Reset View</span>
+          </button>
+        )}
+
+        {/* Top-right controls. Quiz & Demographics are explorer-only, but the
+            Camera button is always the right-most item so it keeps the exact
+            same position when entering/leaving quiz mode (no horizontal jump). */}
+        <div id="topbar-controls">
+          {!quizStarted && (
             <button
               className={`preset-btn${showQuizSetup ? ' active' : ''}`}
               onClick={() => setShowQuizSetup(v => !v)}
@@ -460,14 +452,8 @@ export default function App() {
               <span className="preset-ft"><Exam size={17} /></span>
               <span className="preset-sub">Quiz</span>
             </button>
-            <button
-              className={`preset-btn${showCameraPanel ? ' active' : ''}`}
-              onClick={() => openExclusive('camera')}
-              title="Camera Angles"
-            >
-              <span className="preset-ft"><VideoCamera size={17} /></span>
-              <span className="preset-sub">Camera</span>
-            </button>
+          )}
+          {!quizStarted && (
             <button
               id="demographic-toggle"
               className={`preset-btn${showDemoPanel ? ' active' : ''}`}
@@ -477,8 +463,16 @@ export default function App() {
               <span className="preset-ft"><Ruler size={17} /></span>
               <span className="preset-sub">Demographics</span>
             </button>
-          </div>
-        )}
+          )}
+          <button
+            className={`preset-btn${showCameraPanel ? ' active' : ''}`}
+            onClick={() => openExclusive('camera')}
+            title="Camera Angles"
+          >
+            <span className="preset-ft"><VideoCamera size={17} /></span>
+            <span className="preset-sub">Camera</span>
+          </button>
+        </div>
       </div>
 
       {/* Demographic Regression Panel — separate floating panel */}
