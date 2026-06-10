@@ -1,32 +1,27 @@
 /**
  * DemographicPanel.jsx
  *
- * A separate floating panel that accepts Age, Ethnicity, Height (cm), and
+ * A separate floating panel that accepts Ethnicity, Height (cm), and
  * Weight (kg) as user inputs, runs the multi-variable regression through
  * useAnthropometricScale, and emits scale changes to the parent (App.jsx)
  * via onScaleChange({ statureScale, shoulderScale, hipScale }).
  *
  * Architecture contract:
  *   - Reads from props:  visible, onClose, onScaleChange
- *   - Maintains its own local UI state (age, ethnicity, heightCm, weightKg)
+ *   - Maintains its own local UI state (ethnicity, heightCm, weightKg)
  *   - Calls onScaleChange whenever the regression output changes
  *   - Does NOT directly touch any Three.js object — pure React/math layer
  */
 
 import { useState, useEffect, useRef } from 'react'
 import { useAnthropometricScale } from '../hooks/useAnthropometricScale.js'
-import {
-  ETHNICITY_META,
-  ANSUR_AGE_MIN,
-  ANSUR_AGE_MAX,
-} from '../utils/regressionCoefficients.js'
+import { ETHNICITY_META } from '../utils/regressionCoefficients.js'
 import './DemographicPanel.css'
 
 // ── ANSUR II population mean height & weight (used as slider defaults) ────────
 // Mean stature: 1756.21mm → 175.6cm; mean weight field ÷10 → ~85.5kg
 const DEFAULT_HEIGHT = 175.6
 const DEFAULT_WEIGHT = 85.5
-const DEFAULT_AGE    = 30
 const DEFAULT_ETH    = 'Caucasian'
 
 // Height and weight range for the sliders
@@ -76,7 +71,6 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   const [isMetric,      setIsMetric]      = useState(true)
   const [ethnicity,     setEthnicity]     = useState(DEFAULT_ETH)
   const [showEthInfo,   setShowEthInfo]   = useState(false)
-  const [age,       setAge]       = useState(DEFAULT_AGE)
   const [heightCm,  setHeightCm]  = useState(DEFAULT_HEIGHT)
   const [weightKg,  setWeightKg]  = useState(DEFAULT_WEIGHT)
   const ethInfoRef = useRef(null)
@@ -113,7 +107,7 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
   // chips and used by the muscle layer; bodyShoulderScale / bodyHipScale are the
   // weight-free values that drive the skeleton / joints / vascular layers.
   const { statureScale, shoulderScale, hipScale, bodyShoulderScale, bodyHipScale } =
-    useAnthropometricScale({ ethnicity, age, heightCm, weightKg })
+    useAnthropometricScale({ ethnicity, heightCm, weightKg })
 
   // ── Propagate scale changes upward to App → Scene → 3D models ─────────────
   // useEffect fires only when the numeric outputs actually change (not on every
@@ -124,7 +118,6 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
 
   function handleReset() {
     setEthnicity(DEFAULT_ETH)
-    setAge(DEFAULT_AGE)
     setHeightCm(DEFAULT_HEIGHT)
     setWeightKg(DEFAULT_WEIGHT)
   }
@@ -209,24 +202,6 @@ export default function DemographicPanel({ visible, onClose, onScaleChange }) {
             ⚠ Small sample (n&lt;35) — wider confidence intervals
           </div>
         )}
-
-        <div className="dp-divider" />
-
-        {/* ── Age slider ─────────────────────────────────────────────────── */}
-        <SectionLabel>Age</SectionLabel>
-        <DualSlider
-          id="demo-age"
-          label="Age"
-          value={age}
-          min={ANSUR_AGE_MIN}
-          max={ANSUR_AGE_MAX}
-          step={1}
-          unit="yrs"
-          onChange={setAge}
-        />
-        <div className="dp-range-hint">
-          ANSUR II range: {ANSUR_AGE_MIN}–{ANSUR_AGE_MAX} years
-        </div>
 
         <div className="dp-divider" />
 

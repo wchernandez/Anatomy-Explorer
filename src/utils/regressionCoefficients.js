@@ -40,11 +40,6 @@ export const ANSUR_BASELINE = {
   acromionradialelength:  335.24,
 }
 
-// ── ANSUR II age range ────────────────────────────────────────────────────────
-export const ANSUR_AGE_MIN = 17
-export const ANSUR_AGE_MAX = 58
-export const ANSUR_AGE_MEAN = 30.2
-
 // ── Ethnicity display metadata ────────────────────────────────────────────────
 export const ETHNICITY_META = [
   { key: 'Caucasian',       label: 'Caucasian',        n: 2817 },
@@ -58,9 +53,8 @@ export const ETHNICITY_META = [
 // ── Regression coefficient lookup ─────────────────────────────────────────────
 // REGRESSION_COEFFICIENTS[ethnicityKey][measurementKey] = { beta0, beta1, beta2 }
 //
-// Age is modelled as a continuous linear modifier applied at call-time
-// (see useAnthropometricScale.js), not baked into these base betas.
-// The base betas represent the population-weighted mean age (~30 yrs).
+// Scaling is driven by height and weight only — age is not a factor. The base
+// betas represent the population mean across the ANSUR II adult sample.
 export const REGRESSION_COEFFICIENTS = {
 
   /**
@@ -147,22 +141,4 @@ export const REGRESSION_COEFFICIENTS = {
     buttockkneelength:     { beta0:  62.223, beta1:  2.848, beta2: 0.543 },
     acromionradialelength: { beta0: -33.545, beta1:  2.111, beta2: -0.058 },
   },
-}
-
-/**
- * Age correction deltas (mm per year, relative to ANSUR_AGE_MEAN ≈ 30).
- * Derived from population-wide OLS controlling for height and weight.
- * Applied as: corrected_mm = fitted_mm + AGE_DELTA[key] * (age - ANSUR_AGE_MEAN)
- *
- * Key insight: biacromialbreadth grows slightly with age (musculoskeletal
- * broadening); hipbreadth also increases; sitting height decreases (spinal
- * compression). Limb segments are largely age-stable in adults.
- */
-export const AGE_DELTA = {
-  stature:               -0.50,  // slight height loss with age (~0.5mm/yr)
-  biacromialbreadth:      0.20,  // slight broadening
-  hipbreadth:             0.40,  // broadening with age
-  sittingheight:         -0.35,  // spinal compression
-  buttockkneelength:     -0.10,  // stable
-  acromionradialelength: -0.05,  // stable
 }

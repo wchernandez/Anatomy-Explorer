@@ -31,7 +31,7 @@ function frameRegion(skelScene, focusGroup, camera) {
 
 // Animates the camera to a preset position via spherical interpolation
 // so it always arcs around the model rather than cutting through it.
-function CameraManager({ cameraPresetKey, resetCounter, controlsRef, focusGroup, skelScene, regionFocused }) {
+function CameraManager({ cameraPresetKey, cameraPresetNonce, resetCounter, controlsRef, focusGroup, skelScene, regionFocused }) {
   const { camera } = useThree()
   const rafRef = useRef(null)
 
@@ -86,7 +86,8 @@ function CameraManager({ cameraPresetKey, resetCounter, controlsRef, focusGroup,
     if (!cameraPresetKey) return
     animateToPreset(cameraPresetKey)
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
-  }, [cameraPresetKey, camera])
+    // cameraPresetNonce re-fires this even when the same preset is re-picked.
+  }, [cameraPresetKey, cameraPresetNonce, camera])
 
   useEffect(() => {
     if (!resetCounter) return
@@ -191,7 +192,7 @@ function FocusManager({ focusToken, focusGroup, controlsRef, skelScene }) {
 // Reset View is what resumes the spin (CameraManager flies back to default in
 // parallel). Spinning is driven by toggling OrbitControls' autoRotate via the
 // `spinning` state.
-function IdleSpinner({ controlsRef, allowSpin, setSpinning, cameraPreset, focusToken, resetCounter }) {
+function IdleSpinner({ controlsRef, allowSpin, setSpinning, cameraPreset, cameraPresetNonce, focusToken, resetCounter }) {
   // Stop spinning the instant the user grabs the model. 'start' fires on a
   // user pointer/wheel grab — never for autoRotate itself.
   useEffect(() => {
@@ -208,7 +209,9 @@ function IdleSpinner({ controlsRef, allowSpin, setSpinning, cameraPreset, focusT
   useEffect(() => {
     if (firstRun.current) { firstRun.current = false; return }
     setSpinning(false)
-  }, [cameraPreset, focusToken])
+    // cameraPresetNonce re-fires this even when the same preset is re-picked, so
+    // pressing Front while the model is auto-spinning still stops the spin.
+  }, [cameraPreset, cameraPresetNonce, focusToken])
 
   // Reset View resumes the idle spin (skip the initial mount).
   const firstReset = useRef(true)
@@ -242,6 +245,7 @@ export default function Scene({
   bodyShoulderScale = 1,
   bodyHipScale      = 1,
   cameraPreset    = 'front',
+  cameraPresetNonce = 0,
   activeBoneGroup = 'All Bones',
   boneFadeMode    = 'fade',
   highlightBone   = null,
@@ -429,12 +433,12 @@ export default function Scene({
           maxDistance={12}
           target={[0, -0.2, 0]}
           autoRotate={spinning && allowSpin}
-          autoRotateSpeed={-3}
+          autoRotateSpeed={-2}
         />
 
-        <CameraManager cameraPresetKey={cameraPreset} resetCounter={resetCounter} controlsRef={controlsRef} focusGroup={focusGroup} skelScene={skelScene} regionFocused={regionFocused} />
+        <CameraManager cameraPresetKey={cameraPreset} cameraPresetNonce={cameraPresetNonce} resetCounter={resetCounter} controlsRef={controlsRef} focusGroup={focusGroup} skelScene={skelScene} regionFocused={regionFocused} />
         <FocusManager focusToken={focusToken} focusGroup={focusGroup} controlsRef={controlsRef} skelScene={skelScene} />
-        <IdleSpinner controlsRef={controlsRef} allowSpin={allowSpin} setSpinning={setSpinning} cameraPreset={cameraPreset} focusToken={focusToken} resetCounter={resetCounter} />
+        <IdleSpinner controlsRef={controlsRef} allowSpin={allowSpin} setSpinning={setSpinning} cameraPreset={cameraPreset} cameraPresetNonce={cameraPresetNonce} focusToken={focusToken} resetCounter={resetCounter} />
       </Canvas>
     </div>
   )

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ListChecks, Target, BookOpen, Keyboard } from '@phosphor-icons/react'
-import { QUIZ_MODES, QUIZ_LAYERS, QUIZ_REGIONS } from '../data/quizData.js'
+import { QUIZ_MODES, QUIZ_LAYERS, getQuizRegions, defaultRegion } from '../data/quizData.js'
 
 const MODE_ICONS = { 1: ListChecks, 2: Target, 3: BookOpen, 4: Keyboard }
 
@@ -78,12 +78,13 @@ export default function QuizSetup({ config, onChange, onStart, onClose }) {
 
   const layerOptions = QUIZ_LAYERS.map(l => ({
     key: l.key, label: l.label,
-    sub: l.enabled ? 'Available now' : 'Coming soon',
+    sub: l.enabled ? l.desc : 'Coming soon',
     disabled: !l.enabled,
     badge: l.enabled ? null : 'Soon',
   }))
 
-  const regionOptions = Object.values(QUIZ_REGIONS).map(r => ({
+  // Regions mirror the explorer's Filters tab for the chosen layer.
+  const regionOptions = getQuizRegions(config.layer).map(r => ({
     key: r.key, label: r.label, sub: r.desc,
   }))
 
@@ -131,7 +132,7 @@ export default function QuizSetup({ config, onChange, onStart, onClose }) {
               setOpenId={setOpenId}
               options={layerOptions}
               value={config.layer}
-              onChange={key => onChange({ layer: key })}
+              onChange={key => onChange({ layer: key, region: defaultRegion(key) })}
               placeholder="Select a layer"
             />
           </div>

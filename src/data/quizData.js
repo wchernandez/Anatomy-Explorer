@@ -4,14 +4,21 @@
 // Each region now has a separate array per layer:
 //   region.skeleton, region.muscles, region.joints, region.vascular
 //
-// buildQuiz(regionKey, level, layer) picks the right pool automatically.
+// The "choose a region" options mirror the explorer's filter groups for the
+// selected layer (BONE_GROUPS / MUSCLE_GROUPS / …); a region's question pool is
+// the layer's structures whose mesh target matches that group's keywords.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { BONE_GROUPS }     from '../components/SkeletonModel.jsx'
+import { MUSCLE_GROUPS }   from '../components/MuscleModel.jsx'
+import { JOINT_GROUPS }    from '../components/JointModel.jsx'
+import { VASCULAR_GROUPS } from '../components/VascularModel.jsx'
+
 export const QUIZ_LAYERS = [
-  { key: 'skeleton', label: 'Skeleton', icon: '🦴', enabled: true },
-  { key: 'muscles',  label: 'Muscles',  icon: '💪', enabled: true },
-  { key: 'joints',   label: 'Joints',   icon: '🦵', enabled: true },
-  { key: 'vascular', label: 'Vascular', icon: '🫀', enabled: true },
+  { key: 'skeleton', label: 'Skeleton', icon: '🦴', enabled: true, desc: 'Bones of the skeletal system.' },
+  { key: 'muscles',  label: 'Muscles',  icon: '💪', enabled: true, desc: 'Skeletal muscles and soft tissue.' },
+  { key: 'joints',   label: 'Joints',   icon: '🦵', enabled: true, desc: 'Ligaments, capsules and articulations.' },
+  { key: 'vascular', label: 'Vascular', icon: '🫀', enabled: true, desc: 'Arteries, veins and major vessels.' },
 ]
 
 export const QUIZ_MODES = [
@@ -383,7 +390,7 @@ const WHOLE_BODY_VASCULAR = [
 
 export const QUIZ_REGIONS = {
   whole_body: {
-    key: 'whole_body', label: 'Whole Body', group: 'All Bones', icon: '🦴',
+    key: 'whole_body', label: 'All Bones', group: 'All Bones', icon: '🦴',
     desc: 'The full body — all systems.',
     skeleton: WHOLE_BODY_SKELETON,
     muscles:  WHOLE_BODY_MUSCLES,
@@ -441,6 +448,98 @@ export const QUIZ_REGIONS = {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Region = filter group. The "choose a region" dropdown shows each layer's
+// filter groups (the same names as the explorer's Filters tab), and a group's
+// question pool is the layer's structures whose mesh target matches that group's
+// keyword list. This keeps the quiz regions perfectly in sync with the filters.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const LAYER_GROUPS = {
+  skeleton: BONE_GROUPS,
+  muscles:  MUSCLE_GROUPS,
+  joints:   JOINT_GROUPS,
+  vascular: VASCULAR_GROUPS,
+}
+
+// Master pool per layer = union of every region's structures for that layer,
+// de-duplicated by mesh target. Filter groups then carve subsets out of this.
+const LAYER_MASTER = {}
+for (const layer of ['skeleton', 'muscles', 'joints', 'vascular']) {
+  const seen = new Map()
+  for (const region of Object.values(QUIZ_REGIONS)) {
+    for (const s of (region[layer] || [])) if (!seen.has(s.target)) seen.set(s.target, s)
+  }
+  LAYER_MASTER[layer] = [...seen.values()]
+}
+
+// Structures of `layer` belonging to filter group `groupKey`. A null keyword
+// list (the "All …" group) means the whole layer.
+function matchPool(layer, groupKey) {
+  const master = LAYER_MASTER[layer] || []
+  const keywords = LAYER_GROUPS[layer]?.[groupKey]
+  if (!keywords) return master
+  return master.filter(s => keywords.some(k => s.target.toLowerCase().includes(k.toLowerCase())))
+}
+
+// Filter groups too sparse to make a worthwhile quiz are hidden from the region
+// dropdown (a multiple-choice question needs a couple of distractors).
+const MIN_GROUP_POOL = 2
+
+// Short blurb for each filter group, shown under its name in the region picker.
+// Keyed by group name (names are unique enough across layers to share a map).
+const GROUP_DESCRIPTIONS = {
+  // whole-layer
+  'All Bones':    'Every bone, head to toe.',
+  'All Muscles':  'Every muscle in the body.',
+  'All Joints':   'Every joint and ligament.',
+  'All Vessels':  'Every artery and vein.',
+  // shared anatomical regions
+  'Skull':        'Head and face.',
+  'Head & Neck':  'Head and neck.',
+  'Spine':        'The vertebral column.',
+  'Thorax':       'Chest, ribs and breastbone.',
+  'Upper Limb':   'Arm, forearm and hand.',
+  'Lower Limb':   'Thigh, leg and foot.',
+  'Pelvis':       'Hip bones, sacrum and coccyx.',
+  // muscle-specific groups
+  'Cranial':      'Muscles of the head and face.',
+  'Cervical':     'Muscles of the neck.',
+  'Thoracic':     'Muscles of the chest.',
+  'Dorsal':       'Muscles of the back.',
+  'Abdominal':    'Muscles of the abdomen.',
+  'Pelvic':       'Muscles of the pelvis.',
+  // joint-specific groups
+  'Shoulder':     'The shoulder girdle.',
+  'Hand':         'Joints of the hand.',
+  'Hip':          'The hip joint.',
+  'Knee':         'The knee joint.',
+  'Ankle & Foot': 'Ankle and foot.',
+  // vascular-specific groups
+  'Heart':        'The heart and great vessels.',
+  'Abdomen':      'Abdominal arteries and veins.',
+}
+
+// Region options for a layer: its filter groups (matching the Filters tab),
+// minus any that have too few structures to quiz. The "All …" group is always
+// kept. Each option carries a short `desc` for display.
+export function getQuizRegions(layer) {
+  const groups = LAYER_GROUPS[layer] || {}
+  return Object.keys(groups)
+    .map(key => ({ key, label: key, desc: GROUP_DESCRIPTIONS[key] || '', count: matchPool(layer, key).length }))
+    .filter(o => groups[o.key] === null || o.count >= MIN_GROUP_POOL)
+}
+
+// The default region for a layer = its "All …" group (first key).
+export function defaultRegion(layer) {
+  return Object.keys(LAYER_GROUPS[layer] || {})[0] || 'All Bones'
+}
+
+// The structure pool for a given group + layer (used by App for highlighting).
+export function getQuizPool(groupKey, layer) {
+  return matchPool(layer, groupKey)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -462,12 +561,11 @@ function buildOptions(bone, pool) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main question builder
-// buildQuiz(regionKey, level, layer) — App.jsx calls buildQuiz(config.region, config.level, config.layer)
+// buildQuiz(groupKey, level, layer) — App.jsx calls buildQuiz(config.region, config.level, config.layer)
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function buildQuiz(regionKey, level, layer = 'skeleton') {
-  const region = QUIZ_REGIONS[regionKey]
-  const pool = QUIZ_REGIONS[regionKey]?.[layer] || LAYER_POOLS[layer]
+export function buildQuiz(groupKey, level, layer = 'skeleton') {
+  const pool = matchPool(layer, groupKey)
 
   if (!pool.length) return []
 

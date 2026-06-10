@@ -8,7 +8,7 @@ import InfoPanel from './components/InfoPanel.jsx'
 import LayerControls from './components/LayerControls.jsx'
 import CameraControls from './components/CameraControls.jsx'
 import DemographicPanel from './components/DemographicPanel.jsx'
-import { QUIZ_REGIONS, buildQuiz } from './data/quizData.js'
+import { buildQuiz, getQuizPool } from './data/quizData.js'
 
 function formatName(raw) {
   if (!raw) return 'Unknown Structure'
@@ -63,7 +63,7 @@ export default function App() {
   const [quizStarted,   setQuizStarted]   = useState(false)
   const [quizFinished,  setQuizFinished]  = useState(false)
   const [showQuizSetup, setShowQuizSetup] = useState(false)
-  const [quizConfig,    setQuizConfig]    = useState({ level: 1, layer: 'skeleton', region: 'whole_body' })
+  const [quizConfig,    setQuizConfig]    = useState({ level: 1, layer: 'skeleton', region: 'All Bones' })
   const [quizQuestions, setQuizQuestions] = useState([])
   const [quiz,        setQuiz]        = useState(initialQuiz)
   const [showMenu,    setShowMenu]    = useState(true)
@@ -135,8 +135,12 @@ export default function App() {
   // Skeleton bone names (keyed by group, populated once model loads)
   const [skeletonBoneNames, setSkeletonBoneNames] = useState({})
 
-  // Camera preset
+  // Camera preset. The nonce bumps on every angle pick so re-selecting the
+  // CURRENT preset (e.g. pressing Front while it's already 'front' and the model
+  // is auto-spinning) still re-fires the fly-to animation and stops the spin.
   const [cameraPreset, setCameraPreset] = useState('front')
+  const [cameraPresetNonce, setCameraPresetNonce] = useState(0)
+  const selectCameraAngle = (key) => { setCameraPreset(key); setCameraPresetNonce(n => n + 1) }
 
 
   // Accepts EITHER the legacy (type, value) string form OR the object form
@@ -168,7 +172,7 @@ export default function App() {
   // correspond to a bone we know (so nothing gets highlighted).
   function resolveBoneTarget(input) {
     if (!input) return null
-    const pool = QUIZ_REGIONS[quizConfig.region]?.bones || []
+    const pool = getQuizPool(quizConfig.region, quizConfig.layer)
     const s = String(input).trim().toLowerCase()
     if (!s) return null
     const bone = pool.find(b =>
@@ -328,8 +332,10 @@ export default function App() {
   // While a quiz is running the model is locked to the chosen region (only the
   // skeleton layer, other bones hidden) so the user can't stray off-topic.
 // Targets visible during quiz for non-skeleton layers
-  const quizVisibleTargets = quizStarted && quizConfig.layer !== 'skeleton'? (QUIZ_REGIONS[quizConfig.region]?.[quizConfig.layer] || []).map(b => b.target.toLowerCase()): null
-  const quizGroupName = quizConfig.layer === 'skeleton'? (QUIZ_REGIONS[quizConfig.region]?.group || 'All Bones') : 'All Bones'  
+  const quizVisibleTargets = quizStarted && quizConfig.layer !== 'skeleton'? getQuizPool(quizConfig.region, quizConfig.layer).map(b => b.target.toLowerCase()): null
+  // For the skeleton layer the region IS a bone group, so it doubles as the
+  // camera-focus group; other layers frame the whole body.
+  const quizGroupName = quizConfig.layer === 'skeleton' ? quizConfig.region : 'All Bones'
   const effBoneGroup  = quizStarted ? quizGroupName : activeBoneGroup
   const effBoneFade   = quizStarted ? (quizConfig.layer === 'skeleton' ? 'hide' : boneFadeMode) : (isolated ? 'hide' : boneFadeMode)
   // Camera region-focus is shared by the quiz and the explorer's Isolate button —
@@ -375,6 +381,7 @@ export default function App() {
         bodyShoulderScale={bodyShoulderScale}
         bodyHipScale={bodyHipScale}
         cameraPreset={cameraPreset}
+        cameraPresetNonce={cameraPresetNonce}
         activeBoneGroup={effBoneGroup}
         boneFadeMode={effBoneFade}
         highlightBone={highlightBone}
@@ -516,7 +523,7 @@ export default function App() {
 
       {/* Camera angles — available in both explorer and quiz (gated by `visible`).
           During a quiz the presets are relative to the locked region. */}
-      <CameraControls onAngleSelect={setCameraPreset} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
+      <CameraControls onAngleSelect={selectCameraAngle} visible={showCameraPanel} onClose={() => setShowCameraPanel(false)} />
 
       {/* Info panel is hidden during a quiz — it would reveal the answer. */}
       {!quizStarted && (

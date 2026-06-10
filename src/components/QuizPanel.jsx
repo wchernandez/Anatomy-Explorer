@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { QUIZ_REGIONS } from '../data/quizData.js'
 
 // In-quiz heads-up panel. Shows progress, live score and the current question's
 // answer interface for the active mode. Setup and results live in their own
@@ -12,7 +11,8 @@ export default function QuizPanel({ quiz, questions, quizLevel, region, onQuit, 
   const q = questions[currentQ]
   const hasOptions = Array.isArray(q?.options) && q.options.length > 0
   const isLast = currentQ >= questions.length - 1
-  const regionLabel = QUIZ_REGIONS[region]?.label || ''
+  // `region` is the filter-group key (e.g. 'All Bones', 'Cranial'), used as-is.
+  const regionLabel = region || ''
 
   return (
     <div id="quiz-panel" className="panel">

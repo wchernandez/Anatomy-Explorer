@@ -1169,7 +1169,14 @@ button:active {
   gap: 0.75rem;
   flex-wrap: wrap;
 }
-.quiz-results-actions > button { flex: 1 1 180px; }
+/* Both action buttons share identical sizing — equal width via flex, and the
+   same font-size / spacing so "Try Again" and "Back to Explorer" match. */
+.quiz-results-actions > button {
+  flex: 1 1 180px;
+  margin-top: 0 !important;
+  padding: 0.72rem 1rem !important;
+  font-size: 0.92rem !important;
+}
 
 /* ── In-quiz HUD ── */
 .quiz-hud-top {

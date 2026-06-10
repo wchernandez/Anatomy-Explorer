@@ -1,11 +1,12 @@
-import { QUIZ_MODES, QUIZ_REGIONS } from '../data/quizData.js'
+import { QUIZ_MODES } from '../data/quizData.js'
 
 // Full-screen results screen shown when a quiz finishes. Celebrates the score
 // and reviews every question the user got wrong with the correct answer.
 export default function QuizResults({ score, total, wrong, config, onRetry, onClose }) {
   const pct  = total ? Math.round((score / total) * 100) : 0
   const mode = QUIZ_MODES.find(m => m.level === config.level)
-  const region = QUIZ_REGIONS[config.region]
+  // `config.region` is the filter-group key (e.g. 'All Bones', 'Cranial').
+  const regionLabel = config.region
 
   let verdict
   if (pct === 100)     verdict = { title: 'Flawless!', cls: 'gold' }
@@ -24,7 +25,7 @@ export default function QuizResults({ score, total, wrong, config, onRetry, onCl
         </div>
 
         <div className="quiz-results-meta">
-          {region?.label} · {mode?.label}
+          {regionLabel} · {mode?.label}
         </div>
 
         {wrong.length > 0 ? (
