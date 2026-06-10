@@ -224,6 +224,10 @@ const MAT_SELECTED = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide,
 })
 
+const quizAmberMat   = new THREE.MeshStandardMaterial({ color: 0xffc24a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a3d00), emissiveIntensity: 0.55, side: THREE.DoubleSide })
+const quizCorrectMat = new THREE.MeshStandardMaterial({ color: 0x49d98a, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x0c4a26), emissiveIntensity: 0.6,  side: THREE.DoubleSide })
+const quizWrongMat   = new THREE.MeshStandardMaterial({ color: 0xff5d6e, roughness: 0.4, metalness: 0.1, emissive: new THREE.Color(0x5a0c18), emissiveIntensity: 0.6,  side: THREE.DoubleSide })
+
 // Map original GLB material names → override materials
 const MATERIAL_MAP = {
   'Ligament':          MAT_LIGAMENT,
@@ -250,14 +254,20 @@ function meshMatchesGroup(name, keywords) {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function JointModel({
-  visible       = false,
-  selectedBone  = null,
+  visible          = false,
+  selectedBone     = null,
   onSelect,
-  activeGroup   = 'All Joints',
-  filterMode    = 'fade',       // 'fade' | 'hide'
-  shoulderScale = 1,
-  hipScale      = 1,
-  layerFaded    = false,
+  activeGroup      = 'All Joints',
+  filterMode       = 'fade',
+  shoulderScale    = 1,
+  hipScale         = 1,
+  layerFaded       = false,
+  highlightBone    = null,
+  quizMode         = false,
+  quizGreenTarget  = null,
+  quizRedMesh      = null,
+  quizRedTarget    = null,
+  quizVisibleTargets = null,
 }) {
   const { scene }  = useGLTF('/Joints.glb')
   const [hovered, setHovered] = useState(null)
@@ -351,6 +361,30 @@ export default function JointModel({
       return
     }
 
+    const nameLc = (mesh.name || '').toLowerCase()
+    if (quizMode) {
+      const inPool = !quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t))
+      mesh.raycast = () => null
+
+      if (!inPool) {
+        mesh.visible = false
+        return
+      }
+
+      mesh.visible = true
+      if (quizGreenTarget && nameLc.includes(quizGreenTarget.toLowerCase())) {
+        mesh.material = quizCorrectMat
+      } else if ((quizRedMesh && mesh === quizRedMesh) || (quizRedTarget && nameLc.includes(quizRedTarget.toLowerCase()))) {
+        mesh.material = quizWrongMat
+      } else if (highlightBone && nameLc.includes(highlightBone.toLowerCase())) {
+        mesh.material = quizAmberMat
+      } else {
+        mesh.material = base
+      }
+      mesh.raycast = visible ? THREE.Mesh.prototype.raycast : () => null
+      return
+    }
+
     if (mesh === selectedBone) {
       mesh.material = MAT_SELECTED
       mesh.visible  = true
@@ -385,12 +419,20 @@ export default function JointModel({
         onClick={e => {
           if (!visible) return
           e.stopPropagation()
-          if (meshMatchesGroup(e.object.name, keywords)) onSelect(e.object)
+          const nameLc = e.object.name.toLowerCase()
+          const selectable = quizMode
+            ? (!quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t)))
+            : meshMatchesGroup(e.object.name, keywords)
+          if (selectable) onSelect(e.object)
         }}
         onPointerOver={e => {
           if (!visible) return
           e.stopPropagation()
-          if (meshMatchesGroup(e.object.name, keywords)) setHovered(e.object)
+          const nameLc = e.object.name.toLowerCase()
+          const hoverable = quizMode
+            ? (!quizVisibleTargets || quizVisibleTargets.some(t => nameLc.includes(t)))
+            : meshMatchesGroup(e.object.name, keywords)
+          if (hoverable) setHovered(e.object)
         }}
         onPointerOut={() => setHovered(null)}
       />

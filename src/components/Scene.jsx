@@ -185,6 +185,7 @@ export default function Scene({
   quizGreenTarget = null,
   quizRedMesh     = null,
   quizRedTarget   = null,
+  quizVisibleTargets = null,
 }) {
   // The skeleton is the reference layer: it reports ONE transform (scale +
   // position) that drives a single shared body group wrapping every layer, so
@@ -298,6 +299,12 @@ export default function Scene({
             bodyShoulderScale={bodyShoulderScale}
             bodyHipScale={bodyHipScale}
             layerFaded={musclesFaded}
+            highlightBone={highlightBone}
+            quizMode={quizMode}
+            quizGreenTarget={quizGreenTarget}
+            quizRedMesh={quizRedMesh}
+            quizRedTarget={quizRedTarget}
+            quizVisibleTargets={quizVisibleTargets}
           />
 
           <JointModel
@@ -309,6 +316,12 @@ export default function Scene({
             shoulderScale={bodyShoulderScale}
             hipScale={bodyHipScale}
             layerFaded={jointsFaded}
+            highlightBone={highlightBone}
+            quizMode={quizMode}
+            quizGreenTarget={quizGreenTarget}
+            quizRedMesh={quizRedMesh}
+            quizRedTarget={quizRedTarget}
+            quizVisibleTargets={quizVisibleTargets}
           />
 
           <VascularModel
@@ -320,6 +333,12 @@ export default function Scene({
             shoulderScale={bodyShoulderScale}
             hipScale={bodyHipScale}
             layerFaded={vascularFaded}
+            highlightBone={highlightBone}
+            quizMode={quizMode}
+            quizGreenTarget={quizGreenTarget}
+            quizRedMesh={quizRedMesh}
+            quizRedTarget={quizRedTarget}
+            quizVisibleTargets={quizVisibleTargets}
           />
         </group>
 
